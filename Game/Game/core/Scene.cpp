@@ -4,6 +4,7 @@ static Color COLOR_GRID = {50,50,50,255};
 
 Scene::Scene() {
 	objects = std::vector<GameObject*>();
+	player = 0;
 }
 
 Scene::Scene(int width, int height)
@@ -12,6 +13,12 @@ Scene::Scene(int width, int height)
 	this->width = width;
 	this->height = height;
 	background = DARKGRAY;
+}
+
+void Scene::addPlayerToScene(Player* player)
+{
+	this->player = player;
+	objects.push_back(player);
 }
 
 void Scene::addObjectToScene(GameObject* obj)
@@ -39,6 +46,8 @@ void Scene::Draw()
 	}
 }
 
+#include "AABB.h"
+
 void Scene::Update(__int64 tick)
 {
 	for (auto obj : objects) {
@@ -59,4 +68,5 @@ Scene::~Scene()
 			objects[i] = nullptr;
 		}
 	}
+	player = 0;
 };

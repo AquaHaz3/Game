@@ -15,7 +15,6 @@ void Entity::Draw()
 
 void Entity::Update(__int64 tick)
 {
-	
 }
 
 void Entity::OnEvent(Event* event)

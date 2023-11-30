@@ -27,12 +27,11 @@ public:
 	float getX() { return aabb.min.x; };
 	float getY() { return aabb.min.y; };
 	Vector2& getPos() { return aabb.min; };
-	Rectangle getRectangle() { return Rectangle{ aabb.min.x,aabb.min.y, (float)w, (float)h }; };
 
+	AABB aabb;
 
 protected: 
 
-	AABB aabb;
 	int w;
 	int h;
 

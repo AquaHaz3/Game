@@ -22,7 +22,7 @@ struct AABB
 
 namespace UtilAABB {
 
-	static bool isOverlap(AABB* a, AABB* b);
+	bool isOverlap(AABB* a, AABB* b);
 
 }
 

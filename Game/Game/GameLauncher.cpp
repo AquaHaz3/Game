@@ -3,9 +3,12 @@
 #include <raylib.h>
 #include "core/Box2D.h"
 #include "model/Player.h"
+#include "model/Block.h"
 #include <thread>
 
 static void __update_thread(GameLauncher* launcher);
+
+SceneRef GameLauncher::current_scene = 0;
 
 GameLauncher::GameLauncher()
 {
@@ -15,19 +18,32 @@ GameLauncher::GameLauncher()
 
     isGameAlive = true;
 
-    current_scene = Scene(screenWidth, screenHeight);
+    current_scene = std::shared_ptr<Scene>(new Scene(screenWidth, screenHeight));
 
-    current_scene.setDebugGrid(true);
+    current_scene->setDebugGrid(true);
 }
 
 void GameLauncher::OnStart()
 {
-    current_scene.addObjectToScene(new Player(96,96));
+
+    Block::InitBlocks();
+
+    current_scene->addPlayerToScene(new Player(96,96));
+    current_scene->addObjectToScene(new Block(32,32, BlockID::WALL));
+    current_scene->addObjectToScene(new Block(64,32, BlockID::WALL));
+    current_scene->addObjectToScene(new Block(96,32, BlockID::WALL));
+    current_scene->addObjectToScene(new Block(128,32, BlockID::WALL));
+    current_scene->addObjectToScene(new Block(32,64, BlockID::WALL));
+    current_scene->addObjectToScene(new Block(32,96, BlockID::WALL));
+    current_scene->addObjectToScene(new Block(32,128, BlockID::WALL));
+    current_scene->addObjectToScene(new Block(128,64, BlockID::WALL));
+    current_scene->addObjectToScene(new Block(128,96, BlockID::WALL));
+    current_scene->addObjectToScene(new Block(128,128, BlockID::WALL));
 }
 
 void GameLauncher::Launch()
 {
-    InitWindow(current_scene.width, current_scene.height, "raylib [core] example - basic window");
+    InitWindow(current_scene->width, current_scene->height, "raylib [core] example - basic window");
 
     SetTargetFPS(144);
     OnStart();
@@ -49,7 +65,7 @@ void GameLauncher::draw()
     {
 
         BeginDrawing();
-        current_scene.Draw();
+        current_scene->Draw();
         EndDrawing();
     }
 }
@@ -60,7 +76,7 @@ void GameLauncher::update()
     __int64 tick = 0;
     while (isGameAlive)
     {
-        current_scene.Update(tick);
+        current_scene->Update(tick);
         tick++;
         std::this_thread::sleep_for(tick_delay);
     }

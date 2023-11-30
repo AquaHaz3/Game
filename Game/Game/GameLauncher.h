@@ -2,6 +2,9 @@
 
 #include "core/Scene.h"
 #include <vector>
+#include <memory>
+
+typedef std::shared_ptr<Scene> SceneRef;
 
 class GameLauncher
 {
@@ -16,10 +19,9 @@ public:
 	void update();
 
 	bool isGameAlive;
+	static SceneRef current_scene;
 
 private:
-
-	Scene current_scene;
 	
 
 };

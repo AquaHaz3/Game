@@ -3,6 +3,7 @@
 #include <vector>
 #include "GameObject.h"
 #include "Box2D.h"
+#include "../model/Player.h"
 
 class Scene
 {
@@ -21,6 +22,7 @@ public:
 	Scene(int width, int height);
 	~Scene();
 
+	void addPlayerToScene(Player* player);
 	void addObjectToScene(GameObject* obj);
 	void setDebugGrid(bool isActive);
 	
@@ -31,6 +33,8 @@ private:
 
 	bool isDebugGridOn;
 	Color background;
+
+	Player* player;
 
 };
 

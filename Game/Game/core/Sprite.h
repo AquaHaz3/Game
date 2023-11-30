@@ -28,8 +28,8 @@ public:
 		DrawTextureV(texture, pos, WHITE);
 	}
 
-	void DrawPro(Vector2 pos, int w, int h, int tile_id) {
-		Rectangle _pos = { pos.x, pos.y, w, h};
+	void DrawPro(int x, int y, int w, int h, int tile_id) {
+		Rectangle _pos = { x, y, w, h};
 		DrawTexturePro(texture, tile[tile_id], _pos, {0, 0}, 0, WHITE);
 	}
 
