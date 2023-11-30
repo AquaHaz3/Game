@@ -9,7 +9,7 @@ class GameObject
 public:
 
 	virtual void Draw() = 0;
-	virtual void Update() = 0;
+	virtual void Update(__int64 tick) = 0;
 	virtual void OnEvent(Event* event) = 0;
 
 	uint8_t flags = 0;

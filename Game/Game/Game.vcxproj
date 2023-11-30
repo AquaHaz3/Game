@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="model\Block.cpp" />
     <ClCompile Include="core\AABB.cpp" />
     <ClCompile Include="core\Box2D.cpp" />
     <ClCompile Include="model\Entity.cpp" />
@@ -134,15 +135,22 @@
     <ClCompile Include="core\GameObject.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="core\Scene.cpp" />
+    <ClCompile Include="core\Sprite.cpp" />
+    <ClCompile Include="model\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="model\Block.h" />
     <ClInclude Include="core\AABB.h" />
     <ClInclude Include="core\Box2D.h" />
+    <ClInclude Include="core\Debug.h" />
+    <ClInclude Include="model\Movement.h" />
     <ClInclude Include="model\Entity.h" />
     <ClInclude Include="events\Event.h" />
     <ClInclude Include="GameLauncher.h" />
     <ClInclude Include="core\GameObject.h" />
     <ClInclude Include="core\Scene.h" />
+    <ClInclude Include="core\Sprite.h" />
+    <ClInclude Include="model\Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

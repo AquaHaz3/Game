@@ -1,2 +1,72 @@
-﻿  Entity.cpp
-  Game.vcxproj -> C:\Users\aquahaze\Documents\GitHub\Example\Game\x64\Debug\Game.exe
+﻿  Box2D.cpp
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\AABB.h(14,11): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\AABB.h(15,11): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\AABB.h(16,11): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\AABB.h(17,11): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Box2D.h(25,30): warning C4244: return: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Box2D.h(26,30): warning C4244: return: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Box2D.cpp(5,15): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Box2D.cpp(6,15): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Box2D.cpp(7,17): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Box2D.cpp(8,17): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+  Entity.cpp
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\AABB.h(14,11): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\AABB.h(15,11): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\AABB.h(16,11): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\AABB.h(17,11): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Box2D.h(25,30): warning C4244: return: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Box2D.h(26,30): warning C4244: return: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(21,21): warning C4838: Преобразование из "int" в "float" требует сужающего преобразования.
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(21,21): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(21,24): warning C4838: Преобразование из "int" в "float" требует сужающего преобразования.
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(21,24): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(21,27): warning C4838: Преобразование из "int" в "float" требует сужающего преобразования.
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(21,27): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(21,30): warning C4838: Преобразование из "int" в "float" требует сужающего преобразования.
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(21,30): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(26,34): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(26,27): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+  GameLauncher.cpp
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\AABB.h(14,11): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\AABB.h(15,11): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\AABB.h(16,11): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\AABB.h(17,11): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Box2D.h(25,30): warning C4244: return: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Box2D.h(26,30): warning C4244: return: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(21,21): warning C4838: Преобразование из "int" в "float" требует сужающего преобразования.
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(21,21): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(21,24): warning C4838: Преобразование из "int" в "float" требует сужающего преобразования.
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(21,24): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(21,27): warning C4838: Преобразование из "int" в "float" требует сужающего преобразования.
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(21,27): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(21,30): warning C4838: Преобразование из "int" в "float" требует сужающего преобразования.
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(21,30): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(26,34): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(26,27): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+  Main.cpp
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\AABB.h(14,11): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\AABB.h(15,11): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\AABB.h(16,11): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\AABB.h(17,11): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Box2D.h(25,30): warning C4244: return: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Box2D.h(26,30): warning C4244: return: преобразование "float" в "int", возможна потеря данных
+  Scene.cpp
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\AABB.h(14,11): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\AABB.h(15,11): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\AABB.h(16,11): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\AABB.h(17,11): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Box2D.h(25,30): warning C4244: return: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Box2D.h(26,30): warning C4244: return: преобразование "float" в "int", возможна потеря данных
+  Sprite.cpp
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(21,21): warning C4838: Преобразование из "int" в "float" требует сужающего преобразования.
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(21,21): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(21,24): warning C4838: Преобразование из "int" в "float" требует сужающего преобразования.
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(21,24): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(21,27): warning C4838: Преобразование из "int" в "float" требует сужающего преобразования.
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(21,27): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(21,30): warning C4838: Преобразование из "int" в "float" требует сужающего преобразования.
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(21,30): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(26,34): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(26,27): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+  Создание кода...
+  Game.vcxproj -> C:\Users\aquahaze\Documents\GitHub\Game\Game\x64\Debug\Game.exe

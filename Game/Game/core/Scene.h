@@ -22,8 +22,15 @@ public:
 	~Scene();
 
 	void addObjectToScene(GameObject* obj);
+	void setDebugGrid(bool isActive);
+	
+	void Draw();
+	void Update(__int64 tick);
 
 private:
+
+	bool isDebugGridOn;
+	Color background;
 
 };
 

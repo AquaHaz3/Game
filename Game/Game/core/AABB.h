@@ -1,27 +1,16 @@
 #pragma once
 
-struct Vec2
-{
-
-	Vec2() { x = 0; y = 0; }
-	Vec2(int x, int y) {
-		this->x = x;
-		this->y = y;
-	}
-
-	int x;
-	int y;
-
-};
+#include <raylib.h>
 
 struct AABB
 {
 
-	Vec2 min;
-	Vec2 max;
+	Vector2 min;
+	Vector2 max;
 
-	AABB() {};
-	AABB(int x1, int y1, int x2, int y2)
+	AABB() { max = { 0,0 }; min = { 0,0 }; }
+
+	AABB(float x1, float y1, float x2, float y2)
 	{
 		min.x = x1;
 		min.y = y1;

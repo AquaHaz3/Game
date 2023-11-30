@@ -8,37 +8,29 @@ class Box2D : public GameObject
 {
 public:
 
-	Box2D() {};
+	Box2D() {
+		w = 0; h = 0;
+	};
 
 	Box2D(int x, int y, int width, int height) 
 	{
-		aabb = AABB(x, y, x + width, y + height);
+		aabb = AABB((float)x, (float)y, (float) x + width, (float) y + height);
 		w = width;
 		h = height;
 		flags |= SOLID_OBJECT;
+
 	}
 
-	void setPos(int x, int y);
-	void moveBy(int xRel, int yRel);
+	void setPos(float x, float y);
+	void moveBy(float xRel, float yRel);
 
-	int getX() { return aabb.min.x; };
-	int getY() { return aabb.min.y; };
-	Vec2& getPos() { return aabb.min; };
+	float getX() { return aabb.min.x; };
+	float getY() { return aabb.min.y; };
+	Vector2& getPos() { return aabb.min; };
+	Rectangle getRectangle() { return Rectangle{ aabb.min.x,aabb.min.y, (float)w, (float)h }; };
 
-#if 1
 
-	virtual void Draw()
-	{
-		DrawRectangle(aabb.min.x, aabb.min.y, w, h, GREEN);
-	}
-	virtual void Update(){
-		 n
-	}
-	virtual void OnEvent(Event* event){}
-
-#endif
-
-private: 
+protected: 
 
 	AABB aabb;
 	int w;

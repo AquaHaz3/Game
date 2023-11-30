@@ -10,13 +10,17 @@ public:
 	GameLauncher();
 
 	void Launch();
+	void OnStart();
+
+	void draw();
+	void update();
+
+	bool isGameAlive;
 
 private:
 
 	Scene current_scene;
+	
 
-	void draw();
-	void update();
-		
 };
 
