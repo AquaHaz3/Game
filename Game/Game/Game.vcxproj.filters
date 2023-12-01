@@ -69,6 +69,12 @@
     <ClCompile Include="core\Debug.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="model\Background.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="model\Mob.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameLauncher.h">
@@ -123,6 +129,15 @@
       <Filter>Исходные файлы\event</Filter>
     </ClInclude>
     <ClInclude Include="events\CollectItemEvent.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="TODO.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="model\Background.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="model\Mob.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

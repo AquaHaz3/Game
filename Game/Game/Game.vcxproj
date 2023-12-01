@@ -127,6 +127,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="model\Mob.cpp" />
+    <ClCompile Include="model\Background.cpp" />
     <ClCompile Include="core\Debug.cpp" />
     <ClCompile Include="events\EventBus.cpp" />
     <ClCompile Include="model\Item.cpp" />
@@ -144,9 +146,12 @@
     <ClCompile Include="model\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="model\Mob.h" />
+    <ClInclude Include="model\Background.h" />
     <ClInclude Include="events\CollectItemEvent.hpp" />
     <ClInclude Include="events\EventBus.hpp" />
     <ClInclude Include="events\SceneStartEvent.hpp" />
+    <ClInclude Include="TODO.h" />
     <ClInclude Include="model\Item.h" />
     <ClInclude Include="model\ItemEntity.h" />
     <ClInclude Include="model\Block.h" />

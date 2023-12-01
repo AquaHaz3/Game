@@ -10,7 +10,9 @@ enum class ItemID
 {
 	AIR = 0,
 	POTION_HEAL = 1,
-	POTION_XP = 2
+	POTION_XP = 2,
+
+	SPOTLIGHT = 200,
 };
 
 class Item
@@ -18,7 +20,7 @@ class Item
 
 public:
 
-	char id;
+	uint8_t id;
 	int damage;
 	short count;
 

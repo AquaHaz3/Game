@@ -7,6 +7,7 @@
 #include "model/Item.h"
 #include "model/Wall.h"
 #include "model/ItemEntity.h"
+#include "model/Background.h"
 #include <thread>
 
 static void __update_thread(GameLauncher* launcher);
@@ -32,19 +33,31 @@ void GameLauncher::OnStart()
     Block::InitBlocks();
     Item::InitItems();
 
-    current_scene->addPlayerToScene(new Player(96,96));
-    current_scene->addObjectToScene(new Wall(32, 32, 288, 64, BlockID::WALL));
-    current_scene->addObjectToScene(new Wall(32, 64, 64, 320, BlockID::WALL));
-    current_scene->addObjectToScene(new Wall(32, 320, 288, 352, BlockID::WALL));
-    current_scene->addObjectToScene(new Wall(256, 64, 288, 128, BlockID::WALL));
-    current_scene->addObjectToScene(new Wall(256, 192, 288, 320, BlockID::WALL));
+    current_scene->addObjectToScene(new Background(32, 32, 256, 288, BlockID::FLOOR1));
+    current_scene->addObjectToScene(new Background(32, 320, 256, 256, BlockID::GRAVEL));
 
-    current_scene->addObjectToScene(new ItemEntity(128, 160, ItemID::POTION_HEAL));
-    current_scene->addObjectToScene(new ItemEntity(224, 288, ItemID::POTION_XP));
+    current_scene->addObjectToScene(new Wall(32, 32, 288, 64, BlockID::DARK_BRICK));
+    current_scene->addObjectToScene(new Wall(32, 64, 64, 608, BlockID::DARK_BRICK));
+    current_scene->addObjectToScene(new Wall(32, 320, 288, 352, BlockID::DARK_BRICK));
+    current_scene->addObjectToScene(new Wall(256, 64, 288, 128, BlockID::DARK_BRICK));
+    current_scene->addObjectToScene(new Wall(256, 192, 288, 480, BlockID::DARK_BRICK));
+
+    current_scene->addObjectToScene(new Wall(32, 576, 288, 608, BlockID::DARK_BRICK));
+    current_scene->addObjectToScene(new Wall(256, 608, 288, 544, BlockID::DARK_BRICK));
+
+    current_scene->addObjectToScene(new Wall(256, 608, 288, 544, BlockID::DARK_BRICK));
+
+    current_scene->addObjectToScene(new Block(64, 64, BlockID::BLOCK_TEST));
+
+    current_scene->addObjectToScene(new ItemEntity(128, 160, 16, 22, ItemID::POTION_HEAL, RED));
+    current_scene->addObjectToScene(new ItemEntity(224, 288, 16, 22, ItemID::POTION_XP, BLUE));
+
+    current_scene->addPlayerToScene(new Player(96, 96));
 }
 
 void GameLauncher::Launch()
 {
+
     InitWindow(current_scene->width, current_scene->height, "raylib [core] example - basic window");
 
     SetTargetFPS(144);
@@ -56,7 +69,6 @@ void GameLauncher::Launch()
     CloseWindow();
     isGameAlive = false;
     th1.join();
-
 
 }
 

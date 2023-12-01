@@ -27,6 +27,9 @@ Player::Player(int x, int y) : Entity(x, y, 20, 30, EntityType::Player)
 
 void Player::Draw()
 {
+	
+	//texture.Draw({ aabb.min.x, aabb.min.y });
+
 	texture.DrawPro((int)aabb.min.x-6, (int)aabb.min.y-1, 32, 32, (int)direction + walk_tick * 4);
 	Rectangle render = { aabb.min.x - 38, aabb.min.y - 30, 96, 96 };
 	if (debug_util::isDebugBoxes()) {
@@ -71,7 +74,8 @@ void Player::Update(__int64 tick)
 
 void Player::OnEvent(Event* event)
 {
-	if (event->uuid == CollectItemEvent::getClassUUID()) {
-
+	if (event->uuid == CollectItemEvent::getClassUUID()) 
+	{
+		
 	}
 }

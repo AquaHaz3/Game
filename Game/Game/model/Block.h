@@ -9,9 +9,20 @@
 #define BLOCK_WIDTH 32
 #define BLOCK_HEIGHT 32
 
-enum class BlockID
+enum class BlockID /* NAME = ID */
 {
-	WALL = 0
+
+	AIR = 0,
+	WALL = 1,
+	DARK_BRICK = 2,
+	DARK_STONE = 3,
+	BLOCK_TEST = 4,
+
+	GRAVEL = 100,
+	COBBLESTONE = 101,
+	FLOOR1 = 102,
+	FLOOR2 = 103,
+
 };
 
 class Block : public Box2D
@@ -42,7 +53,8 @@ protected:
 
 	static void addBlock(BlockID id, std::string tex_path);
 
-	friend class Wall;  // OK
+	friend class Wall;  // 
+	friend class Background;  // 
 
 };
 

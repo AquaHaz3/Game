@@ -8,6 +8,7 @@ void Item::InitItems()
 	addItem(ItemID::AIR);
 	addItem(ItemID::POTION_HEAL, "potion_health.png");
 	addItem(ItemID::POTION_XP, "potion_xp.png");
+	addItem(ItemID::SPOTLIGHT, "light0.png");
 }
 
 void Item::addItem(ItemID id, std::string tex_path)
