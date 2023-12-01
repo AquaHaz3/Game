@@ -45,7 +45,7 @@ void GameLauncher::OnStart()
     current_scene->addObjectToScene(new Wall(32, 576, 288, 608, BlockID::DARK_BRICK));
     current_scene->addObjectToScene(new Wall(256, 608, 288, 544, BlockID::DARK_BRICK));
 
-    current_scene->addObjectToScene(new Wall(256, 608, 288, 544, BlockID::DARK_BRICK));
+    //current_scene->addObjectToScene(new Wall(256, 608, 288, 544, BlockID::DARK_BRICK));
 
     current_scene->addObjectToScene(new Block(64, 64, BlockID::BLOCK_TEST));
 

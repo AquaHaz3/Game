@@ -18,6 +18,8 @@ public:
 private:
 
 	int walk_tick;
+	char x_offset;
+	char y_offset;
 	Sprite texture;
 
 };

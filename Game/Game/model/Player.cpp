@@ -23,6 +23,15 @@ Player::Player(int x, int y) : Entity(x, y, 20, 30, EntityType::Player)
 	texture.addTile(64, 32, 32, 32); // Go to LEFT
 	texture.addTile(64, 96, 32, 32); // Go to UP
 
+	if (w < 32) {
+		x_offset = (32 - w) / 2;
+		aabb.min.x = x + x_offset;
+	}
+	if (h < 32) {
+		y_offset = (32 - h) / 2;
+		aabb.min.y = y + y_offset;
+	}
+
 }
 
 void Player::Draw()
@@ -30,8 +39,8 @@ void Player::Draw()
 	
 	//texture.Draw({ aabb.min.x, aabb.min.y });
 
-	texture.DrawPro((int)aabb.min.x-6, (int)aabb.min.y-1, 32, 32, (int)direction + walk_tick * 4);
-	Rectangle render = { aabb.min.x - 38, aabb.min.y - 30, 96, 96 };
+	texture.DrawPro((int)aabb.min.x - x_offset, (int)aabb.min.y - y_offset, 32, 32, (int)direction + walk_tick * 4);
+	Rectangle render = { aabb.min.x, aabb.min.y, 96, 96 };
 	if (debug_util::isDebugBoxes()) {
 		DrawRectangleLinesEx(render, 1, PURPLE);
 		DrawRectangleLines(aabb.min.x, aabb.min.y, w, h, {250, 20, 20, 200});
