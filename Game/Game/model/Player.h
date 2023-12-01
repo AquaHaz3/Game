@@ -7,7 +7,7 @@ class Player : public Entity
 
 public:
 
-	Player() : Entity(0,0, 32,32, "Player.png") {}
+	Player() : Entity(0, 0, 32, 32, EntityType::Player) {}
 
 	Player(int x, int y);
 
@@ -18,6 +18,7 @@ public:
 private:
 
 	int walk_tick;
+	Sprite texture;
 
 };
 

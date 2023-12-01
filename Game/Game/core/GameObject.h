@@ -16,5 +16,9 @@ public:
 
 };
 
+#define STUB_OBJECT 0b00000001
+#define ENTITY_OBJECT 0b00000100
 #define SOLID_OBJECT 0b00001000
+
+
 

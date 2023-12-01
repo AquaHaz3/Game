@@ -10,7 +10,7 @@ Block::Block(int x, int y, BlockID id)
 
 void Block::Draw()
 {
-	DrawTexture(textures[id], aabb.min.x, aabb.min.y, NO_TINT);
+	DrawTexture(textures[id], (int)aabb.min.x, (int)aabb.min.y, NO_TINT);
 }
 
 std::vector<Texture2D> Block::textures = std::vector<Texture2D>(MAX_BLOCK_ID);

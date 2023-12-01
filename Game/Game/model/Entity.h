@@ -3,6 +3,14 @@
 #include "../core/Box2D.h"
 #include "../core/Sprite.h"
 
+enum class EntityType {
+
+	Unknown = 0,
+	Player = 1,
+	Item = 2
+
+};
+
 enum class Direction {
 	RIGHT = 0,
 	DOWN = 1,
@@ -18,10 +26,13 @@ public:
 	int health;
 	float speed;
 	Direction direction;
+	EntityType type;
+
 
 public:
 
-	Entity(int x, int y, int w, int h, std::string sprite_path);
+	Entity(int x, int y, int w, int h);
+	Entity(int x, int y, int w, int h, EntityType type);
 
 	virtual void Draw() override;
 	virtual void Update(__int64 tick) override;

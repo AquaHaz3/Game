@@ -6,6 +6,9 @@
 
 #define MAX_BLOCK_ID 255
 
+#define BLOCK_WIDTH 32
+#define BLOCK_HEIGHT 32
+
 enum class BlockID
 {
 	WALL = 0
@@ -38,6 +41,8 @@ protected:
 	static std::vector<Texture2D> textures;
 
 	static void addBlock(BlockID id, std::string tex_path);
+
+	friend class Wall;  // OK
 
 };
 

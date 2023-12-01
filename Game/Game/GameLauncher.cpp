@@ -4,6 +4,9 @@
 #include "core/Box2D.h"
 #include "model/Player.h"
 #include "model/Block.h"
+#include "model/Item.h"
+#include "model/Wall.h"
+#include "model/ItemEntity.h"
 #include <thread>
 
 static void __update_thread(GameLauncher* launcher);
@@ -27,18 +30,17 @@ void GameLauncher::OnStart()
 {
 
     Block::InitBlocks();
+    Item::InitItems();
 
     current_scene->addPlayerToScene(new Player(96,96));
-    current_scene->addObjectToScene(new Block(32,32, BlockID::WALL));
-    current_scene->addObjectToScene(new Block(64,32, BlockID::WALL));
-    current_scene->addObjectToScene(new Block(96,32, BlockID::WALL));
-    current_scene->addObjectToScene(new Block(128,32, BlockID::WALL));
-    current_scene->addObjectToScene(new Block(32,64, BlockID::WALL));
-    current_scene->addObjectToScene(new Block(32,96, BlockID::WALL));
-    current_scene->addObjectToScene(new Block(32,128, BlockID::WALL));
-    current_scene->addObjectToScene(new Block(128,64, BlockID::WALL));
-    current_scene->addObjectToScene(new Block(128,96, BlockID::WALL));
-    current_scene->addObjectToScene(new Block(128,128, BlockID::WALL));
+    current_scene->addObjectToScene(new Wall(32, 32, 288, 64, BlockID::WALL));
+    current_scene->addObjectToScene(new Wall(32, 64, 64, 320, BlockID::WALL));
+    current_scene->addObjectToScene(new Wall(32, 320, 288, 352, BlockID::WALL));
+    current_scene->addObjectToScene(new Wall(256, 64, 288, 128, BlockID::WALL));
+    current_scene->addObjectToScene(new Wall(256, 192, 288, 320, BlockID::WALL));
+
+    current_scene->addObjectToScene(new ItemEntity(128, 160, ItemID::POTION_HEAL));
+    current_scene->addObjectToScene(new ItemEntity(224, 288, ItemID::POTION_XP));
 }
 
 void GameLauncher::Launch()

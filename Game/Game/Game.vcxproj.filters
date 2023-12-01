@@ -16,6 +16,12 @@
     <Filter Include="Исходные файлы\model">
       <UniqueIdentifier>{5ac3757a-cb71-458e-9bb5-987c54a20c3f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\core">
+      <UniqueIdentifier>{8b25445c-1d37-432a-b429-b8ac956b928a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\event">
+      <UniqueIdentifier>{31c59d3b-1bd4-45a0-aae8-eae3b8c60418}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -24,28 +30,43 @@
     <ClCompile Include="GameLauncher.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="core\GameObject.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="core\Box2D.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="core\Scene.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="model\Entity.cpp">
-      <Filter>Исходные файлы</Filter>
+    <ClCompile Include="events\EventBus.cpp">
+      <Filter>Исходные файлы\event</Filter>
     </ClCompile>
     <ClCompile Include="core\AABB.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Исходные файлы\core</Filter>
     </ClCompile>
-    <ClCompile Include="core\Sprite.cpp">
-      <Filter>Исходные файлы</Filter>
+    <ClCompile Include="core\GameObject.cpp">
+      <Filter>Исходные файлы\core</Filter>
     </ClCompile>
-    <ClCompile Include="model\Player.cpp">
-      <Filter>Исходные файлы</Filter>
+    <ClCompile Include="core\Box2D.cpp">
+      <Filter>Исходные файлы\core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\Scene.cpp">
+      <Filter>Исходные файлы\core</Filter>
     </ClCompile>
     <ClCompile Include="model\Block.cpp">
+      <Filter>Исходные файлы\model</Filter>
+    </ClCompile>
+    <ClCompile Include="model\Entity.cpp">
+      <Filter>Исходные файлы\model</Filter>
+    </ClCompile>
+    <ClCompile Include="model\ItemEntity.cpp">
+      <Filter>Исходные файлы\model</Filter>
+    </ClCompile>
+    <ClCompile Include="model\Item.cpp">
+      <Filter>Исходные файлы\model</Filter>
+    </ClCompile>
+    <ClCompile Include="model\Player.cpp">
+      <Filter>Исходные файлы\model</Filter>
+    </ClCompile>
+    <ClCompile Include="model\Wall.cpp">
+      <Filter>Исходные файлы\model</Filter>
+    </ClCompile>
+    <ClCompile Include="core\Sprite.cpp">
+      <Filter>Исходные файлы\core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\Debug.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,37 +74,55 @@
     <ClInclude Include="GameLauncher.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="core\GameObject.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="events\Event.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Исходные файлы\event</Filter>
     </ClInclude>
-    <ClInclude Include="core\Box2D.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="core\Scene.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="model\Entity.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="events\EventBus.hpp">
+      <Filter>Исходные файлы\event</Filter>
     </ClInclude>
     <ClInclude Include="core\AABB.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="core\Sprite.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Исходные файлы\core</Filter>
     </ClInclude>
     <ClInclude Include="core\Debug.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Исходные файлы\core</Filter>
     </ClInclude>
-    <ClInclude Include="model\Player.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="core\GameObject.h">
+      <Filter>Исходные файлы\core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\Box2D.h">
+      <Filter>Исходные файлы\core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\Scene.h">
+      <Filter>Исходные файлы\core</Filter>
     </ClInclude>
     <ClInclude Include="model\Movement.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Исходные файлы\model</Filter>
+    </ClInclude>
+    <ClInclude Include="core\Sprite.h">
+      <Filter>Исходные файлы\core</Filter>
+    </ClInclude>
+    <ClInclude Include="model\Entity.h">
+      <Filter>Исходные файлы\model</Filter>
     </ClInclude>
     <ClInclude Include="model\Block.h">
+      <Filter>Исходные файлы\model</Filter>
+    </ClInclude>
+    <ClInclude Include="model\Wall.h">
+      <Filter>Исходные файлы\model</Filter>
+    </ClInclude>
+    <ClInclude Include="model\Player.h">
+      <Filter>Исходные файлы\model</Filter>
+    </ClInclude>
+    <ClInclude Include="model\ItemEntity.h">
+      <Filter>Исходные файлы\model</Filter>
+    </ClInclude>
+    <ClInclude Include="model\Item.h">
+      <Filter>Исходные файлы\model</Filter>
+    </ClInclude>
+    <ClInclude Include="events\SceneStartEvent.hpp">
+      <Filter>Исходные файлы\event</Filter>
+    </ClInclude>
+    <ClInclude Include="events\CollectItemEvent.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

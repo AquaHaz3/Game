@@ -1,9 +1,12 @@
 #include "Player.h"
+#include "../core/Debug.h"
 
-Player::Player(int x, int y) : Entity(x, y, 20, 30, "Player.png")
+Player::Player(int x, int y) : Entity(x, y, 20, 30, EntityType::Player)
 {
+
 	health = 20;
 	speed = 1;
+	texture = Sprite("player.png");
 
 	texture.addTile(32, 64, 32, 32); // Go to RIGHT
 	texture.addTile(32, 0, 32, 32); // Go to DOWN
@@ -20,17 +23,21 @@ Player::Player(int x, int y) : Entity(x, y, 20, 30, "Player.png")
 	texture.addTile(64, 32, 32, 32); // Go to LEFT
 	texture.addTile(64, 96, 32, 32); // Go to UP
 
-
 }
 
 void Player::Draw()
 {
-	texture.DrawPro(aabb.min.x-6, aabb.min.y-1, 32, 32, (int)direction + walk_tick * 4);
-	//DrawRectangleLines(aabb.min.x, aabb.min.y, w, h, RED);
+	texture.DrawPro((int)aabb.min.x-6, (int)aabb.min.y-1, 32, 32, (int)direction + walk_tick * 4);
+	Rectangle render = { aabb.min.x - 38, aabb.min.y - 30, 96, 96 };
+	if (debug_util::isDebugBoxes()) {
+		DrawRectangleLinesEx(render, 1, PURPLE);
+		DrawRectangleLines(aabb.min.x, aabb.min.y, w, h, {250, 20, 20, 200});
+	}
 }
 
 #include "Movement.h"
 #include "../GameLauncher.h"
+#include "../events/CollectItemEvent.hpp"
 
 void Player::Update(__int64 tick)
 {
@@ -42,6 +49,15 @@ void Player::Update(__int64 tick)
 		bool isCollided = false;
 		for (auto solid : GameLauncher::current_scene->boxes) {
 			if (UtilAABB::isOverlap(&aabb, &solid->aabb)) {
+				if (solid->flags & ENTITY_OBJECT) {
+					Entity* e = (Entity*) solid;
+					if (e->type == EntityType::Item) {
+						auto event = new CollectItemEvent((ItemEntity*)e);
+						OnEvent(event);
+						delete event;
+						GameLauncher::current_scene->removeObject(e);
+					}
+				}
 				isCollided = true;
 				break;
 			}
@@ -55,4 +71,7 @@ void Player::Update(__int64 tick)
 
 void Player::OnEvent(Event* event)
 {
+	if (event->uuid == CollectItemEvent::getClassUUID()) {
+
+	}
 }

@@ -127,6 +127,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="core\Debug.cpp" />
+    <ClCompile Include="events\EventBus.cpp" />
+    <ClCompile Include="model\Item.cpp" />
+    <ClCompile Include="model\ItemEntity.cpp" />
     <ClCompile Include="model\Block.cpp" />
     <ClCompile Include="core\AABB.cpp" />
     <ClCompile Include="core\Box2D.cpp" />
@@ -137,8 +141,14 @@
     <ClCompile Include="core\Scene.cpp" />
     <ClCompile Include="core\Sprite.cpp" />
     <ClCompile Include="model\Player.cpp" />
+    <ClCompile Include="model\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="events\CollectItemEvent.hpp" />
+    <ClInclude Include="events\EventBus.hpp" />
+    <ClInclude Include="events\SceneStartEvent.hpp" />
+    <ClInclude Include="model\Item.h" />
+    <ClInclude Include="model\ItemEntity.h" />
     <ClInclude Include="model\Block.h" />
     <ClInclude Include="core\AABB.h" />
     <ClInclude Include="core\Box2D.h" />
@@ -151,6 +161,7 @@
     <ClInclude Include="core\Scene.h" />
     <ClInclude Include="core\Sprite.h" />
     <ClInclude Include="model\Player.h" />
+    <ClInclude Include="model\Wall.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

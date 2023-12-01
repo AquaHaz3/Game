@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <raylib.h>
 
 namespace debug_util {
 
@@ -11,6 +12,7 @@ namespace debug_util {
 		exit(0);
 	}
 
-
+	bool isDebugBoxes();
+	void switchDebugBoxes();
 
 }

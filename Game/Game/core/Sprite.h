@@ -29,7 +29,7 @@ public:
 	}
 
 	void DrawPro(int x, int y, int w, int h, int tile_id) {
-		Rectangle _pos = { x, y, w, h};
+		Rectangle _pos = { (float)x, (float)y, (float)w, (float)h};
 		DrawTexturePro(texture, tile[tile_id], _pos, {0, 0}, 0, WHITE);
 	}
 
@@ -39,6 +39,9 @@ public:
 public:
 
 	static Texture2D LoadTextureFromResources(std::string texture_path);
+	static Texture2D GetNullTexture();
+
+	static Texture2D* NullTexture;
 
 };
 
