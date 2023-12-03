@@ -22,7 +22,7 @@ public:
 	virtual void OnStart() override
 	{
 
-        printf("[SceneManager] Load 'GameScene' index 1");
+        printf("[SceneManager] Load 'GameScene' index 1\n");
 
         SceneManager::addObject(new Background(32, 32, 256, 288, BlockID::FLOOR1));
         SceneManager::addObject(new Background(32, 320, 256, 256, BlockID::GRAVEL));

@@ -251,6 +251,7 @@ void SceneManager::pauseAll()
 
 void SceneManager::change()
 {
+	current->Dispose();
 	current = scenes[current_index].get();
 	if (!current->isInit) current->OnStart();
 	isReadyToChange = false;
