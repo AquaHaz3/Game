@@ -193,7 +193,11 @@ void Player::drawInventory() // рисует инвентарь
 		if (c > 0) {
 			DrawTextureV(Item::textures[inventory[i].id], cellPos, NO_TINT);
 		}
-		if (c > 1) {
+		if (c > 1 && c < 10) {
+			DrawText(&digits[c*2], cellPos.x + 28, cellPos.y + 23, 10, BLACK);
+			DrawText(&digits[c*2], cellPos.x + 27, cellPos.y + 22, 10, WHITE);
+		}
+		if (c >= 10) {
 			DrawText(std::to_string(c).c_str(), cellPos.x + 28, cellPos.y + 23, 10, BLACK);
 			DrawText(std::to_string(c).c_str(), cellPos.x + 27, cellPos.y + 22, 10, WHITE);
 		}
