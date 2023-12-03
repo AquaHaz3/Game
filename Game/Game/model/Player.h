@@ -25,7 +25,7 @@ private:
 	int walk_tick; // номер кадра (для анимации ходьбы)
 	char x_offset;
 	char y_offset;
-	Sprite texture;
+	Sprite texture; // текстура игрока
 
 	Sprite inventoryCell; 
 	Sprite inventoryHand;
@@ -40,12 +40,12 @@ private:
 
 	int xp;
 	int remindAboutXp; // Напоминание о xp;
+	char bow_progress; // натянутость лука
 
 	int inv_x; // 'x' позиция инвентаря на экране
 	//int xpbar_x; // 'x' позиция 'xp' бара на экране
 
-	Weapon weapon;
-	char bow_progress; // натянутость лука
+	Weapon weapon; // Наше текущее оружие в руке (его хар-ки)
 
 };
 

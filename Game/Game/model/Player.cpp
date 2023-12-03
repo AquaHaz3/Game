@@ -64,10 +64,9 @@ Player::Player(int x, int y) : Entity(x, y, 20, 30, EntityType::Player)
 void Player::Draw()
 {
 	drawInventory();
+	drawUI(); 
 
-	drawUI(); // Интерфейс
-
-	if (bow_progress > 0) {
+	if (bow_progress > 0) { // Рисуем направление натягивания лука, возле игрока
 		Vector2 mouse = { GetMouseX(),GetMouseY() };
 		Vector2 center = { aabb.min.x + w / 2,aabb.min.y + h / 2 };
 		float angle = Vector2Angle({center.x + 1, center.y}, mouse) / PI;
@@ -98,7 +97,7 @@ void Player::Update(__int64 tick)
 	bool isMoved = Movement::EntityWASDControl(this);
 	if (isMoved) {
 		bool isCollided = false;
-		for (auto solid : GameLauncher::current_scene->boxes) {
+		for (auto solid : GameLauncher::current_scene->boxes) { // Проходим по всем твёрдым предметам
 			if (UtilAABB::isOverlap(&aabb, &solid->aabb)) {
 				if (solid->flags & ENTITY_OBJECT) {
 					Entity* e = (Entity*) solid;
@@ -194,11 +193,7 @@ void Player::drawInventory() // рисует инвентарь
 		if (c > 0) {
 			DrawTextureV(Item::textures[inventory[i].id], cellPos, NO_TINT);
 		}
-		if (c < 10 && c > 1) {
-			DrawText(&digits[c * 2], cellPos.x + 28, cellPos.y + 23, 10, BLACK);
-			DrawText(&digits[c * 2], cellPos.x + 27, cellPos.y + 22, 10, WHITE);
-		}
-		if (c > 10) {
+		if (c > 1) {
 			DrawText(std::to_string(c).c_str(), cellPos.x + 28, cellPos.y + 23, 10, BLACK);
 			DrawText(std::to_string(c).c_str(), cellPos.x + 27, cellPos.y + 22, 10, WHITE);
 		}
@@ -232,8 +227,8 @@ bool Player::putToInventory(uint8_t id) // помещает предмет в и
 
 void Player::checkForAttack()
 {
-	if(IsMouseButtonDown(MOUSE_LEFT_BUTTON) && (WType) weapon.type == WType::BOWS)
 	// Если наше оружие лук, то натягиваем его
+	if(IsMouseButtonDown(MOUSE_LEFT_BUTTON) && (WType) weapon.type == WType::BOWS)
 	{
 		bow_progress = std::min(bow_progress + 1, 100);
 	}
@@ -246,10 +241,10 @@ void Player::checkForAttack()
 				GameLauncher::current_scene->addObjectToScene(
 					new Arrow(center.x, center.y + 8, 0.5 + (1 * (bow_progress / 100.0f)), angle, 1, 0)
 				);
-				xp -= weapon.xp_cost; // Снимаем с игрока xp 
+				xp -= weapon.xp_cost; // Снимаем с игрока xp
 			}
 			else {
-				if (remindAboutXp <= 1) remindAboutXp = 125;
+				if (remindAboutXp <= 1) remindAboutXp = 125; // Если нет xp, то напоминаем об этом
 			}
 		}
 		bow_progress = 0;
