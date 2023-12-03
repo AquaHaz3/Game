@@ -25,7 +25,6 @@ public:
 
 	int health;
 	float speed;
-	Direction direction;
 	EntityType type;
 
 

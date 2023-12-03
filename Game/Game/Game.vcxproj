@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="model\entity\Arrow.cpp" />
     <ClCompile Include="model\Mob.cpp" />
     <ClCompile Include="model\Background.cpp" />
     <ClCompile Include="core\Debug.cpp" />
@@ -144,13 +145,18 @@
     <ClCompile Include="core\Sprite.cpp" />
     <ClCompile Include="model\Player.cpp" />
     <ClCompile Include="model\Wall.cpp" />
+    <ClCompile Include="model\misc\TextParticle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="events\ArrowHitEvent.hpp" />
+    <ClInclude Include="model\entity\Arrow.h" />
     <ClInclude Include="model\Mob.h" />
     <ClInclude Include="model\Background.h" />
     <ClInclude Include="events\CollectItemEvent.hpp" />
     <ClInclude Include="events\EventBus.hpp" />
     <ClInclude Include="events\SceneStartEvent.hpp" />
+    <ClInclude Include="core\Particle.hpp" />
+    <ClInclude Include="model\misc\TextParticle.h" />
     <ClInclude Include="TODO.h" />
     <ClInclude Include="model\Item.h" />
     <ClInclude Include="model\ItemEntity.h" />

@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "Box2D.h"
 #include "../model/Player.h"
+#include "Particle.hpp"
 
 class Scene
 {
@@ -16,6 +17,7 @@ public:
 
 	std::list<GameObject*> objects;
 	std::list<Box2D*> boxes;
+	std::list<Particle*> particles;
 
 public:
 
@@ -28,16 +30,18 @@ public:
 	void setDebugGrid(bool isActive);
 
 	void removeObject(GameObject* obj);
+
+	void addParticle(Particle* particle);
 	
 	void Draw();
 	void Update(__int64 tick);
+
+	PlayerRef player;
 
 private:
 
 	bool isDebugGridOn;
 	Color background;
-
-	Player* player;
 
 	std::vector<GameObject*> toRemove;
 

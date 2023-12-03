@@ -5,6 +5,7 @@
 #include "model/Player.h"
 #include "model/Block.h"
 #include "model/Item.h"
+#include "model/entity/Arrow.h"
 #include "model/Wall.h"
 #include "model/ItemEntity.h"
 #include "model/Background.h"
@@ -24,7 +25,7 @@ GameLauncher::GameLauncher()
 
     current_scene = std::shared_ptr<Scene>(new Scene(screenWidth, screenHeight));
 
-    current_scene->setDebugGrid(true);
+    current_scene->setDebugGrid(false);
 }
 
 void GameLauncher::OnStart()
@@ -32,6 +33,7 @@ void GameLauncher::OnStart()
 
     Block::InitBlocks();
     Item::InitItems();
+    Arrow::InitArrows();
 
     current_scene->addObjectToScene(new Background(32, 32, 256, 288, BlockID::FLOOR1));
     current_scene->addObjectToScene(new Background(32, 320, 256, 256, BlockID::GRAVEL));
@@ -47,10 +49,16 @@ void GameLauncher::OnStart()
 
     //current_scene->addObjectToScene(new Wall(256, 608, 288, 544, BlockID::DARK_BRICK));
 
-    current_scene->addObjectToScene(new Block(64, 64, BlockID::BLOCK_TEST));
-
     current_scene->addObjectToScene(new ItemEntity(128, 160, 16, 22, ItemID::POTION_HEAL, RED));
     current_scene->addObjectToScene(new ItemEntity(224, 288, 16, 22, ItemID::POTION_XP, BLUE));
+
+    current_scene->addObjectToScene(new ItemEntity(64, 548, 16, 22, ItemID::POTION_HEAL, RED));
+    current_scene->addObjectToScene(new ItemEntity(128, 548, 16, 22, ItemID::POTION_HEAL, RED));
+    current_scene->addObjectToScene(new ItemEntity(96, 548, 16, 22, ItemID::POTION_XP, BLUE));
+    current_scene->addObjectToScene(new ItemEntity(64, 352, 16, 22, ItemID::BOW));
+    current_scene->addObjectToScene(new ItemEntity(128, 352, 24, 24, ItemID::CROWN, ORANGE));
+    current_scene->addObjectToScene(new ItemEntity(128, 288, 24, 24, ItemID::CROWN, ORANGE));
+    current_scene->addObjectToScene(new ItemEntity(64, 288, 24, 24, ItemID::CROWN, ORANGE));
 
     current_scene->addPlayerToScene(new Player(96, 96));
 }
@@ -69,15 +77,13 @@ void GameLauncher::Launch()
     CloseWindow();
     isGameAlive = false;
     th1.join();
-
 }
 
 void GameLauncher::draw()
 {
 
     while (!WindowShouldClose())    // Detect window close button or ESC key
-    {
-
+    { 
         BeginDrawing();
         current_scene->Draw();
         EndDrawing();

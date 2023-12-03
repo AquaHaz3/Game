@@ -33,6 +33,11 @@ public:
 		DrawTexturePro(texture, tile[tile_id], _pos, {0, 0}, 0, WHITE);
 	}
 
+	void DrawPro(int x, int y, int w, int h, float oX, float oY, float angle) {
+		Rectangle _pos = { (float)x, (float)y, (float)w, (float)h};
+		DrawTexturePro(texture, {0,0,32,32}, _pos, {oX, oY}, angle, WHITE);
+	}
+
 	Texture2D texture;
 	std::vector<Rectangle> tile;
 

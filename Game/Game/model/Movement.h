@@ -1,14 +1,14 @@
 #pragma once
 
 #include <raylib.h>
-#include "Entity.h"
+#include "Player.h"
 
 namespace Movement {
 
 	/*
 	@return true if entity is moving
 	*/
-	static inline bool EntityWASDControl(Entity* entity)
+	static inline bool EntityWASDControl(Player* entity)
 	{
 		bool isMoved = false;
 		if (IsKeyDown(KEY_W)) {

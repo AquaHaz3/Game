@@ -1,7 +1,5 @@
 #pragma once
 
-#pragma once
-
 #include "Event.h"
 #include "../model/ItemEntity.h"
 

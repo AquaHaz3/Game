@@ -14,7 +14,6 @@ Entity::Entity(int x, int y, int w, int h, EntityType type) : Box2D(x, y, w, h)
 	flags |= ENTITY_OBJECT;
 	health = 20;
 	speed = 0.5;
-	direction = Direction::DOWN;
 	this->type = type;
 }
 
