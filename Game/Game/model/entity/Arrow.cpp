@@ -1,8 +1,8 @@
 ﻿#include "Arrow.h"
 
-#include "../../GameLauncher.h"
 #include "../../core/Debug.h"
 #include "../../events/ArrowHitEvent.hpp"
+#include "../../core/Scene.h"
 
 Arrow::Arrow(int x, int y, float speed, float angle, float damage, int id)
 	: Entity(x, y, 4, 4)
@@ -30,7 +30,7 @@ void Arrow::Draw()
 void Arrow::Update(__int64 tick)
 {
 	if ((lifeTime > 500 || aabb.min.x < 0 || aabb.min.y < 0) && isAlive) {
-		GameLauncher::current_scene->removeObject(this);
+		SceneManager::removeObject(this);
 		isAlive = false;
 		return;
 	}
@@ -38,7 +38,7 @@ void Arrow::Update(__int64 tick)
 	if (!isMoving) return;
 	moveBy(xSpeed, ySpeed);
 	if (tick % 3 == 2) {
-		for (auto solid : GameLauncher::current_scene->boxes) { // Проверяем не столкнулась ли стрела с чем-то?
+		for (auto solid : SceneManager::current->boxes) { // Проверяем не столкнулась ли стрела с чем-то?
 			if (solid == this) continue;
 			if (solid->flags & ENTITY_OBJECT) {
 				if (lifeTime < 458) {

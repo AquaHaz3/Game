@@ -44,4 +44,23 @@ Texture2D Sprite::GetNullTexture()
 	return *NullTexture;
 }
 
+std::map<std::string, Texture2D> SpriteLoader::textures = std::map<std::string, Texture2D>();
 
+void SpriteLoader::LoadInGameSprites()
+{
+	if (textures.size() > 0) return;
+	textures.emplace("player.png", Sprite::LoadTextureFromResources("player.png"));
+	textures.emplace("inv_cell.png", Sprite::LoadTextureFromResources("inv_cell.png"));
+	textures.emplace("inv_hand.png", Sprite::LoadTextureFromResources("inv_hand.png"));
+}
+
+Sprite SpriteLoader::GetSprite(std::string name)
+{
+	if (textures.count(name) > 0) {
+		return Sprite(textures[name]);
+	}
+	else {
+		printf("[SpriteLoader] [WARNING] Texture with name {%s} don't loaded", name.c_str());
+		return Sprite(Sprite::GetNullTexture());
+	}
+}

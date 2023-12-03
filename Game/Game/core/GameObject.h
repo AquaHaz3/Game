@@ -13,6 +13,7 @@ public:
 	virtual void OnEvent(Event* event) = 0;
 
 	uint8_t flags = 0;
+	uint8_t finger_print = 0b1100'1100;
 
 };
 
@@ -20,6 +21,5 @@ public:
 #define PARTICLE_OBJECT   0b00000010
 #define ENTITY_OBJECT     0b00000100
 #define SOLID_OBJECT      0b00001000
-
 
 

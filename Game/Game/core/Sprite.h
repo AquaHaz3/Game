@@ -19,6 +19,12 @@ public:
 		tile = std::vector<Rectangle>();
 	};
 
+	Sprite(Texture2D texture)
+	{
+		this->texture = texture;
+		tile = std::vector<Rectangle>();
+	};
+
 	void addTile(int x, int y, int w, int h) {
 		Rectangle region{ (float) x, (float)y,(float)w, (float)h };
 		tile.push_back(region);
@@ -47,6 +53,21 @@ public:
 	static Texture2D GetNullTexture();
 
 	static Texture2D* NullTexture;
+
+};
+
+#include <map>
+
+class SpriteLoader {
+
+public:
+
+	static void LoadInGameSprites();
+	static Sprite GetSprite(std::string name);
+
+private:
+
+	static std::map<std::string, Texture2D> textures;
 
 };
 

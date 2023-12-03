@@ -1,5 +1,6 @@
 ﻿#include "Player.h"
 #include "../core/Debug.h"
+#include "../core/Scene.h"
 
 #define MAX_PLAYER_HP 10
 #define MAX_PLAYER_XP 200
@@ -12,7 +13,6 @@ static Color MAGIC_BLUE = { 40, 129, 250, 255 };
 static Color MAGIC_BLUE2 = { 60, 149, 250, 255 };
 static Color NO_TINT = { 255,255,255,255 };
 
-#include "../GameLauncher.h"
 #include <raymath.h>
 
 Player::Player(int x, int y) : Entity(x, y, 20, 30, EntityType::Player)
@@ -20,9 +20,9 @@ Player::Player(int x, int y) : Entity(x, y, 20, 30, EntityType::Player)
 
 	health = 7;
 	speed = 1;
-	texture = Sprite("player.png");
-	inventoryCell = Sprite("inv_cell.png"); // текстура ячейки инвентаря
-	inventoryHand = Sprite("inv_hand.png"); // текстура ячейки инвентаря (рука)
+	texture = SpriteLoader::GetSprite("player.png");
+	inventoryCell = SpriteLoader::GetSprite("inv_cell.png"); // текстура ячейки инвентаря
+	inventoryHand = SpriteLoader::GetSprite("inv_hand.png"); // текстура ячейки инвентаря (рука)
 
 	texture.addTile(32, 64, 32, 32); // Go to RIGHT
 	texture.addTile(32, 0, 32, 32); // Go to DOWN
@@ -49,7 +49,7 @@ Player::Player(int x, int y) : Entity(x, y, 20, 30, EntityType::Player)
 	inventory = std::vector<Item>(INVENTORY_SIZE);
 	invFreeIndex = 1;
 
-	inv_x = (GameLauncher::current_scene->width / 2) - ((32 * INVENTORY_SIZE) / 2);
+	inv_x = (SceneManager::current->width / 2) - ((32 * INVENTORY_SIZE) / 2);
 
 	for (int i = 0; i < INVENTORY_SIZE; i++) {
 		inventory.push_back(Item(ItemID::AIR, 0)); // Заполняем инвентарь пустотой
@@ -67,7 +67,7 @@ void Player::Draw()
 	drawUI(); 
 
 	if (bow_progress > 0) { // Рисуем направление натягивания лука, возле игрока
-		Vector2 mouse = { GetMouseX(),GetMouseY() };
+		Vector2 mouse = GetMousePosition();
 		Vector2 center = { aabb.min.x + w / 2,aabb.min.y + h / 2 };
 		float angle = Vector2Angle({center.x + 1, center.y}, mouse) / PI;
 		Vector2 z = Vector2MoveTowards(center, mouse, bow_progress);
@@ -97,7 +97,7 @@ void Player::Update(__int64 tick)
 	bool isMoved = Movement::EntityWASDControl(this);
 	if (isMoved) {
 		bool isCollided = false;
-		for (auto solid : GameLauncher::current_scene->boxes) { // Проходим по всем твёрдым предметам
+		for (auto solid : SceneManager::current->boxes) { // Проходим по всем твёрдым предметам
 			if (UtilAABB::isOverlap(&aabb, &solid->aabb)) {
 				if (solid->flags & ENTITY_OBJECT) {
 					Entity* e = (Entity*) solid;
@@ -105,7 +105,7 @@ void Player::Update(__int64 tick)
 						auto event = new CollectItemEvent((ItemEntity*)e);
 						OnEvent(event);
 						delete event;
-						GameLauncher::current_scene->removeObject(e);
+						SceneManager::removeObject(e);
 					}
 				}
 				isCollided = true;
@@ -130,18 +130,14 @@ void Player::OnEvent(Event* event)
 			int hp = rand() % 3 + 1;
 			health = std::min(health+hp, MAX_PLAYER_HP);
 			auto about = "+"+std::to_string(hp); // +1 or +2 or +3
-			GameLauncher::current_scene->addParticle(
-				new TextParticle(aabb.max, about, 80, RED) // частица (напр. вылетает "+2")
-			);
+			SceneManager::addParticle(new TextParticle(aabb.max, about, 80, RED));
 			return;
 		}
 		if (itemE->id == ItemID::POTION_XP) { // При подборе XP
 			int _xp = ((rand() % 5) * 10) + 20;
 			xp = std::min(xp + _xp, MAX_PLAYER_XP);
 			auto about = "+" + std::to_string(_xp); // from +20 to +60
-			GameLauncher::current_scene->addParticle(
-				new TextParticle(aabb.max, about, 80, MAGIC_BLUE) // частица (напр. вылетает "+20")
-			);
+			SceneManager::addParticle(new TextParticle(aabb.max, about, 80, MAGIC_BLUE));
 			return;
 		}
 		putToInventory((uint8_t) itemE->id); // помещаем подобранный предмет в инвентарь
@@ -239,10 +235,10 @@ void Player::checkForAttack()
 	else {
 		if (bow_progress > 20) { // Если натягивал лук 
 			if (xp >= weapon.xp_cost) { // И если хватает xp на выстрел
-				Vector2 mouse = { GetMouseX(),GetMouseY() };
+				Vector2 mouse = GetMousePosition();
 				Vector2 center = { aabb.min.x + w / 2,aabb.min.y + h / 2 };
 				float angle = Vector2Angle({ center.x + 1, center.y }, mouse);
-				GameLauncher::current_scene->addObjectToScene(
+				SceneManager::addObject(
 					new Arrow(center.x, center.y + 8, 0.5 + (1 * (bow_progress / 100.0f)), angle, 1, 0)
 				);
 				xp -= weapon.xp_cost; // Снимаем с игрока xp

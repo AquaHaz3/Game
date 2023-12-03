@@ -8,6 +8,12 @@ Block::Block(int x, int y, BlockID id)
 	this->id = (int)id;
 }
 
+Block::Block(int x, int y, int w, int h, BlockID id)
+	: Box2D(x, y, w, h)
+{
+	this->id = (int)id;
+}
+
 void Block::Draw()
 {
 	DrawTexture(textures[id], (int)aabb.min.x, (int)aabb.min.y, NO_TINT);

@@ -9,11 +9,13 @@
 #include "model/Wall.h"
 #include "model/ItemEntity.h"
 #include "model/Background.h"
+#include "core/Sprite.h"
 #include <thread>
 
-static void __update_thread(GameLauncher* launcher);
+#include "scenes/GameScene.hpp"
+#include "scenes/MenuScene.hpp"
 
-SceneRef GameLauncher::current_scene = 0;
+static void __update_thread(GameLauncher* launcher);
 
 GameLauncher::GameLauncher()
 {
@@ -23,9 +25,11 @@ GameLauncher::GameLauncher()
 
     isGameAlive = true;
 
-    current_scene = std::shared_ptr<Scene>(new Scene(screenWidth, screenHeight));
+    auto start_scene = std::shared_ptr<Scene>(new MenuScene(screenWidth, screenHeight));
+    start_scene->setDebugGrid(false);
 
-    current_scene->setDebugGrid(false);
+    SceneManager::Instance()->setStartScene(start_scene);
+    SceneManager::Instance()->AddScene(new GameScene(screenWidth, screenHeight, "base"));
 }
 
 void GameLauncher::OnStart()
@@ -35,38 +39,15 @@ void GameLauncher::OnStart()
     Item::InitItems();
     Arrow::InitArrows();
 
-    current_scene->addObjectToScene(new Background(32, 32, 256, 288, BlockID::FLOOR1));
-    current_scene->addObjectToScene(new Background(32, 320, 256, 256, BlockID::GRAVEL));
+    SpriteLoader::LoadInGameSprites();
 
-    current_scene->addObjectToScene(new Wall(32, 32, 288, 64, BlockID::DARK_BRICK));
-    current_scene->addObjectToScene(new Wall(32, 64, 64, 608, BlockID::DARK_BRICK));
-    current_scene->addObjectToScene(new Wall(32, 320, 288, 352, BlockID::DARK_BRICK));
-    current_scene->addObjectToScene(new Wall(256, 64, 288, 128, BlockID::DARK_BRICK));
-    current_scene->addObjectToScene(new Wall(256, 192, 288, 480, BlockID::DARK_BRICK));
-
-    current_scene->addObjectToScene(new Wall(32, 576, 288, 608, BlockID::DARK_BRICK));
-    current_scene->addObjectToScene(new Wall(256, 608, 288, 544, BlockID::DARK_BRICK));
-
-    //current_scene->addObjectToScene(new Wall(256, 608, 288, 544, BlockID::DARK_BRICK));
-
-    current_scene->addObjectToScene(new ItemEntity(128, 160, 16, 22, ItemID::POTION_HEAL, RED));
-    current_scene->addObjectToScene(new ItemEntity(224, 288, 16, 22, ItemID::POTION_XP, BLUE));
-
-    current_scene->addObjectToScene(new ItemEntity(64, 548, 16, 22, ItemID::POTION_HEAL, RED));
-    current_scene->addObjectToScene(new ItemEntity(128, 548, 16, 22, ItemID::POTION_HEAL, RED));
-    current_scene->addObjectToScene(new ItemEntity(96, 548, 16, 22, ItemID::POTION_XP, BLUE));
-    current_scene->addObjectToScene(new ItemEntity(64, 352, 16, 22, ItemID::BOW));
-    current_scene->addObjectToScene(new ItemEntity(128, 352, 24, 24, ItemID::CROWN, ORANGE));
-    current_scene->addObjectToScene(new ItemEntity(128, 288, 24, 24, ItemID::CROWN, ORANGE));
-    current_scene->addObjectToScene(new ItemEntity(64, 288, 24, 24, ItemID::CROWN, ORANGE));
-
-    current_scene->addPlayerToScene(new Player(96, 96));
+    SceneManager::Instance()->Start();
 }
 
 void GameLauncher::Launch()
 {
 
-    InitWindow(current_scene->width, current_scene->height, "raylib [core] example - basic window");
+    InitWindow(SceneManager::current->width, SceneManager::current->height, "The Game");
 
     SetTargetFPS(144);
     OnStart();
@@ -85,7 +66,7 @@ void GameLauncher::draw()
     while (!WindowShouldClose())    // Detect window close button or ESC key
     { 
         BeginDrawing();
-        current_scene->Draw();
+        SceneManager::DrawCurrentScene();
         EndDrawing();
     }
 }
@@ -96,7 +77,7 @@ void GameLauncher::update()
     __int64 tick = 0;
     while (isGameAlive)
     {
-        current_scene->Update(tick);
+        SceneManager::UpdateCurrentScene(tick);
         tick++;
         std::this_thread::sleep_for(tick_delay);
     }

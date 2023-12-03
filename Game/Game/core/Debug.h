@@ -6,9 +6,12 @@
 
 namespace debug_util {
 
-	static void panicf(const char* format, ...) {
-		va_list list;
-		vprintf(format, list);
+	static void panicf(const char* format, ...) 
+	{
+		va_list args;
+		va_start(args, format);
+		vprintf(format, args);
+		va_end(args);
 		exit(0);
 	}
 

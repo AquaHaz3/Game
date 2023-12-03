@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <raylib.h>
 
@@ -22,8 +22,17 @@ struct AABB
 
 namespace UtilAABB {
 
-	/* �������� �� ������������ */
+	/* Проверка на столкновение */
 	bool isOverlap(AABB* a, AABB* b);
+
+	/* Лежит ли точка на прямоугольнике? */
+	inline bool isPointOn(Vector2& p, AABB* aabb) 
+	{
+		if (p.x >= aabb->min.x && p.x < aabb->max.x) {
+			return (p.y >= aabb->min.y && p.y < aabb->max.y);
+		}
+		return false;
+	}
 
 }
 
