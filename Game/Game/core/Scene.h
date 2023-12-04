@@ -41,6 +41,8 @@ public:
 	void Dispose();
 
 	virtual void OnStart() { isInit = true; };
+	virtual void AfterDraw() { };
+	virtual void BeforeDraw() { };
 
 	PlayerRef player;
 

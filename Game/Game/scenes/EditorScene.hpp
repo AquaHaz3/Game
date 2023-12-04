@@ -27,6 +27,10 @@ public:
 		SceneManager::addObject(cursor);
 	};
 
+	virtual void AfterDraw() override {
+		cursor->Draw();
+	}
+
 private:
 
 	void onClick(char btn) {

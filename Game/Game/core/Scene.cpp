@@ -47,7 +47,6 @@ void Scene::Draw()
 
 	ClearBackground(background);
 
-
 	if (IsKeyPressed(KEY_SPACE)) {
 		debug_util::switchDebugBoxes();
 	}
@@ -61,6 +60,16 @@ void Scene::Draw()
 		}
 	}
 
+	BeforeDraw();
+
+	isRenderTime = true;
+
+	for (auto obj : objects) {
+		obj->Draw();
+	}
+
+	AfterDraw();
+
 	if (debug_util::isDebugBoxes()) {
 		auto about_particles = "Particles: " + std::to_string(particles.size());
 		auto about_objects = "Objects: " + std::to_string(objects.size());
@@ -70,13 +79,6 @@ void Scene::Draw()
 		DrawText(about_boxes.c_str(), width - 198, 34, 20, WHITE);
 		DrawText(about_particles.c_str(), width - 198, 58, 20, WHITE);
 		DrawText(fps.c_str(), width - 198, 82, 20, WHITE);
-
-	}
-
-	isRenderTime = true;
-
-	for (auto obj : objects) {
-		obj->Draw();
 	}
 
 	isRenderTime = false;
