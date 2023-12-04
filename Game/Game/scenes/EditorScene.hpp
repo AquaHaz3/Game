@@ -4,6 +4,7 @@
 #include "../model/ui/ButtonUI.hpp"
 #include "../core/SceneFile.h"
 #include "../model/ui/CursorUI.hpp"
+#include "../model/ui/EditorUI.hpp"
 
 class EditorScene : public Scene {
 
@@ -11,9 +12,9 @@ public:
 
 	EditorScene(int w, int h) : Scene(w, h)
 	{
-		current_object.type = (int)SceneObjectType::WALL;
-		current_object.id = 0;
-		current_object.ord = (int) BlockID::FLOOR2;
+		brush.type = (int)SceneObjectType::WALL;
+		brush.id = 0;
+		brush.ord = (int) BlockID::DARK_BRICK;
 		context = SceneFile();
 		setDebugGrid(true);
 	};
@@ -24,29 +25,70 @@ public:
 			[this](char btn) { onClick(btn); },
 			[this](char btn) { onSelect(btn); }
 		);
-		SceneManager::addObject(cursor);
+		ui = new EditorUI(width, &brush);
 	};
 
 	virtual void AfterDraw() override {
 		cursor->Draw();
+		ui->Draw();
+	}
+
+	virtual void AfterUpdate(__int64 tick) override {
+		cursor->Update(tick);
+		ui->Update(tick);
+	}
+
+	virtual void OnDispose() override {
+		delete cursor;
+		delete ui;
 	}
 
 private:
 
-	void onClick(char btn) {
+	void onClick(char btn) 
+	{
 
 	}
 
 	void onSelect(char btn) {
-		SceneManager::addObject(new Background(
-			(int)cursor->select.x, (int)cursor->select.y, 
-			(int) cursor->select.width, (int) cursor->select.height,
-			(BlockID)current_object.ord
-		));
+
+		if (brush.type == (int)SceneObjectType::PLAYER) return;
+		if (brush.type == (int)SceneObjectType::ITEM_ENTITIY) return;
+
+		brush.x = cursor->select.x;
+		brush.y = cursor->select.y;
+		brush.w = cursor->select.width;
+		brush.h = cursor->select.height;
+
+		if (brush.ord != 0 && btn == MOUSE_BUTTON_LEFT) {
+			auto obj = SceneFile::brushGameObjectFactory(&brush);
+			SceneManager::addObject(obj);
+			auto save = new PrototypeGameObject();
+			memcpy(save, &brush, sizeof(PrototypeGameObject));
+			context.addObject(save);
+		}
+		else {
+			AABB eraser = {
+			(float)brush.x, (float)brush.y,
+			(float)(brush.x + brush.w), (float)(brush.y + brush.h)
+			};
+			removeObjectOnRenderScene(&eraser);
+			context.removeObjectInBox(&eraser);
+		}
 	}
 
-	PrototypeGameObject current_object;
+	void removeObjectOnRenderScene(AABB* box) {
+		
+		for (auto obj : SceneManager::current->boxes) {
+			if (UtilAABB::isOverlap(box, &obj->aabb)) {
+				SceneManager::removeObject(obj);
+			};
+		}
+	}
+
+	PrototypeGameObject brush;
 	SceneFile context;
 	CursorUI* cursor;
+	EditorUI* ui;
 
 };

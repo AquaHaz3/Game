@@ -60,8 +60,6 @@ void Scene::Draw()
 		}
 	}
 
-	BeforeDraw();
-
 	isRenderTime = true;
 
 	for (auto obj : objects) {
@@ -97,6 +95,8 @@ void Scene::Update(__int64 tick)
 		if (p->isAlive == false) toRemove.push_back(p);
 	}
 
+	AfterUpdate(tick);
+
 	if (toRemove.size() > 0 && isRenderTime == false) {
 		for (auto to_r : toRemove) 
 		{
@@ -113,6 +113,7 @@ void Scene::Update(__int64 tick)
 
 void Scene::Dispose()
 {
+	OnDispose();
 	for (auto obj : objects) {
 		if (obj != player.get()) {
 			delete obj;

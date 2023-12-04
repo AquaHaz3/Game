@@ -42,7 +42,8 @@ public:
 
 	virtual void OnStart() { isInit = true; };
 	virtual void AfterDraw() { };
-	virtual void BeforeDraw() { };
+	virtual void AfterUpdate(__int64 tick) { };
+	virtual void OnDispose() { };
 
 	PlayerRef player;
 

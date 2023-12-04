@@ -27,6 +27,26 @@ union _word {
     char io[2];
 };
 
+GameObject* SceneFile::brushGameObjectFactory(PrototypeGameObject* brush)
+{
+    switch ((SceneObjectType) brush->type)
+    {
+    case SceneObjectType::BACKGROUND:
+        return new Background(brush->x,brush->y, brush->w, brush->h, (BlockID) brush->ord);
+    case SceneObjectType::WALL:
+        return new Wall(brush->x, brush->y, brush->x+ brush->w, brush->y+brush->h, (BlockID)brush->ord);
+    case SceneObjectType::BLOCK:
+        return new Block(brush->x, brush->y, (BlockID)brush->ord);
+    case SceneObjectType::ITEM_ENTITIY:
+        return new ItemEntity(brush->x, brush->y, 32, 32, (ItemID) brush->ord);
+    case SceneObjectType::PLAYER:
+        return new Player(brush->x, brush->y);
+    default:
+        throw std::runtime_error("[SceneFile] unknown SceneObjectType: " + std::to_string((int)brush->type));
+        break;
+    }
+}
+
 static GameObject* defaultGameObjectFactory(SceneObjectType type, UtilsIO::ByteReader& br)
 {
     switch (type)

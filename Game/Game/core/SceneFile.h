@@ -61,6 +61,27 @@ public:
 		objects.erase(index);
 	}
 
+	void removeObjectInBox(AABB* box) {
+		auto toErase = std::vector<PrototypeGameObject*>();
+		auto toEraseI = std::vector<int>();
+		for (const auto& kv : objects) {
+			PrototypeGameObject* obj = kv.second;
+			AABB objBox = {
+				(float)(obj->x), (float)(obj->y),
+				(float)(obj->x + obj->w), (float)(obj->y + obj->h)
+			};
+			if (UtilAABB::isOverlap(&objBox, box)) {
+				toErase.push_back(obj);
+				toEraseI.push_back(kv.first);
+			};
+		}
+		for (int i = 0; i < toErase.size(); i++) {
+			PrototypeGameObject* obj = toErase[i];
+			if (obj != 0) delete obj;
+			objects.erase(toEraseI[i]);
+		}
+	}
+
 	SceneFile(const std::string& name) {
 		this->path = "data\\" + name;
 	}
@@ -72,14 +93,16 @@ public:
 	}
 
 	~SceneFile() {
-		for (int i = 0; i < max_id; i++) {
-			PrototypeGameObject* obj = objects[i];
+		for (const auto& kv : objects) {
+			PrototypeGameObject* obj = kv.second;
 			if (obj != 0) {
 				delete obj;
 			}
 		}
 		objects.clear();
 	}
+
+	static GameObject* brushGameObjectFactory(PrototypeGameObject* brush);
 
 private:
 

@@ -24,7 +24,7 @@ public:
 		this->isGrid = isGrid;
 		posData = "";
 		selectionData = "";
-		selectionDelay = -10;
+		selectionDelay = -45;
 		this->onClick = onClick;
 		this->onSelect = onSelect;
 	};
@@ -32,12 +32,18 @@ public:
 	virtual void Draw() {
 
 		DrawRectangleLinesEx(pos, 1, color);
-		if (isSelection) {
+
+		if (isSelection == 1) {
 			DrawRectangleLinesEx(select, 1, ORANGE);
 			DrawRectangleRec(select, { 255, 161, 0, 60 });
 		}
+
+		if (isSelection == 2) {
+			DrawRectangleLinesEx(select, 1, RED);
+			DrawRectangleRec(select, {230, 41, 55, 60 });
+		}
 		
-		if (isSelection == false) {
+		if (isSelection == 0) {
 			DrawText(posData.c_str(), pos.x + 32, pos.y + 32, 10, WHITE);
 		}
 		else {
@@ -58,22 +64,36 @@ public:
 			pos.x = (int(mouse.x / 32)) * 32;
 			pos.y = (int(mouse.y / 32)) * 32;
 
-			if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
+			bool isLeft = IsMouseButtonDown(MOUSE_BUTTON_LEFT);
+			bool isRight = IsMouseButtonDown(MOUSE_BUTTON_RIGHT);
+
+			if (isLeft ^ isRight) {
+				
 				if (selectionDelay >= 1 && selectionDelay < 3) {
 					startSelectPos.x = pos.x;
 					startSelectPos.y = pos.y;
+					if(isLeft) onClick(MOUSE_BUTTON_LEFT);
+					else onClick(MOUSE_BUTTON_RIGHT);
 				}
 				if(selectionDelay < 55) selectionDelay++;
 				if (selectionDelay > 50 && selectionDelay < 60) {
-					isSelection = true;
+					isSelection = 1 + (char)isRight;
 					selectionDelay = 61;
 				}
 			}
 
 			if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
-				isSelection = false;
+				if(isSelection > 0)
+					onSelect(MOUSE_BUTTON_LEFT);
+				isSelection = 0;
 				selectionDelay = 0;
-				onSelect(MOUSE_BUTTON_LEFT);
+			}
+
+			if (IsMouseButtonReleased(MOUSE_BUTTON_RIGHT)) {
+				if (isSelection > 0)
+					onSelect(MOUSE_BUTTON_RIGHT);
+				isSelection = 0;
+				selectionDelay = 0;
 			}
 
 			if (isSelection) {
@@ -111,7 +131,7 @@ public:
 private:
 
 	bool isGrid;
-	bool isSelection;
+	char isSelection;
 	Vector2 startSelectPos;
 	int selectionDelay;
 

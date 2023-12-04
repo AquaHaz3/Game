@@ -17,11 +17,15 @@ enum class BlockID /* NAME = ID */
 	DARK_BRICK = 2,
 	DARK_STONE = 3,
 	BLOCK_TEST = 4,
+	__lastBlock,
 
-	GRAVEL = 100,
-	COBBLESTONE = 101,
-	FLOOR1 = 102,
-	FLOOR2 = 103,
+	__background = 100,
+	GRAVEL,
+	COBBLESTONE,
+	FLOOR1,
+	FLOOR2,
+
+	__lastBackground
 
 };
 
@@ -56,6 +60,7 @@ protected:
 
 	friend class Wall;  // 
 	friend class Background;  // 
+	friend class EditorUI;  // 
 
 };
 
