@@ -179,5 +179,8 @@
     <ClInclude Include="model\ui\ButtonUI.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="scenes\EditorScene.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

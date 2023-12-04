@@ -14,6 +14,7 @@
 
 #include "scenes/GameScene.hpp"
 #include "scenes/MenuScene.hpp"
+#include "scenes/EditorScene.hpp"
 
 static void __update_thread(GameLauncher* launcher);
 
@@ -30,6 +31,7 @@ GameLauncher::GameLauncher()
 
     SceneManager::Instance()->setStartScene(start_scene);
     SceneManager::Instance()->AddScene(new GameScene(screenWidth, screenHeight, "base"));
+    SceneManager::Instance()->AddScene(new EditorScene(screenWidth, screenHeight));
 }
 
 void GameLauncher::OnStart()

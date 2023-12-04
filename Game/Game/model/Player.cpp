@@ -63,8 +63,6 @@ Player::Player(int x, int y) : Entity(x, y, 20, 30, EntityType::Player)
 
 void Player::Draw()
 {
-	drawInventory();
-	drawUI(); 
 
 	if (bow_progress > 0) { // Рисуем направление натягивания лука, возле игрока
 		Vector2 mouse = GetMousePosition();
@@ -83,6 +81,9 @@ void Player::Draw()
 		DrawRectangleLinesEx(render, 1, PURPLE);
 		DrawRectangleLines(aabb.min.x, aabb.min.y, w, h, {250, 20, 20, 200});
 	}
+
+	drawInventory();
+	drawUI();
 }
 
 #include "Movement.h"

@@ -1,7 +1,7 @@
 #include "Wall.h"
 #include "../core/Debug.h"
 
-#define DEBUG_WALL 1
+#define DEBUG_WALL 0
 
 static Color NO_TINT = { 255,255,255,255 };
 static Color DEBUG_TINT = { 220, 0, 220, 100 };

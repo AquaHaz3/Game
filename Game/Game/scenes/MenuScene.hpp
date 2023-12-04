@@ -21,7 +21,14 @@ public:
 		));
 		
 		SceneManager::addObject(
-			new ButtonUI(width / 2 - 100, 296, 200, 64, MenuButtonColor, "Exit Game",
+			new ButtonUI(width / 2 - 100, 296, 200, 64, MenuButtonColor, "Scene Editor",
+			[]() { // При нажатии 'Scene Editor'
+				SceneManager::Instance()->ChangeScene(2);
+			}
+		));
+
+		SceneManager::addObject(
+			new ButtonUI(width / 2 - 100, 392, 200, 64, MenuButtonColor, "Exit Game",
 			[]() { // При нажатии 'ExitGame'
 				SceneManager::Instance()->StopAndExit();
 			}
