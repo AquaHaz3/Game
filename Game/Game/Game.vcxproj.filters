@@ -182,5 +182,8 @@
     <ClInclude Include="scenes\EditorScene.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="model\ui\CursorUI.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

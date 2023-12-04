@@ -61,12 +61,10 @@ public:
 		objects.erase(index);
 	}
 
-private:
-
 	SceneFile(const std::string& name) {
-		this->path = "data\\"+name;
+		this->path = "data\\" + name;
 	}
-	
+
 	SceneFile() {
 		this->path = "";
 		objects = std::map<uint32_t, PrototypeGameObject*>();
@@ -82,6 +80,8 @@ private:
 		}
 		objects.clear();
 	}
+
+private:
 
 	std::string path;
 

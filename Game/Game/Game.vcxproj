@@ -166,6 +166,7 @@
     <ClInclude Include="model\misc\TextParticle.h" />
     <ClInclude Include="core\SceneFile.h" />
     <ClInclude Include="model\ui\ButtonUI.hpp" />
+    <ClInclude Include="model\ui\CursorUI.hpp" />
     <ClInclude Include="scenes\EditorScene.hpp" />
     <ClInclude Include="scenes\GameScene.hpp" />
     <ClInclude Include="scenes\MenuScene.hpp" />
