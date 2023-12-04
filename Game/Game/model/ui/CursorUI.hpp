@@ -4,6 +4,8 @@
 #include <raylib.h>
 #include "../../core/Sprite.h"
 
+#include <functional>
+
 class CursorUI : public GameObject
 {
 
@@ -14,13 +16,17 @@ public:
 		this->isGrid = false;
 	};
 
-	CursorUI(bool isGrid, Color color) {
+	CursorUI(bool isGrid, Color color,
+		std::function<void(char btn)> onClick, std::function<void(char btn)> onSelect
+	) {
 		this->color = color;
 		pos = { 0, 0, 32, 32 };
 		this->isGrid = isGrid;
 		posData = "";
 		selectionData = "";
-		selectionDelay = 0;
+		selectionDelay = -10;
+		this->onClick = onClick;
+		this->onSelect = onSelect;
 	};
 
 	virtual void Draw() {
@@ -67,12 +73,13 @@ public:
 			if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
 				isSelection = false;
 				selectionDelay = 0;
+				onSelect(MOUSE_BUTTON_LEFT);
 			}
 
 			if (isSelection) {
 				if (pos.x < startSelectPos.x) {
 					select.x = pos.x;
-					select.width = abs(startSelectPos.x - pos.x);
+					select.width = abs(startSelectPos.x - pos.x + 32);
 				}
 				else {
 					select.x = startSelectPos.x;
@@ -80,7 +87,7 @@ public:
 				}
 				if (pos.y < startSelectPos.y) {
 					select.y = pos.y;
-					select.height = abs(startSelectPos.y - pos.y);
+					select.height = abs(startSelectPos.y - pos.y + 32);
 				}
 				else {
 					select.y = startSelectPos.y;
@@ -110,5 +117,8 @@ private:
 
 	std::string posData;
 	std::string selectionData;
+
+	std::function<void(char button)> onClick;
+	std::function<void(char button)> onSelect;
 
 };
