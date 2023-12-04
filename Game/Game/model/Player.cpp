@@ -46,7 +46,7 @@ Player::Player(int x, int y) : Entity(x, y, 20, 30, EntityType::Player)
 		y_offset = (32 - h) / 2; aabb.min.y = y;
 	}
 
-	inventory = std::vector<Item>(INVENTORY_SIZE);
+	inventory = std::vector<Item>();
 	invFreeIndex = 1;
 
 	inv_x = (SceneManager::current->width / 2) - ((32 * INVENTORY_SIZE) / 2);
