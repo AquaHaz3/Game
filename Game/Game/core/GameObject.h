@@ -13,7 +13,7 @@ public:
 	virtual void OnEvent(Event* event) = 0;
 
 	uint8_t flags = 0;
-	uint8_t finger_print = 0b1100'1100;
+	uint8_t object_id = 0b1100'1100;
 
 };
 

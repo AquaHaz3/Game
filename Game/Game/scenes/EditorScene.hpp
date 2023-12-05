@@ -22,20 +22,26 @@ public:
 	virtual void OnStart() override
 	{
 		cursor = new CursorUI(true, RED,
-			[this](char btn) { onClick(btn); },
+			[this](char btn, int x, int y) { onClick(btn, x, y); },
 			[this](char btn) { onSelect(btn); }
 		);
 		ui = new EditorUI(width, &brush);
 	};
 
 	virtual void AfterDraw() override {
+		Vector2 playerPos = context.getPlayerPos();
+		if (playerPos.x >= 0) {
+			SpriteLoader::GetSprite("player.png").DrawPro(playerPos.x, playerPos.y, 32, 32, 0, 0, 0);
+		}
 		cursor->Draw();
 		ui->Draw();
+		
 	}
 
 	virtual void AfterUpdate(__int64 tick) override {
 		cursor->Update(tick);
 		ui->Update(tick);
+		
 	}
 
 	virtual void OnDispose() override {
@@ -45,9 +51,11 @@ public:
 
 private:
 
-	void onClick(char btn) 
+	void onClick(char btn, int x, int y) 
 	{
-
+		if (brush.type == (int)SceneObjectType::PLAYER) {
+			context.setPlayer(x, y);
+		}
 	}
 
 	void onSelect(char btn) {
@@ -55,8 +63,8 @@ private:
 		if (brush.type == (int)SceneObjectType::PLAYER) return;
 		if (brush.type == (int)SceneObjectType::ITEM_ENTITIY) return;
 
-		brush.x = cursor->select.x;
-		brush.y = cursor->select.y;
+		brush.x = cursor->select.x; 
+		brush.y = cursor->select.y; 
 		brush.w = cursor->select.width;
 		brush.h = cursor->select.height;
 

@@ -14,6 +14,8 @@ enum class ItemID
 	POTION_XP = 2,
 	CROWN,
 	BOW,
+
+	__lastItem
 };
 
 enum class WType { // тип оружия
@@ -67,6 +69,7 @@ protected:
 
 	friend class ItemEntity;
 	friend class Player;
+	friend class EditorUI;
 
 	static std::vector<Texture2D> textures;
 	static std::vector<Weapon> weapons;

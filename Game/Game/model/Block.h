@@ -19,8 +19,7 @@ enum class BlockID /* NAME = ID */
 	BLOCK_TEST = 4,
 	__lastBlock,
 
-	__background = 100,
-	GRAVEL,
+	GRAVEL = 100,
 	COBBLESTONE,
 	FLOOR1,
 	FLOOR2,

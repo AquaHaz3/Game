@@ -103,7 +103,7 @@ void Scene::Update(__int64 tick)
 			objects.remove(to_r);
 			if(to_r->flags & SOLID_OBJECT) boxes.remove((Box2D*) to_r);
 			if(to_r->flags & PARTICLE_OBJECT) particles.remove((Particle*) to_r);
-			if(to_r->finger_print == 0b1100110)
+			if(to_r->object_id == 0b1100110)
 				delete to_r;
 		}
 		toRemove.clear();

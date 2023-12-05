@@ -32,7 +32,7 @@ GameObject* SceneFile::brushGameObjectFactory(PrototypeGameObject* brush)
     switch ((SceneObjectType) brush->type)
     {
     case SceneObjectType::BACKGROUND:
-        return new Background(brush->x,brush->y, brush->w, brush->h, (BlockID) brush->ord);
+        return new Wall(brush->x, brush->y, brush->x + brush->w, brush->y + brush->h, (BlockID) brush->ord);
     case SceneObjectType::WALL:
         return new Wall(brush->x, brush->y, brush->x+ brush->w, brush->y+brush->h, (BlockID)brush->ord);
     case SceneObjectType::BLOCK:
@@ -65,6 +65,64 @@ static GameObject* defaultGameObjectFactory(SceneObjectType type, UtilsIO::ByteR
         throw std::runtime_error("[SceneFile] unknown SceneObjectType: "+std::to_string((int)type));
         break;
     }
+}
+
+std::string SceneFile::getTypeName(SceneObjectType type)
+{
+    switch (type)
+    {
+    case SceneObjectType::BACKGROUND:
+        return "Background";
+    case SceneObjectType::WALL:
+        return "Wall";
+    case SceneObjectType::BLOCK:
+        return "Block";
+    case SceneObjectType::ITEM_ENTITIY:
+        return "ItemEntity";
+    case SceneObjectType::PLAYER:
+        return "Player";
+    default:
+        throw std::runtime_error("[SceneFile] unknown SceneObjectType: " + std::to_string((int)type));
+        break;
+    }
+}
+
+int SceneFile::getObjectDefaultID(SceneObjectType type) {
+    switch (type)
+    {
+    case SceneObjectType::BACKGROUND:
+        return (int) BlockID::GRAVEL;
+    case SceneObjectType::WALL:
+    case SceneObjectType::BLOCK:
+        return (int)BlockID::WALL;
+    case SceneObjectType::ITEM_ENTITIY:
+        return (int)ItemID::POTION_HEAL;
+    case SceneObjectType::PLAYER:
+        return 0;
+    default:
+        return 0;
+        break;
+    }
+}
+
+int SceneFile::getObjectLastID(SceneObjectType type) {
+
+    switch (type)
+    {
+    case SceneObjectType::BACKGROUND:
+        return (int)BlockID::__lastBackground;
+    case SceneObjectType::WALL:
+    case SceneObjectType::BLOCK:
+        return (int)BlockID::__lastBlock;
+    case SceneObjectType::ITEM_ENTITIY:
+        return (int)ItemID::__lastItem;
+    case SceneObjectType::PLAYER:
+        return 0;
+    default:
+        return 0;
+        break;
+    }
+
 }
 
 void SceneFile::SaveScene(std::string name, int width, int height)
@@ -140,4 +198,26 @@ Scene* SceneFile::BuildScene()
     delete[] buffer;
     input.close();
     return scene;
+}
+
+void SceneFile::removeObjectInBox(AABB* box)
+{
+    auto toErase = std::vector<PrototypeGameObject*>();
+    auto toEraseI = std::vector<int>();
+    for (const auto& kv : objects) {
+        PrototypeGameObject* obj = kv.second;
+        AABB objBox = {
+            (float)(obj->x), (float)(obj->y),
+            (float)(obj->x + obj->w), (float)(obj->y + obj->h)
+        };
+        if (UtilAABB::isOverlap(&objBox, box)) {
+            toErase.push_back(obj);
+            toEraseI.push_back(kv.first);
+        };
+    }
+    for (int i = 0; i < toErase.size(); i++) {
+        PrototypeGameObject* obj = toErase[i];
+        if (obj != 0) delete obj;
+        objects.erase(toEraseI[i]);
+    }
 }

@@ -17,7 +17,7 @@ public:
 	};
 
 	CursorUI(bool isGrid, Color color,
-		std::function<void(char btn)> onClick, std::function<void(char btn)> onSelect
+		std::function<void(char btn, int x, int y)> onClick, std::function<void(char btn)> onSelect
 	) {
 		this->color = color;
 		pos = { 0, 0, 32, 32 };
@@ -27,6 +27,8 @@ public:
 		selectionDelay = -45;
 		this->onClick = onClick;
 		this->onSelect = onSelect;
+		isSelection = 0;
+		select = { 0,0,0,0 };
 	};
 
 	virtual void Draw() {
@@ -72,8 +74,8 @@ public:
 				if (selectionDelay >= 1 && selectionDelay < 3) {
 					startSelectPos.x = pos.x;
 					startSelectPos.y = pos.y;
-					if(isLeft) onClick(MOUSE_BUTTON_LEFT);
-					else onClick(MOUSE_BUTTON_RIGHT);
+					if(isLeft) onClick(MOUSE_BUTTON_LEFT, pos.x, pos.y);
+					else onClick(MOUSE_BUTTON_RIGHT, pos.x, pos.y);
 				}
 				if(selectionDelay < 55) selectionDelay++;
 				if (selectionDelay > 50 && selectionDelay < 60) {
@@ -138,7 +140,7 @@ private:
 	std::string posData;
 	std::string selectionData;
 
-	std::function<void(char button)> onClick;
+	std::function<void(char btn, int x, int y)> onClick;
 	std::function<void(char button)> onSelect;
 
 };

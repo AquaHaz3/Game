@@ -15,6 +15,7 @@ void Item::InitItems()
 	addItem(ItemID::CROWN, "crown.png");
 	addItem(ItemID::SPOTLIGHT, "light0.png");
 
+	//                             Type         Rare             d  x  r
 	addWeapon(ItemID::BOW, _weapon(WType::BOWS, WLevel::DEFAULT, 5, 5, 4), "bow.png");
 }
 

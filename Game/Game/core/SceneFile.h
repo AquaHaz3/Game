@@ -13,8 +13,8 @@ enum class SceneObjectType {
 	BACKGROUND = 0,
 	WALL = 1,
 	BLOCK = 2,
-	ITEM_ENTITIY = 4,
-	PLAYER = 5
+	ITEM_ENTITIY = 3,
+	PLAYER = 4
 
 };
 
@@ -43,11 +43,15 @@ public:
 	void SaveScene(std::string name, int width, int height);
 
 	void setPlayer(int x, int y) {
-		isHavePlayer = true;
+		isHavePlayer = (x >= 0);
 		player_x = x;
 		player_y = y;
 	}
 
+	Vector2 getPlayerPos() {
+		return {(float)player_x, (float) player_y};
+	}
+	
 	void addObject(PrototypeGameObject* object) {
 		objects.emplace(max_id, object);
 		max_id++;
@@ -61,26 +65,7 @@ public:
 		objects.erase(index);
 	}
 
-	void removeObjectInBox(AABB* box) {
-		auto toErase = std::vector<PrototypeGameObject*>();
-		auto toEraseI = std::vector<int>();
-		for (const auto& kv : objects) {
-			PrototypeGameObject* obj = kv.second;
-			AABB objBox = {
-				(float)(obj->x), (float)(obj->y),
-				(float)(obj->x + obj->w), (float)(obj->y + obj->h)
-			};
-			if (UtilAABB::isOverlap(&objBox, box)) {
-				toErase.push_back(obj);
-				toEraseI.push_back(kv.first);
-			};
-		}
-		for (int i = 0; i < toErase.size(); i++) {
-			PrototypeGameObject* obj = toErase[i];
-			if (obj != 0) delete obj;
-			objects.erase(toEraseI[i]);
-		}
-	}
+	void removeObjectInBox(AABB* box);
 
 	SceneFile(const std::string& name) {
 		this->path = "data\\" + name;
@@ -90,6 +75,8 @@ public:
 		this->path = "";
 		objects = std::map<uint32_t, PrototypeGameObject*>();
 		max_id = 0;
+		player_x = -1;
+		player_y = -1;
 	}
 
 	~SceneFile() {
@@ -103,6 +90,9 @@ public:
 	}
 
 	static GameObject* brushGameObjectFactory(PrototypeGameObject* brush);
+	static std::string getTypeName(SceneObjectType type);
+	static int getObjectDefaultID(SceneObjectType type);
+	static int getObjectLastID(SceneObjectType type);
 
 private:
 
@@ -111,8 +101,8 @@ private:
 private:
 
 	std::map<uint32_t, PrototypeGameObject*> objects;
-	int player_x;
-	int player_y;
+	int player_x = -1;
+	int player_y = -1;
 
 	bool isHavePlayer;
 
