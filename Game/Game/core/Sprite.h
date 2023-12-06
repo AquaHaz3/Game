@@ -34,9 +34,8 @@ public:
 		DrawTextureV(texture, pos, WHITE);
 	}
 
-	void DrawPro(int x, int y, int w, int h, int tile_id) {
-		Rectangle _pos = { (float)x, (float)y, (float)w, (float)h};
-		DrawTexturePro(texture, tile[tile_id], _pos, {0, 0}, 0, WHITE);
+	void DrawTile(int x, int y, int tile_id) {
+		DrawTextureRec(texture, tile[tile_id], { (float)x, (float)y }, WHITE);
 	}
 
 	void DrawPro(int x, int y, int w, int h, float oX, float oY, float angle) {

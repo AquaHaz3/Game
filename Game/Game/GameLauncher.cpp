@@ -26,12 +26,17 @@ GameLauncher::GameLauncher()
 
     isGameAlive = true;
 
+    SceneManager::Instance()->setDefaultCameraSize(screenWidth, screenHeight);
+
     auto start_scene = std::shared_ptr<Scene>(new MenuScene(screenWidth, screenHeight));
-    start_scene->setDebugGrid(false);
+
+    SceneFile sceneFile = SceneFile("base.scene");
+    auto gameScene = new GameScene(screenWidth*2, screenHeight*2, "base.scene");
+    gameScene->setDebugGrid(false);
 
     SceneManager::Instance()->setStartScene(start_scene);
-    SceneManager::Instance()->AddScene(new GameScene(screenWidth, screenHeight, "base"));
-    SceneManager::Instance()->AddScene(new EditorScene(screenWidth, screenHeight));
+    SceneManager::Instance()->AddScene(gameScene);
+    SceneManager::Instance()->AddScene(new EditorScene(screenWidth*2, screenHeight*2));
 }
 
 void GameLauncher::OnStart()
@@ -49,7 +54,7 @@ void GameLauncher::OnStart()
 void GameLauncher::Launch()
 {
 
-    InitWindow(SceneManager::current->width, SceneManager::current->height, "The Game");
+    InitWindow(SceneManager::current->camWidth, SceneManager::current->camHeight, "The Game");
 
     SetTargetFPS(144);
     OnStart();

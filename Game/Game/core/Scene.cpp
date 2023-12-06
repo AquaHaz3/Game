@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "../core/Debug.h"
 
+
 static Color COLOR_GRID = {50,50,50,255};
 
 Scene::Scene() 
@@ -19,6 +20,8 @@ Scene::Scene(int width, int height)
 	boxes = std::list<Box2D*>();
 	toRemove = std::vector<GameObject*>();
 	particles = std::list<Particle*>();
+	this->camWidth = SceneManager::Instance()->getCameraWidth();
+	this->camHeight = SceneManager::Instance()->getCameraHeight();
 	this->width = width;
 	this->height = height;
 	background = DARKGRAY;
@@ -37,6 +40,8 @@ void Scene::addObjectToScene(GameObject* obj)
 	if (obj->flags & SOLID_OBJECT) boxes.push_back((Box2D*)obj);
 }
 
+#include <rlgl.h>
+
 void Scene::Draw()
 {
 
@@ -51,32 +56,49 @@ void Scene::Draw()
 		debug_util::switchDebugBoxes();
 	}
 
+	rlPushMatrix();
+	rlTranslatef(cam_x, cam_y, 0);
+
+	int from_i = (int)(-cam_y) / 32;
+	int from_j = (int)(-cam_x) / 32;
+
 	if (isDebugGridOn) {
-		for (int i = 0; i < height/ 32; i++) {
-			DrawLine(0, i*32, width, i*32, COLOR_GRID);
-		}
-		for (int i = 0; i < width/ 32; i++) {
-			DrawLine(i*32, 0, i*32, height, COLOR_GRID);
-		}
+		for (int i = from_i; i < height / 32 + from_i; i++)
+			DrawLine(0, i * 32, width, i * 32, COLOR_GRID);
+		for (int j = from_j; j < width / 32 + from_j; j++)
+			DrawLine(j * 32, 0, j * 32, height, COLOR_GRID);
 	}
 
 	isRenderTime = true;
 
 	for (auto obj : objects) {
-		obj->Draw();
+		if (obj->flags & SOLID_OBJECT) {
+			Box2D* box = (Box2D*)obj;
+			if (box->aabb.max.x + cam_x > 0 && box->aabb.max.y + cam_y > 0) {
+				obj->Draw();
+			}
+		}
+		else {
+			obj->Draw();
+		}
 	}
 
 	AfterDraw();
 
+	rlPopMatrix();
+
 	if (debug_util::isDebugBoxes()) {
+		//DrawRectangle(-cam_x, -cam_y, camWidth, camHeight, { 0, 248, 88, 60 });
 		auto about_particles = "Particles: " + std::to_string(particles.size());
 		auto about_objects = "Objects: " + std::to_string(objects.size());
 		auto about_boxes = "Boxes(Solid): " + std::to_string(boxes.size());
 		auto fps = "FPS: " + std::to_string(GetFPS());
-		DrawText(about_objects.c_str(), width - 198, 10, 20, WHITE);
-		DrawText(about_boxes.c_str(), width - 198, 34, 20, WHITE);
-		DrawText(about_particles.c_str(), width - 198, 58, 20, WHITE);
-		DrawText(fps.c_str(), width - 198, 82, 20, WHITE);
+		auto camera = "Camera: {" + std::to_string((int)cam_x) + ", " + std::to_string((int)cam_y) + "}";
+		DrawText(about_objects.c_str(), camWidth - 198, 10, 20, WHITE);
+		DrawText(about_boxes.c_str(), camWidth - 198, 34, 20, WHITE);
+		DrawText(about_particles.c_str(), camWidth - 198, 58, 20, WHITE);
+		DrawText(fps.c_str(), camWidth - 198, 82, 20, WHITE);
+		DrawText(camera.c_str(), camWidth - 198, 106, 10, WHITE);
 	}
 
 	isRenderTime = false;
@@ -125,6 +147,19 @@ void Scene::Dispose()
 	toRemove.clear();
 }
 
+void Scene::bindCamera(AABB* box, int borderW, int borderH)
+{
+	int dx = box->max.x - (SceneManager::current->camWidth - borderW);
+	int ddx = cam_x + box->min.x - borderW;
+	if(abs(cam_x) < dx) cam_x = -dx;
+	if (ddx < 0 && ddx >= cam_x) cam_x = cam_x - ddx;
+
+	int dy = box->max.y - (SceneManager::current->camHeight - borderH);
+	int ddy = cam_y + box->min.y - borderH;
+	if (abs(cam_y) < dy) cam_y = -dy;
+	if (ddy < 0 && ddy >= cam_y) cam_y = cam_y - ddy;
+}
+
 void Scene::setDebugGrid(bool isActive)
 {
 	isDebugGridOn = isActive;
@@ -147,9 +182,9 @@ void Scene::addParticle(Particle* particle)
 
 Scene::~Scene() 
 {
-	printf("[Game] [Scene] Dispose: Start!");
+	printf("[Game] [Scene] Dispose: Start!\n");
 	Dispose();
-	printf("[Game] [Scene] Dispose: End!");
+	printf("[Game] [Scene] Dispose: End!\n");
 };
 
 #include <thread>
@@ -231,6 +266,24 @@ int SceneManager::AddScene(Scene* scene)
 {
 	scenes.push_back(std::shared_ptr<Scene>(scene));
 	return scenes.size() - 1;
+}
+
+Vector2 SceneManager::GetMouseOnWorld()
+{
+	Vector2 mouse = GetMousePosition();
+	return { mouse.x - current->cam_x, mouse.y - current->cam_y };
+}
+
+void SceneManager::ProjectToCamera(Vector2& pos)
+{
+	pos.x -= SceneManager::current->cam_x;
+	pos.y -= SceneManager::current->cam_y;
+}
+
+void SceneManager::ProjectToCamera(Rectangle& rec)
+{
+	rec.x -= SceneManager::current->cam_x;
+	rec.y -= SceneManager::current->cam_y;
 }
 
 void SceneManager::pauseAll()

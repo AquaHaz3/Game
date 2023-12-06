@@ -40,15 +40,18 @@ void Arrow::Update(__int64 tick)
 	if (tick % 3 == 2) {
 		for (auto solid : SceneManager::current->boxes) { // Проверяем не столкнулась ли стрела с чем-то?
 			if (solid == this) continue;
-			if (solid->flags & ENTITY_OBJECT) {
-				if (lifeTime < 458) {
-					auto e = new ArrowHitEvent(this);
-					solid->OnEvent(e); // Отправляем событие 'ArrowHitEvent' объекту, принявшему стрелу
-					delete e;
-				}
-				continue;
-			}
 			if (UtilAABB::isOverlap(&aabb, &solid->aabb)) {
+				if (solid->flags & ENTITY_OBJECT) {
+					bool phaseThrow = false;
+					if (lifeTime < 458) {
+						auto e = new ArrowHitEvent(this);
+						solid->OnEvent(e); // Отправляем событие 'ArrowHitEvent' объекту, принявшему стрелу
+						if (e->destroyArrowAfterHit) lifeTime = 458;
+						phaseThrow = e->phase;
+						delete e;
+					}
+					if (phaseThrow) continue;
+				}
 				isMoving = false;
 				return;
 			}

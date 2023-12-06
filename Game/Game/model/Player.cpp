@@ -49,7 +49,7 @@ Player::Player(int x, int y) : Entity(x, y, 20, 30, EntityType::Player)
 	inventory = std::vector<Item>();
 	invFreeIndex = 1;
 
-	inv_x = (SceneManager::current->width / 2) - ((32 * INVENTORY_SIZE) / 2);
+	inv_x = (SceneManager::current->camWidth / 2) - ((32 * INVENTORY_SIZE) / 2);
 
 	for (int i = 0; i < INVENTORY_SIZE; i++) {
 		inventory.push_back(Item(ItemID::AIR, 0)); // Заполняем инвентарь пустотой
@@ -65,7 +65,7 @@ void Player::Draw()
 {
 
 	if (bow_progress > 0) { // Рисуем направление натягивания лука, возле игрока
-		Vector2 mouse = GetMousePosition();
+		Vector2 mouse = SceneManager::GetMouseOnWorld();
 		Vector2 center = { aabb.min.x + w / 2,aabb.min.y + h / 2 };
 		float angle = Vector2Angle({center.x + 1, center.y}, mouse) / PI;
 		Vector2 z = Vector2MoveTowards(center, mouse, bow_progress);
@@ -75,12 +75,15 @@ void Player::Draw()
 		DrawTextPro(GetFontDefault(), ">", z, { 2,8 }, 180*angle, 20, 1, WHITE);
 	}
 
-	texture.DrawPro((int)aabb.min.x - x_offset, (int)aabb.min.y - y_offset, 32, 32, (int)direction + walk_tick * 4);
-	Rectangle render = { aabb.min.x - 32 - x_offset, aabb.min.y - 32 - y_offset, 96, 96 };
+	texture.DrawTile((int)aabb.min.x - x_offset, (int)aabb.min.y - y_offset, (int)direction + walk_tick * 4);
 	if (debug_util::isDebugBoxes()) {
+		Rectangle render = { aabb.min.x - 48 - x_offset, aabb.min.y - 48 - y_offset, 128, 128 };
 		DrawRectangleLinesEx(render, 1, PURPLE);
 		DrawRectangleLines(aabb.min.x, aabb.min.y, w, h, {250, 20, 20, 200});
+		std::string test = "(" + std::to_string((int)aabb.min.x) + ", " + std::to_string((int)aabb.min.y) + ")";
+		DrawText(test.c_str(), aabb.max.x, aabb.max.y, 10, WHITE);
 	}
+
 
 	drawInventory();
 	drawUI();
@@ -114,6 +117,12 @@ void Player::Update(__int64 tick)
 			}
 		}
 		if (isCollided) setPos(pre.x, pre.y);
+		if (aabb.max.x >= SceneManager::current->width) setPos(pre.x, aabb.min.y);
+		if (aabb.max.y >= SceneManager::current->height) setPos(aabb.min.x, pre.y);
+		if (aabb.min.x <= 0) setPos(pre.x, aabb.min.y);
+		if (aabb.min.y <= 0) setPos(aabb.min.x, pre.y);
+
+		SceneManager::current->bindCamera(&aabb, 320, 196);
 	}
 	else {
 		walk_tick = 0;
@@ -153,23 +162,32 @@ static char digits[20] = {
 void Player::drawUI()
 {
 	int hp = (int)health;
-	DrawText("HP: ", 12, 8, 20, WHITE); // HP: 
-	DrawText("xp: ", 12, 36, 20, WHITE); // xp: 
-	DrawRectangle(60, 38, 200, 16, GRAY); // Серая полоса xp
-	DrawRectangle(60, 38 + 8, xp, 8, MAGIC_BLUE); // Синяя(заполненая) полоса 
-	DrawRectangle(60, 38, xp, 8, MAGIC_BLUE2); // Синяя(заполненая) полоса (осветлённая)
+
+	Vector2 textPos = { 12, 8 };
+	Vector2 barsPos = { 60, 38 };
+	SceneManager::ProjectToCamera(textPos); // Проекция на камеру
+	SceneManager::ProjectToCamera(barsPos); // Проекция на камеру
+
+	DrawText("HP: ", textPos.x, textPos.y, 20, WHITE); // HP: 
+	DrawText("xp: ", textPos.x, textPos.y+28, 20, WHITE); // xp: 
+	DrawRectangle(barsPos.x, barsPos.y, 200, 16, GRAY); // Серая полоса xp
+	DrawRectangle(barsPos.x, barsPos.y + 8, xp, 8, MAGIC_BLUE); // Синяя(заполненая) полоса 
+	DrawRectangle(barsPos.x, barsPos.y, xp, 8, MAGIC_BLUE2); // Синяя(заполненая) полоса (осветлённая)
+
 	for (int i = 0; i < MAX_PLAYER_HP; i++) { // Рисует жизни
 		if (i < hp) {
-			DrawRectangle(60 + i * 12, 18, 10, 8, HP_BAR); // Полосы здоровья
-			DrawRectangle(60 + i * 12, 10, 10, 8, HP_BAR2); // Полосы здоровья (осветлённая часть)
+			DrawRectangle(barsPos.x + i * 12, barsPos.y - 20, 10, 8, HP_BAR); // Полосы здоровья
+			DrawRectangle(barsPos.x + i * 12, barsPos.y - 28, 10, 8, HP_BAR2); // Полосы здоровья (осветлённая часть)
 		}
 		else {
-			DrawRectangle(60 + i * 12, 10, 10, 16, GRAY);  // Серые полосы здоровья (пустые)
+			DrawRectangle(barsPos.x + i * 12, barsPos.y - 28, 10, 16, GRAY);  // Серые полосы здоровья (пустые)
 		}
 	}
 
 	if ((remindAboutXp / 25) % 2 != 0) {
-		DrawRectangleLinesEx({ 8,32,256,32 }, 2, MAGIC_BLUE2); // Напоминание о малом кол-ве XP 
+		Rectangle reminderRect = { 8,32,256,32 };
+		SceneManager::ProjectToCamera(reminderRect);
+		DrawRectangleLinesEx(reminderRect, 2, MAGIC_BLUE2); // Напоминание о малом кол-ве XP 
 	}
 	if (remindAboutXp > 0) remindAboutXp--;
 }
@@ -178,21 +196,29 @@ void Player::drawInventory() // рисует инвентарь
 {
 
 	Vector2 cellPos = { (float)inv_x, 0 };
+	SceneManager::ProjectToCamera(cellPos);
 	inventoryHand.Draw(cellPos);
 	if (inventory[0].count > 0) { // Ячейка (руки)
 		DrawTextureV(Item::textures[inventory[0].id], cellPos, NO_TINT);
 	}
 
+	int temp = cellPos.x;
+
 	for (int i = 1; i < INVENTORY_SIZE; i++) { // Рисовка ячейки
 		cellPos.x += 32;
 		inventoryCell.Draw(cellPos);
 		int c = inventory[i].count;
-		if (c > 0) {
-			DrawTextureV(Item::textures[inventory[i].id], cellPos, NO_TINT);
-		}
+		if (c > 0) DrawTextureV(Item::textures[inventory[i].id], cellPos, NO_TINT);
+	}
+
+	cellPos.x = temp;
+
+	for (int i = 1; i < INVENTORY_SIZE; i++) { // Рисовка кол-ва предметов (поверх)
+		int c = inventory[i].count;
+		cellPos.x += 32;
 		if (c > 1 && c < 10) {
-			DrawText(&digits[c*2], cellPos.x + 28, cellPos.y + 23, 10, BLACK);
-			DrawText(&digits[c*2], cellPos.x + 27, cellPos.y + 22, 10, WHITE);
+			DrawText(&digits[c * 2], cellPos.x + 28, cellPos.y + 23, 10, BLACK);
+			DrawText(&digits[c * 2], cellPos.x + 27, cellPos.y + 22, 10, WHITE);
 		}
 		if (c >= 10) {
 			DrawText(std::to_string(c).c_str(), cellPos.x + 28, cellPos.y + 23, 10, BLACK);
@@ -236,7 +262,7 @@ void Player::checkForAttack()
 	else {
 		if (bow_progress > 20) { // Если натягивал лук 
 			if (xp >= weapon.xp_cost) { // И если хватает xp на выстрел
-				Vector2 mouse = GetMousePosition();
+				Vector2 mouse = SceneManager::GetMouseOnWorld();
 				Vector2 center = { aabb.min.x + w / 2,aabb.min.y + h / 2 };
 				float angle = Vector2Angle({ center.x + 1, center.y }, mouse);
 				SceneManager::addObject(

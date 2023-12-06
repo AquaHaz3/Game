@@ -2,13 +2,13 @@
 
 static Color NO_TINT = { 255,255,255,255 };
 
-Background::Background(int x, int y, int width, int height, BlockID id)
+Background::Background(int x, int y, int camWidth, int camHeight, BlockID id)
 {
 	this->x = x;
 	this->y = y;
 
-	blocksW = width / BLOCK_WIDTH;
-	blocksH = height / BLOCK_HEIGHT;
+	blocksW = camWidth / BLOCK_WIDTH;
+	blocksH = camHeight / BLOCK_HEIGHT;
 
 	this->id = (int)id;
 }

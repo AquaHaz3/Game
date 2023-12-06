@@ -84,7 +84,13 @@
     <ClCompile Include="core\SceneFile.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="core\ByteReader.cpp">
+    <ClCompile Include="core\ByteStream.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="events\ArrowHitEvent.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="core\SoundLoader.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -167,7 +173,7 @@
     <ClInclude Include="core\SceneFile.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="core\ByteReader.h">
+    <ClInclude Include="core\ByteStream.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="scenes\GameScene.hpp">
@@ -186,6 +192,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="model\ui\EditorUI.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="core\SoundLoader.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

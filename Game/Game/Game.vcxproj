@@ -131,7 +131,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="core\ByteReader.cpp" />
+    <ClCompile Include="core\ByteStream.cpp" />
+    <ClCompile Include="events\ArrowHitEvent.cpp" />
     <ClCompile Include="model\entity\Arrow.cpp" />
     <ClCompile Include="model\Mob.cpp" />
     <ClCompile Include="model\Background.cpp" />
@@ -152,9 +153,10 @@
     <ClCompile Include="model\Wall.cpp" />
     <ClCompile Include="model\misc\TextParticle.cpp" />
     <ClCompile Include="core\SceneFile.cpp" />
+    <ClCompile Include="core\SoundLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="core\ByteReader.h" />
+    <ClInclude Include="core\ByteStream.h" />
     <ClInclude Include="events\ArrowHitEvent.hpp" />
     <ClInclude Include="model\entity\Arrow.h" />
     <ClInclude Include="model\Mob.h" />
@@ -171,6 +173,7 @@
     <ClInclude Include="scenes\EditorScene.hpp" />
     <ClInclude Include="scenes\GameScene.hpp" />
     <ClInclude Include="scenes\MenuScene.hpp" />
+    <ClInclude Include="core\SoundLoader.h" />
     <ClInclude Include="TODO.h" />
     <ClInclude Include="model\Item.h" />
     <ClInclude Include="model\ItemEntity.h" />

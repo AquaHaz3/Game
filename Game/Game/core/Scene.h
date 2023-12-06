@@ -13,6 +13,9 @@ class Scene
 
 public:
 
+	int camWidth;
+	int camHeight;
+
 	int width;
 	int height;
 
@@ -45,9 +48,35 @@ public:
 	virtual void AfterUpdate(__int64 tick) { };
 	virtual void OnDispose() { };
 
+	void moveCamera(float x, float y) {
+		cam_x -= x;
+		cam_y -= y;
+		if (cam_x > 0) cam_x = 0;
+		if (cam_y > 0) cam_y = 0;
+		if (abs(cam_x) + camWidth > width) cam_x = -(width - camWidth);
+		if (abs(cam_y) + camHeight > height) cam_y = -(height - camHeight);
+	}
+
+	void inline setCameraX(float x) {
+		cam_x = x;
+	}
+
+	void inline setCameraY(float y) {
+		cam_y = y;
+	}
+
+	/* 
+	Перемещает камеру так, чтобы объект был виден 
+	(А также центрирует, отн. borderW и borderH)
+	@param box - объект, за которой последует камера
+	@param borderW - достаточный оступ от горизонтального края камеры
+	@param borderР - достаточный оступ от вертикального края камеры
+	*/
+	void bindCamera(AABB* box, int borderW, int borderH);
+
 	PlayerRef player;
 
-private:
+protected:
 
 	bool isDebugGridOn;
 	Color background;
@@ -55,6 +84,11 @@ private:
 	std::vector<GameObject*> toRemove;
 
 	bool isRenderTime;
+
+	float cam_x;
+	float cam_y;
+
+	friend class SceneManager;
 
 };
 
@@ -105,6 +139,23 @@ public:
 	void StopAndExit();
 	int AddScene(Scene* scene);
 
+	int getCameraWidth() {
+		return cameraWidth;
+	}
+
+	int getCameraHeight() {
+		return cameraHeight;
+	}
+
+	void setDefaultCameraSize(int w, int h) {
+		cameraWidth = w;
+		cameraHeight = h;
+	}
+
+	static Vector2 GetMouseOnWorld();
+	static void ProjectToCamera(Vector2& pos);
+	static void ProjectToCamera(Rectangle& rec);
+
 	static Scene* current;
 
 private:
@@ -114,6 +165,10 @@ private:
 		current_index = 0;
 		current = 0;
 		isPaused = true;
+		isReadyToExit = false;
+		isReadyToChange = false;
+		cameraWidth = 1024;
+		cameraHeight = 640;
 	}
 
 	std::vector<SceneRef> scenes;
@@ -125,6 +180,9 @@ private:
 
 	bool isReadyToChange;
 	bool isReadyToExit;
+
+	int cameraWidth;
+	int cameraHeight;
 
 	void pauseAll();
 	void change();

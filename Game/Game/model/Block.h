@@ -17,12 +17,17 @@ enum class BlockID /* NAME = ID */
 	DARK_BRICK = 2,
 	DARK_STONE = 3,
 	BLOCK_TEST = 4,
+	WOOD = 5,
+	WOOD_X = 6,
+	WOOD_Y = 7,
 	__lastBlock,
 
 	GRAVEL = 100,
 	COBBLESTONE,
 	FLOOR1,
 	FLOOR2,
+	PLANKS,
+	SANDSTONE,
 
 	__lastBackground
 

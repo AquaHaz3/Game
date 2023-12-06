@@ -1,4 +1,1 @@
-﻿  SceneFile.cpp
-C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\SceneFile.cpp(138,39): warning C4267: =: преобразование из "size_t" в "uint16_t"; возможна потеря данных
-C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\SceneFile.cpp(181,13): warning C4244: инициализация: преобразование "std::streamoff" в "int", возможна потеря данных
-  Game.vcxproj -> C:\Users\aquahaze\Documents\GitHub\Game\Game\x64\Debug\Game.exe
+﻿  Game.vcxproj -> C:\Users\aquahaze\Documents\GitHub\Game\Game\x64\Debug\Game.exe

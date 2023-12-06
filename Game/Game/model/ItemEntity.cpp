@@ -7,10 +7,12 @@ ItemEntity::ItemEntity(int x, int y, int w, int h, ItemID id)
 	if (w < 32) {
 		x_offset = (32 - w) / 2;
 		aabb.min.x = x + x_offset;
+		aabb.max.x += x_offset;
 	}
 	if (h < 32) {
 		y_offset = (32 - h) / 2;
 		aabb.min.y = y + y_offset;
+		aabb.max.y += y_offset;
 	}
 	this->id = (char)id; 
 	this->tint = { 0,0,0,0 };
@@ -22,10 +24,12 @@ ItemEntity::ItemEntity(int x, int y, int w, int h, ItemID id, Color light)
 	if (w < 32) {
 		x_offset = (32 - w) / 2;
 		aabb.min.x = x + x_offset;
+		aabb.max.x += x_offset;
 	}
 	if (h < 32) {
 		y_offset = (32 - h) / 2;
 		aabb.min.y = y + y_offset;
+		aabb.max.y += y_offset;
 	}
 	this->id = (char)id;
 	this->tint = light;

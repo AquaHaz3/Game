@@ -14,21 +14,21 @@ public:
 	virtual void OnStart() override
 	{
 		SceneManager::addObject(
-			new ButtonUI(width/2 - 100, 200, 200, 64, MenuButtonColor, "Start",
+			new ButtonUI(camWidth/2 - 100, 200, 200, 64, MenuButtonColor, "Start",
 			[]() { // При нажатии 'Start'
 				SceneManager::Instance()->ChangeScene(1);
 			}
 		));
 		
 		SceneManager::addObject(
-			new ButtonUI(width / 2 - 100, 296, 200, 64, MenuButtonColor, "Scene Editor",
+			new ButtonUI(camWidth / 2 - 100, 296, 200, 64, MenuButtonColor, "Scene Editor",
 			[]() { // При нажатии 'Scene Editor'
 				SceneManager::Instance()->ChangeScene(2);
 			}
 		));
 
 		SceneManager::addObject(
-			new ButtonUI(width / 2 - 100, 392, 200, 64, MenuButtonColor, "Exit Game",
+			new ButtonUI(camWidth / 2 - 100, 392, 200, 64, MenuButtonColor, "Exit Game",
 			[]() { // При нажатии 'ExitGame'
 				SceneManager::Instance()->StopAndExit();
 			}

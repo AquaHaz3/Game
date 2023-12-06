@@ -25,7 +25,7 @@ public:
 			[this](char btn, int x, int y) { onClick(btn, x, y); },
 			[this](char btn) { onSelect(btn); }
 		);
-		ui = new EditorUI(width, &brush);
+		ui = new EditorUI(camWidth, &brush);
 	};
 
 	virtual void AfterDraw() override {
@@ -41,7 +41,24 @@ public:
 	virtual void AfterUpdate(__int64 tick) override {
 		cursor->Update(tick);
 		ui->Update(tick);
-		
+
+		if (tick % 3 != 0) return;
+
+		if (IsKeyDown(KEY_W)) {
+			SceneManager::current->moveCamera(0, -2);
+		}
+		if (IsKeyDown(KEY_S)) {
+			SceneManager::current->moveCamera(0, 2);
+		}
+		if (IsKeyDown(KEY_A)) {
+			SceneManager::current->moveCamera(-2, 0);
+		}
+		if (IsKeyDown(KEY_D)) {
+			SceneManager::current->moveCamera(2, 0);
+		}
+		if (IsKeyReleased(KEY_ENTER)) {
+			onSave();
+		}
 	}
 
 	virtual void OnDispose() override {
@@ -55,6 +72,17 @@ private:
 	{
 		if (brush.type == (int)SceneObjectType::PLAYER) {
 			context.setPlayer(x, y);
+		}
+		if (brush.type == (int)SceneObjectType::ITEM_ENTITIY) {
+			brush.x = x;
+			brush.y = y;
+			brush.w = 32;
+			brush.h = 32;
+			auto obj = SceneFile::brushGameObjectFactory(&brush);
+			SceneManager::addObject(obj);
+			auto save = new PrototypeGameObject();
+			memcpy(save, &brush, sizeof(PrototypeGameObject));
+			context.addObject(save);
 		}
 	}
 
@@ -72,7 +100,7 @@ private:
 			auto obj = SceneFile::brushGameObjectFactory(&brush);
 			SceneManager::addObject(obj);
 			auto save = new PrototypeGameObject();
-			memcpy(save, &brush, sizeof(PrototypeGameObject));
+			*save = brush;
 			context.addObject(save);
 		}
 		else {
@@ -83,6 +111,13 @@ private:
 			removeObjectOnRenderScene(&eraser);
 			context.removeObjectInBox(&eraser);
 		}
+	}
+
+	void onSave() 
+	{
+		printf("[EditorScene] Try to save...\n");
+		context.SaveScene("base", width, height);
+		printf("[EditorScene] saved...\n");
 	}
 
 	void removeObjectOnRenderScene(AABB* box) {

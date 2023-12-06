@@ -26,9 +26,9 @@ class EditorUI : public GameObject
 
 public:
 
-	EditorUI(int width, PrototypeGameObject* brush)
+	EditorUI(int camWidth, PrototypeGameObject* brush)
 	{
-		this->width = width;
+		this->camWidth = camWidth;
 		this->brush = brush;
 		left_arrow = SpriteLoader::GetSprite("ui_left.png");
 		right_arrow = SpriteLoader::GetSprite("ui_right.png");
@@ -36,32 +36,39 @@ public:
 
 	virtual void Draw() {
 
+		Vector2 editBar = { 48, 0 };
+		Vector2 toolPos = { 64, 8 };
+		SceneManager::ProjectToCamera(editBar);
+		SceneManager::ProjectToCamera(toolPos);
+
 		rlPushMatrix();
-		rlTranslatef(0, -height, 0);
-		DrawRectangle(48, 0, width-96, 48, EditorBack);
-		DrawRectangleLines(48, 0, width-96, 48, EditorLine);
+		rlTranslatef(0, -camHeight, 0);
+		DrawRectangle(editBar.x, editBar.y, camWidth-96, 48, EditorBack);
+		DrawRectangleLines(editBar.x, editBar.y, camWidth-96, 48, EditorLine);
 
 
-		left_arrow.Draw({ 64, 8 });
-		right_arrow.Draw({ 144, 8 });
+		left_arrow.Draw({ toolPos.x, toolPos.y }); toolPos.x += 80;
+		right_arrow.Draw({ toolPos.x, toolPos.y }); toolPos.x -= 40;
 		if (brush->type >= (int)SceneObjectType::BACKGROUND 
 			&& brush->type <= (int)SceneObjectType::BLOCK) {
-			DrawTexture(Block::textures[brush->ord], 104, 8, WHITE);
+			DrawTexture(Block::textures[brush->ord], toolPos.x, toolPos.y, WHITE);
 		}
 		if (brush->type == (int) SceneObjectType::ITEM_ENTITIY) {
-			DrawTexture(Item::textures[brush->ord], 104, 8, WHITE);
+			DrawTexture(Item::textures[brush->ord], toolPos.x, toolPos.y, WHITE);
 		}
 		if (brush->type == (int) SceneObjectType::PLAYER) {
-			SpriteLoader::GetSprite("player.png").DrawPro( 104, 8, 32, 32, 0, 0, 0);
+			SpriteLoader::GetSprite("player.png").DrawPro(toolPos.x, toolPos.y, 32, 32, 0, 0, 0);
 		}
 
 		BeginBlendMode(BLEND_SUBTRACT_COLORS);
-		DrawRectangleLines(104, 8, 32, 32, WHITE);
+		DrawRectangleLines(toolPos.x, toolPos.y, 32, 32, WHITE);
 		EndBlendMode();
-		DrawText(aboutId.c_str(), 180, 8, 10, WHITE);
-		left_arrow.Draw({ 256, 8 });
-		right_arrow.Draw({ 448, 8 });
-		DrawText(aboutType.c_str(), 304, 14, 20, WHITE);
+		toolPos.x += 76;
+		DrawText(aboutId.c_str(), toolPos.x, toolPos.y, 10, WHITE);
+		toolPos.x += 76;
+		left_arrow.Draw({ toolPos.x, toolPos.y }); toolPos.x += 192;
+		right_arrow.Draw({ toolPos.x, toolPos.y }); toolPos.x -= 144;
+		DrawText(aboutType.c_str(), toolPos.x, toolPos.y + 6, 20, WHITE);
 
 		rlPopMatrix();
 	}
@@ -73,7 +80,7 @@ public:
 			int alpha = std::min((int) (255 - (200 - mouse.y * 2)), 255);
 			EditorBack.a = alpha;
 			EditorLine.a = alpha;
-			height = std::max((int)(64 - mouse.y), 0);
+			camHeight = std::max((int)(64 - mouse.y), 0);
 		}
 		if (tick % 3 == 1) {
 			aboutId = "Id = " + std::to_string(brush->ord);
@@ -105,8 +112,8 @@ public:
 
 private:
 
-	int width;
-	int height;
+	int camWidth;
+	int camHeight;
 
 	Sprite left_arrow;
 	Sprite right_arrow;

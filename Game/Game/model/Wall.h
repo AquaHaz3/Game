@@ -2,7 +2,7 @@
 
 #include "Block.h"
 
-
+#include "../events/ArrowHitEvent.hpp"
 
 class Wall : public Box2D
 {

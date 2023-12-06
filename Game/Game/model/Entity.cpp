@@ -23,5 +23,12 @@ void Entity::Draw()
 void Entity::Update(__int64 tick)
 {}
 
+#include "../events/ArrowHitEvent.hpp"
+
 void Entity::OnEvent(Event* event)
-{}
+{
+	if (event->uuid == ArrowHitEvent::getClassUUID()) {
+		auto arrowHit = (ArrowHitEvent*)event;
+		arrowHit->phase = true;
+	}
+}

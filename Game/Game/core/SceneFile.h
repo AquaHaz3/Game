@@ -26,21 +26,28 @@ struct PrototypeGameObject {
 	uint16_t y;
 	uint16_t w;
 	uint16_t h;
-	uint32_t ord;
-	uint8_t reserved_r;
-	uint8_t reserved_g;
-	uint8_t reserved_b;
-	uint8_t reserved_a;
+	uint16_t ord;
+	Color color;
+
+	PrototypeGameObject() {
+		x = 0; y = 0; w = 0; h = 0;
+		ord = 0; id = 0; type = 0;
+		color = { 0,0,0,0 };
+	}
 
 };
+
+/*
+    Записывает или считывает сцену из файла (*.scene)
+*/
 
 class SceneFile
 {
 
 public:
 
-	Scene* BuildScene();
-	void SaveScene(std::string name, int width, int height);
+	void InitScene(Scene* scene);
+	void SaveScene(std::string name, int camWidth, int camHeight);
 
 	void setPlayer(int x, int y) {
 		isHavePlayer = (x >= 0);

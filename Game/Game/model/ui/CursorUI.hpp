@@ -56,7 +56,7 @@ public:
 
 	virtual void Update(__int64 tick) 
 	{
-		Vector2 mouse = GetMousePosition();
+		Vector2 mouse = SceneManager::GetMouseOnWorld();
 		if (tick % 2 == 0) {
 			posData = "(" + std::to_string((int)pos.x) + ", " + std::to_string((int)pos.y) + ")";
 			selectionData = "";
@@ -71,7 +71,7 @@ public:
 
 			if (isLeft ^ isRight) {
 				
-				if (selectionDelay >= 1 && selectionDelay < 3) {
+				if (selectionDelay == 1) {
 					startSelectPos.x = pos.x;
 					startSelectPos.y = pos.y;
 					if(isLeft) onClick(MOUSE_BUTTON_LEFT, pos.x, pos.y);
