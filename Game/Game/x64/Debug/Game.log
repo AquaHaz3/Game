@@ -1,1 +1,151 @@
-﻿  Game.vcxproj -> C:\Users\aquahaze\Documents\GitHub\Game\Game\x64\Debug\Game.exe
+﻿  ByteStream.cpp
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\ByteStream.cpp(82,23): warning C4267: аргумент: преобразование из "size_t" в "uint16_t"; возможна потеря данных
+  ArrowHitEvent.cpp
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\events\ArrowHitEvent.hpp(17,17): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+  Arrow.cpp
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\events\ArrowHitEvent.hpp(17,17): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.h(56,46): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.h(57,48): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\entity\Arrow.cpp(12,17): warning C4244: =: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\entity\Arrow.cpp(14,28): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\entity\Arrow.cpp(15,28): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\entity\Arrow.cpp(24,46): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\entity\Arrow.cpp(24,33): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\entity\Arrow.cpp(26,42): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\entity\Arrow.cpp(26,30): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+  Mob.cpp
+  Background.cpp
+  Debug.cpp
+  EventBus.cpp
+  Item.cpp
+  ItemEntity.cpp
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ItemEntity.cpp(9,18): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ItemEntity.cpp(14,18): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ItemEntity.cpp(26,18): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ItemEntity.cpp(31,18): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ItemEntity.cpp(41,89): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ItemEntity.cpp(41,66): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ItemEntity.cpp(43,74): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ItemEntity.cpp(43,51): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ItemEntity.cpp(45,42): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ItemEntity.cpp(45,30): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+  Block.cpp
+  AABB.cpp
+  Box2D.cpp
+  Entity.cpp
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\events\ArrowHitEvent.hpp(17,17): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+  GameLauncher.cpp
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.h(56,46): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.h(57,48): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\events\ArrowHitEvent.hpp(17,17): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\ButtonUI.hpp(23,1): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\ButtonUI.hpp(28,37): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\ButtonUI.hpp(28,25): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\CursorUI.hpp(49,48): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\CursorUI.hpp(49,36): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\CursorUI.hpp(66,32): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\CursorUI.hpp(67,32): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\CursorUI.hpp(77,54): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\CursorUI.hpp(77,47): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\CursorUI.hpp(78,49): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\CursorUI.hpp(78,42): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\EditorUI.hpp(45,19): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\EditorUI.hpp(46,35): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\EditorUI.hpp(46,24): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\EditorUI.hpp(47,40): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\EditorUI.hpp(47,29): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\EditorUI.hpp(54,63): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\EditorUI.hpp(54,52): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\EditorUI.hpp(57,62): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\EditorUI.hpp(57,51): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\EditorUI.hpp(60,68): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\EditorUI.hpp(60,57): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\EditorUI.hpp(64,40): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\EditorUI.hpp(64,29): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\EditorUI.hpp(67,47): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\EditorUI.hpp(67,36): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\EditorUI.hpp(71,52): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\ui\EditorUI.hpp(71,38): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\scenes\EditorScene.hpp(34,72): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\scenes\EditorScene.hpp(34,59): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\scenes\EditorScene.hpp(94,27): warning C4244: =: преобразование "float" в "uint16_t", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\scenes\EditorScene.hpp(95,27): warning C4244: =: преобразование "float" в "uint16_t", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\scenes\EditorScene.hpp(96,27): warning C4244: =: преобразование "float" в "uint16_t", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\scenes\EditorScene.hpp(97,27): warning C4244: =: преобразование "float" в "uint16_t", возможна потеря данных
+  GameObject.cpp
+  Main.cpp
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.h(56,46): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.h(57,48): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+  Scene.cpp
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.h(56,46): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.h(57,48): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.cpp(152,9): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.cpp(153,10): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.cpp(154,30): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.cpp(157,9): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.cpp(158,10): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.cpp(159,31): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.cpp(268,26): warning C4267: return: преобразование из "size_t" в "int"; возможна потеря данных
+  Sprite.cpp
+  Player.cpp
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.h(56,46): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.h(57,48): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(43,41): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(46,41): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(73,62): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(74,62): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(82,42): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(82,30): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(84,46): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(84,34): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(171,37): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(171,26): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(172,39): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(172,26): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(173,34): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(173,23): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(174,37): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(174,23): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(175,34): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(175,23): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(179,48): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(179,28): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(180,48): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(180,28): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(183,48): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(183,28): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(205,11): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(214,14): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(220,55): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(220,39): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(221,55): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(221,39): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(224,66): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(224,50): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(225,66): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(225,50): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(269,44): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(269,35): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Player.cpp(269,22): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+  Wall.cpp
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\events\ArrowHitEvent.hpp(17,17): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Wall.cpp(19,22): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Wall.cpp(20,25): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Wall.cpp(23,22): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Wall.cpp(24,25): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Wall.cpp(41,78): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\Wall.cpp(41,48): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+  Создание кода...
+  Компиляция...
+  TextParticle.cpp
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\misc\TextParticle.cpp(20,15): warning C4244: =: преобразование "float" в "int", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\model\misc\TextParticle.cpp(21,15): warning C4244: =: преобразование "float" в "int", возможна потеря данных
+  SceneFile.cpp
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.h(56,46): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.h(57,48): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\events\ArrowHitEvent.hpp(17,17): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\SceneFile.cpp(131,37): warning C4267: аргумент: преобразование из "size_t" в "uint16_t"; возможна потеря данных
+  SoundLoader.cpp
+  Создание кода...
+C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\SceneFile.cpp(62): warning C4715: defaultGameObjectFactory: значение возвращается не при всех путях выполнения
+  Game.vcxproj -> C:\Users\aquahaze\Documents\GitHub\Game\Game\x64\Debug\Game.exe
