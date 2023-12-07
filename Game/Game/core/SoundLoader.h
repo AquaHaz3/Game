@@ -7,5 +7,14 @@
 class SoundLoader
 {
 
+public:
+
+	static void InitSounds();
+	static Sound getSound(std::string name);
+	
+private:
+
+	static std::map<std::string, Sound> sounds;
+
 };
 
