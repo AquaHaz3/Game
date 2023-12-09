@@ -15,7 +15,7 @@ static Color NO_TINT = { 255,255,255,255 };
 
 #include <raymath.h>
 
-Player::Player(int x, int y) : Entity(x, y, 20, 30, EntityType::Player)
+Player::Player(int x, int y) : Entity(x, y, 20, 30, EntityID::Player)
 {
 
 	health = 7;
@@ -76,6 +76,12 @@ void Player::Draw()
 	}
 
 	texture.DrawTile((int)aabb.min.x - x_offset, (int)aabb.min.y - y_offset, (int)direction + walk_tick * 4);
+
+	if ((WType)weapon.type == WType::SWORDS) {
+		Rectangle dest = { aabb.min.x+8, aabb.min.y+8, 20, 20 };
+		DrawTexturePro(Item::textures[weaponID], { 0,0,32,32 }, dest, { 0,0 }, (float)sword_progress, WHITE);
+	}
+
 	if (debug_util::isDebugBoxes()) {
 		Rectangle render = { aabb.min.x - 48 - x_offset, aabb.min.y - 48 - y_offset, 128, 128 };
 		DrawRectangleLinesEx(render, 1, PURPLE);
@@ -99,13 +105,20 @@ void Player::Update(__int64 tick)
 	walk_tick = (tick / 100) % 2 + 1;
 	Vector2 pre = aabb.min;
 	bool isMoved = Movement::EntityWASDControl(this);
+
+	if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
+		if (sword_progress == 0) sword_progress = 30;
+	}
+	
+	if (sword_progress > 0) sword_progress--;
+
 	if (isMoved) {
 		bool isCollided = false;
 		for (auto solid : SceneManager::current->boxes) { // Проходим по всем твёрдым предметам
 			if (UtilAABB::isOverlap(&aabb, &solid->aabb)) {
 				if (solid->flags & ENTITY_OBJECT) {
 					Entity* e = (Entity*) solid;
-					if (e->type == EntityType::Item) { // Если столкнулись с предметом
+					if (e->type == EntityID::Item) { // Если столкнулись с предметом
 						auto event = new CollectItemEvent((ItemEntity*)e);
 						OnEvent(event);
 						delete event;
@@ -240,6 +253,7 @@ bool Player::putToInventory(uint8_t id) // помещает предмет в и
 		inventory[0].id = id;
 		inventory[0].count = 1;
 		weapon = Item::weapons[id]; // Устанавливаем текущее оружие
+		weaponID = id;
 		return true;
 	}
 	if (invFreeIndex != INVENTORY_SIZE) { // Кладём в свободную ячейку, если ещё есть место

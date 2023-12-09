@@ -3,7 +3,7 @@
 #include "../core/Box2D.h"
 #include "../core/Sprite.h"
 
-enum class EntityType {
+enum class EntityID {
 
 	Unknown = 0,
 	Player = 1,
@@ -25,13 +25,13 @@ public:
 
 	int health;
 	float speed;
-	EntityType type;
+	EntityID type;
 
 
 public:
 
 	Entity(int x, int y, int w, int h);
-	Entity(int x, int y, int w, int h, EntityType type);
+	Entity(int x, int y, int w, int h, EntityID type);
 
 	virtual void Draw() override;
 	virtual void Update(__int64 tick) override;

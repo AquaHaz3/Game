@@ -41,25 +41,54 @@ GameLauncher::GameLauncher()
 
 void GameLauncher::OnStart()
 {
-
     Block::InitBlocks();
-    Item::InitItems();
-    Arrow::InitArrows();
+    Item::InitItems(); 
+    Arrow::InitArrows(); 
 
-    SpriteLoader::LoadInGameSprites();
+    SpriteLoader::LoadInGameSprites(); 
 
     SceneManager::Instance()->Start();
+}
+
+void GameLauncher::load()
+{
+    loadingStage = 0;
+    std::string text = "Load: Blocks ...";
+    while (loadingStage < 5)
+    {
+        BeginDrawing();
+        ClearBackground(DARKGRAY);
+        DrawRectangle(256, 300, 512, 40, GRAY);
+        DrawRectangle(256, 300, 102 * loadingStage, 40, BLUE);
+        DrawText(text.c_str(), 470 - (text.size() * 2), 355, 20, WHITE);
+        loadingStage++;
+        EndDrawing();
+        switch (loadingStage)
+        {
+        case 0: Block::InitBlocks(); text = "Load: Items ..."; break;
+        case 1: Item::InitItems(); text = "Load: Arrows ..."; break;
+        case 2: Arrow::InitArrows(); text = "Load: Some sprites ..."; break;
+        case 3: SpriteLoader::LoadInGameSprites(); text = "Starting scene ..."; break;
+        case 4: SceneManager::Instance()->Start(); text = "Game is ready!"; break;
+        default:
+            break;
+        }
+    }
 }
 
 void GameLauncher::Launch()
 {
 
     InitWindow(SceneManager::current->camWidth, SceneManager::current->camHeight, "The Game");
+    BeginDrawing();
+    ClearBackground(DARKGRAY);
+    EndDrawing();
 
     SetTargetFPS(144);
     OnStart();
-    
+
     std::thread th1(__update_thread, this);
+    // load();
     draw();
 
     CloseWindow();

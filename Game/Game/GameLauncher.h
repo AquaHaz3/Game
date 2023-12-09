@@ -14,6 +14,8 @@ public:
 	void Launch();
 	void OnStart();
 
+	void load();
+
 	void draw();
 	void update();
 
@@ -21,6 +23,7 @@ public:
 
 private:
 	
+	int loadingStage;
 
 };
 

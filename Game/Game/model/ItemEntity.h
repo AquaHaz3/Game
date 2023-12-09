@@ -12,7 +12,7 @@ public:
 
 public:
 
-	ItemEntity() : Entity(0, 0, 0, 0, EntityType::Item) { id = 0; };
+	ItemEntity() : Entity(0, 0, 0, 0, EntityID::Item) { id = 0; };
 	ItemEntity(int x, int y, int w, int h, ItemID id);
 	ItemEntity(int x, int y, int w, int h, ItemID id, Color light);
 

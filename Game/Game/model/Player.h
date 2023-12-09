@@ -10,7 +10,7 @@ class Player : public Entity
 
 public:
 
-	Player() : Entity(0, 0, 32, 32, EntityType::Player) {}
+	Player() : Entity(0, 0, 32, 32, EntityID::Player) {}
 
 	Player(int x, int y);
 
@@ -41,11 +41,13 @@ private:
 	int xp;
 	int remindAboutXp; // Напоминание о xp;
 	char bow_progress; // натянутость лука
+	char sword_progress;
 
 	int inv_x; // 'x' позиция инвентаря на экране
 	//int xpbar_x; // 'x' позиция 'xp' бара на экране
 
 	Weapon weapon; // Наше текущее оружие в руке (его хар-ки)
+	int weaponID;
 
 };
 

@@ -17,6 +17,7 @@ void Item::InitItems()
 
 	//                             Type         Rare             d  x  r
 	addWeapon(ItemID::BOW, _weapon(WType::BOWS, WLevel::DEFAULT, 5, 5, 4), "weapon/bow.png");
+	addWeapon(ItemID::NAME, _weapon(WType::SWORDS, WLevel::DEFAULT, 5, 5, 4), "weapon/sword.png");
 }
 
 bool Item::isWeaponItem(uint8_t id) {

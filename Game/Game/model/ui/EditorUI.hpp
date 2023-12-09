@@ -49,10 +49,12 @@ public:
 
 		left_arrow.Draw({ toolPos.x, toolPos.y }); toolPos.x += 80;
 		right_arrow.Draw({ toolPos.x, toolPos.y }); toolPos.x -= 40;
+
 		if (brush->type >= (int)SceneObjectType::BACKGROUND 
 			&& brush->type <= (int)SceneObjectType::BLOCK) {
 			DrawTexture(Block::textures[brush->ord], toolPos.x, toolPos.y, WHITE);
 		}
+
 		if (brush->type == (int) SceneObjectType::ITEM_ENTITIY) {
 			DrawTexture(Item::textures[brush->ord], toolPos.x, toolPos.y, WHITE);
 		}

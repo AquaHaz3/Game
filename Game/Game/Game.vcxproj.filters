@@ -72,7 +72,7 @@
     <ClCompile Include="model\Background.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="model\Mob.cpp">
+    <ClCompile Include="model\entity\Mob.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="model\misc\TextParticle.cpp">
@@ -155,7 +155,7 @@
     <ClInclude Include="model\Background.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="model\Mob.h">
+    <ClInclude Include="model\entity\Mob.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="core\Particle.hpp">

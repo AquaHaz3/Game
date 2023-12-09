@@ -6,10 +6,10 @@ Entity::Entity(int x, int y, int w, int h)
 	flags |= ENTITY_OBJECT;
 	health = 20;
 	speed = 0.5;
-	this->type = EntityType::Unknown;
+	this->type = EntityID::Unknown;
 }
 
-Entity::Entity(int x, int y, int w, int h, EntityType type) : Box2D(x, y, w, h)
+Entity::Entity(int x, int y, int w, int h, EntityID type) : Box2D(x, y, w, h)
 {
 	flags |= ENTITY_OBJECT;
 	health = 20;

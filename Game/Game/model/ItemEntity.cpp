@@ -2,7 +2,7 @@
 #include "../core/Debug.h"
 
 ItemEntity::ItemEntity(int x, int y, int w, int h, ItemID id)
-	: Entity(x, y, w, h, EntityType::Item)
+	: Entity(x, y, w, h, EntityID::Item)
 {
 	if (w < 32) {
 		x_offset = (32 - w) / 2;
@@ -19,7 +19,7 @@ ItemEntity::ItemEntity(int x, int y, int w, int h, ItemID id)
 }
 
 ItemEntity::ItemEntity(int x, int y, int w, int h, ItemID id, Color light)
-	: Entity(x, y, w, h, EntityType::Item)
+	: Entity(x, y, w, h, EntityID::Item)
 {
 	if (w < 32) {
 		x_offset = (32 - w) / 2;
