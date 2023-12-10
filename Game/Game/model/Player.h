@@ -7,7 +7,7 @@
 
 class Player : public Entity
 {
-
+	
 public:
 
 	Player() : Entity(0, 0, 32, 32, EntityID::Player) {}
@@ -48,7 +48,6 @@ private:
 
 	Weapon weapon; // Наше текущее оружие в руке (его хар-ки)
 	int weaponID;
-
 };
 
 typedef std::shared_ptr<Player> PlayerRef;

@@ -129,6 +129,7 @@ void Player::Update(__int64 tick)
 
 	if (isMoved) 
 	{
+		
 		bool isCollided = false;
 		for (auto solid : SceneManager::current->boxes) { // Проходим по всем твёрдым предметам
 			if (UtilAABB::isOverlap(&aabb, &solid->aabb)) {

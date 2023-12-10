@@ -4,7 +4,6 @@
 #include "Player.h"
 
 namespace Movement {
-
 	/*
 	@return true if entity is moving
 	*/
