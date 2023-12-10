@@ -170,6 +170,7 @@
     <ClInclude Include="model\ui\ButtonUI.hpp" />
     <ClInclude Include="model\ui\CursorUI.hpp" />
     <ClInclude Include="model\ui\EditorUI.hpp" />
+    <ClInclude Include="model\ui\SoundUI.h" />
     <ClInclude Include="scenes\EditorScene.hpp" />
     <ClInclude Include="scenes\GameScene.hpp" />
     <ClInclude Include="scenes\MenuScene.hpp" />

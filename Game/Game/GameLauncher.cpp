@@ -82,6 +82,7 @@ void GameLauncher::Launch()
 {
 
     InitWindow(SceneManager::current->camWidth, SceneManager::current->camHeight, "The Game");
+    InitAudioDevice();
     BeginDrawing();
     ClearBackground(DARKGRAY);
     EndDrawing();
@@ -93,6 +94,7 @@ void GameLauncher::Launch()
     // load();
     draw();
 
+    CloseAudioDevice();
     CloseWindow();
     isGameAlive = false;
     th1.join();
