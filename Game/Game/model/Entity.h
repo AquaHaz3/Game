@@ -7,8 +7,11 @@ enum class EntityID {
 
 	Unknown = 0,
 	Player = 1,
-	Item = 2
+	Item = 2,
+	Ghost = 3,
+	Bat = 4,
 
+	__lastEntity
 };
 
 enum class Direction {
@@ -16,6 +19,20 @@ enum class Direction {
 	DOWN = 1,
 	LEFT = 2,
 	UP = 3,
+};
+
+struct EntityModel {
+
+	EntityID id;
+	short health;
+
+	EntityModel() {}
+	EntityModel(EntityID id, short hp)
+	{
+		this->id = id;
+		health = hp;
+	}
+
 };
 
 class Entity : public Box2D
@@ -39,7 +56,18 @@ public:
 
 protected:
 
+	friend class EditorUI;
+
 	Sprite texture;
+
+	static std::vector<Texture2D> textures;
+	static std::vector<EntityModel> models;
+
+	static void addEntity(EntityID id, std::string tex_path, short health);
+
+public:
+
+	static void InitEntities();
 
 };
 

@@ -44,6 +44,7 @@ void GameLauncher::OnStart()
     Block::InitBlocks();
     Item::InitItems(); 
     Arrow::InitArrows(); 
+    Entity::InitEntities();
 
     SpriteLoader::LoadInGameSprites(); 
 
@@ -54,7 +55,7 @@ void GameLauncher::load()
 {
     loadingStage = 0;
     std::string text = "Load: Blocks ...";
-    while (loadingStage < 5)
+    while (loadingStage < 6)
     {
         BeginDrawing();
         ClearBackground(DARKGRAY);
@@ -67,9 +68,10 @@ void GameLauncher::load()
         {
         case 0: Block::InitBlocks(); text = "Load: Items ..."; break;
         case 1: Item::InitItems(); text = "Load: Arrows ..."; break;
-        case 2: Arrow::InitArrows(); text = "Load: Some sprites ..."; break;
-        case 3: SpriteLoader::LoadInGameSprites(); text = "Starting scene ..."; break;
-        case 4: SceneManager::Instance()->Start(); text = "Game is ready!"; break;
+        case 2: Entity::InitEntities();; text = "Load: Entities ..."; break;
+        case 3: Arrow::InitArrows(); text = "Load: Some sprites ..."; break;
+        case 4: SpriteLoader::LoadInGameSprites(); text = "Starting scene ..."; break;
+        case 5: SceneManager::Instance()->Start(); text = "Game is ready!"; break;
         default:
             break;
         }

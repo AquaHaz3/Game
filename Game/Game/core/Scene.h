@@ -75,6 +75,8 @@ public:
 	void bindCamera(AABB* box, int borderW, int borderH);
 
 	PlayerRef player;
+	std::vector<Entity*>& getPlayerContainer();
+
 
 protected:
 
@@ -82,11 +84,14 @@ protected:
 	Color background;
 
 	std::vector<GameObject*> toRemove;
+	std::vector<Entity*> playerContainer;
 
 	bool isRenderTime;
 
 	float cam_x;
 	float cam_y;
+
+	bool isStatic;
 
 	friend class SceneManager;
 
@@ -155,6 +160,10 @@ public:
 	static Vector2 GetMouseOnWorld();
 	static void ProjectToCamera(Vector2& pos);
 	static void ProjectToCamera(Rectangle& rec);
+	static bool isSceneStatic();
+
+	/* SIDE: BOTH */
+	static std::vector<Entity*>& GetPlayers();
 
 	static Scene* current;
 

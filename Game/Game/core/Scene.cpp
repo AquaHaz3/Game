@@ -10,6 +10,7 @@ Scene::Scene()
 	boxes = std::list<Box2D*>();
 	toRemove = std::vector<GameObject*>();
 	particles = std::list<Particle*>();
+	playerContainer = std::vector<Entity*>();
 	player = 0;
 	isInit = false;
 }
@@ -20,18 +21,23 @@ Scene::Scene(int width, int height)
 	boxes = std::list<Box2D*>();
 	toRemove = std::vector<GameObject*>();
 	particles = std::list<Particle*>();
+	playerContainer = std::vector<Entity*>();
 	this->camWidth = SceneManager::Instance()->getCameraWidth();
 	this->camHeight = SceneManager::Instance()->getCameraHeight();
 	this->width = width;
 	this->height = height;
+	player = 0;
+	isStatic = false;
 	background = DARKGRAY;
 	isInit = false;
 }
 
 void Scene::addPlayerToScene(Player* player)
 {
+	if (this->player != nullptr) return;
 	this->player = std::shared_ptr<Player>(player);
 	objects.push_back(player);
+	playerContainer.push_back(player);
 }
 
 void Scene::addObjectToScene(GameObject* obj)
@@ -160,6 +166,11 @@ void Scene::bindCamera(AABB* box, int borderW, int borderH)
 	if (ddy < 0 && ddy >= cam_y) cam_y = cam_y - ddy;
 }
 
+std::vector<Entity*>& Scene::getPlayerContainer()
+{
+	return playerContainer;
+}
+
 void Scene::setDebugGrid(bool isActive)
 {
 	isDebugGridOn = isActive;
@@ -284,6 +295,16 @@ void SceneManager::ProjectToCamera(Rectangle& rec)
 {
 	rec.x -= SceneManager::current->cam_x;
 	rec.y -= SceneManager::current->cam_y;
+}
+
+bool SceneManager::isSceneStatic()
+{
+	return current->isStatic;
+}
+
+std::vector<Entity*>& SceneManager::GetPlayers()
+{
+	return current->getPlayerContainer();
 }
 
 void SceneManager::pauseAll()

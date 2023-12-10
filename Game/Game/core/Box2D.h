@@ -12,11 +12,11 @@ public:
 		w = 0; h = 0;
 	};
 
-	Box2D(int x, int y, int camWidth, int camHeight) 
+	Box2D(int x, int y, int width, int height) 
 	{
-		aabb = AABB((float)x, (float)y, (float) x + camWidth, (float) y + camHeight);
-		w = camWidth;
-		h = camHeight;
+		aabb = AABB((float)x, (float)y, (float) x + width, (float) y + height);
+		w = width;
+		h = height;
 		flags |= SOLID_OBJECT;
 
 	}

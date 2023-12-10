@@ -33,6 +33,9 @@ namespace UtilAABB {
 		}
 		return false;
 	}
+	
+	bool isIntersects(Vector2 a1, Vector2 a2, Vector2 b1, Vector2 b2);
+	bool isIntersectsBox(AABB* box, Vector2 b1, Vector2 b2);
 
 }
 

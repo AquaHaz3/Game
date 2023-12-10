@@ -9,7 +9,7 @@ class Arrow : public Entity
 public:
 
 	Arrow() : Entity(0,0,0,0) {};
-	Arrow(int x, int y, float speed, float angle, float damage, int id);
+	Arrow(int x, int y, float speed, float angle, float damage, int id, Entity* owner);
 
 	virtual void Draw() override;
 	virtual void Update(__int64 tick) override;
@@ -23,6 +23,8 @@ public:
 
 	static void InitArrows();
 	static std::vector<Sprite> arrow_types;
+
+	Entity* owner;
 
 private:
 

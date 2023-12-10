@@ -12,15 +12,19 @@ public:
 
 	EditorScene(int w, int h) : Scene(w, h)
 	{
+		brush = PrototypeGameObject();
 		brush.type = (int)SceneObjectType::WALL;
 		brush.id = 0;
 		brush.ord = (int) BlockID::DARK_BRICK;
 		context = SceneFile();
+		isStatic = true;
 		setDebugGrid(true);
 	};
 
 	virtual void OnStart() override
 	{
+		SceneFile last = SceneFile("base.scene");
+		last.LoadSceneForEditor(this, &context);
 		cursor = new CursorUI(true, RED,
 			[this](char btn, int x, int y) { onClick(btn, x, y); },
 			[this](char btn) { onSelect(btn); }
@@ -70,10 +74,25 @@ private:
 
 	void onClick(char btn, int x, int y) 
 	{
+
+		if (btn == MOUSE_BUTTON_RIGHT) {
+			AABB eraser = {
+			(float)x, (float)y,
+			(float)(x + 32), (float)(y + 32)
+			};
+			removeObjectOnRenderScene(&eraser);
+			context.removeObjectInBox(&eraser);
+			return;
+		}
+
 		if (brush.type == (int)SceneObjectType::PLAYER) {
 			context.setPlayer(x, y);
 		}
-		if (brush.type == (int)SceneObjectType::ITEM_ENTITIY) {
+
+		if (
+			brush.type == (int)SceneObjectType::ITEM_ENTITIY ||
+			brush.type == (int)SceneObjectType::MOB
+		) {
 			brush.x = x;
 			brush.y = y;
 			brush.w = 32;
@@ -90,6 +109,7 @@ private:
 
 		if (brush.type == (int)SceneObjectType::PLAYER) return;
 		if (brush.type == (int)SceneObjectType::ITEM_ENTITIY) return;
+		if (brush.type == (int)SceneObjectType::MOB) return;
 
 		brush.x = cursor->select.x; 
 		brush.y = cursor->select.y; 

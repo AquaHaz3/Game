@@ -14,7 +14,10 @@ enum class ItemID
 	POTION_XP = 2,
 	CROWN,
 	BOW,
-	NAME,
+	SWORD,
+	FAST_BOW,
+	BOW2,
+	RED_BOW,
 
 	__lastItem
 };

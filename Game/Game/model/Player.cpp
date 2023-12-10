@@ -109,10 +109,26 @@ void Player::Update(__int64 tick)
 	if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
 		if (sword_progress == 0) sword_progress = 30;
 	}
+
+	int key = GetCharPressed();
+
+	if ((key >= '2') && (key <= '9'))
+	{
+		char index = key - '1';
+		if (Item::isWeaponItem(inventory[index].id)) {
+			Item swap = inventory[index];
+			inventory[index] = inventory[0];
+			inventory[0] = swap;
+			weaponID = swap.id;
+			weapon = Item::weapons[swap.id];
+		}
+	}
+	
 	
 	if (sword_progress > 0) sword_progress--;
 
-	if (isMoved) {
+	if (isMoved) 
+	{
 		bool isCollided = false;
 		for (auto solid : SceneManager::current->boxes) { // Проходим по всем твёрдым предметам
 			if (UtilAABB::isOverlap(&aabb, &solid->aabb)) {
@@ -124,6 +140,7 @@ void Player::Update(__int64 tick)
 						delete event;
 						SceneManager::removeObject(e);
 					}
+					continue;
 				}
 				isCollided = true;
 				break;
@@ -194,7 +211,7 @@ void Player::drawUI()
 		}
 		else {
 			DrawRectangle(barsPos.x + i * 12, barsPos.y - 28, 10, 16, GRAY);  // Серые полосы здоровья (пустые)
-		}
+		} 
 	}
 
 	if ((remindAboutXp / 25) % 2 != 0) {
@@ -271,7 +288,7 @@ void Player::checkForAttack()
 	// Если наше оружие лук, то натягиваем его
 	if(IsMouseButtonDown(MOUSE_LEFT_BUTTON) && (WType) weapon.type == WType::BOWS)
 	{
-		bow_progress = std::min(bow_progress + 1, 100);
+		bow_progress = std::min(bow_progress + weapon.reserved, 100);
 	}
 	else {
 		if (bow_progress > 20) { // Если натягивал лук 
@@ -279,8 +296,10 @@ void Player::checkForAttack()
 				Vector2 mouse = SceneManager::GetMouseOnWorld();
 				Vector2 center = { aabb.min.x + w / 2,aabb.min.y + h / 2 };
 				float angle = Vector2Angle({ center.x + 1, center.y }, mouse);
+				float damage = weapon.damage * (bow_progress / 100.0f);
 				SceneManager::addObject(
-					new Arrow(center.x, center.y + 8, 0.5 + (1 * (bow_progress / 100.0f)), angle, 1, 0)
+					new Arrow(center.x, center.y + 8, 0.5 + (1 * (bow_progress / 100.0f)), 
+						angle, damage, 0, this)
 				);
 				xp -= weapon.xp_cost; // Снимаем с игрока xp
 			}

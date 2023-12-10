@@ -58,6 +58,11 @@ public:
 		if (brush->type == (int) SceneObjectType::ITEM_ENTITIY) {
 			DrawTexture(Item::textures[brush->ord], toolPos.x, toolPos.y, WHITE);
 		}
+
+		if (brush->type == (int)SceneObjectType::MOB) {
+			DrawTexturePro(Entity::textures[brush->ord], {0,0,32,32}, { toolPos.x, toolPos.y, 32, 32 }, {0,0}, 0, WHITE);
+		}
+
 		if (brush->type == (int) SceneObjectType::PLAYER) {
 			SpriteLoader::GetSprite("player.png").DrawPro(toolPos.x, toolPos.y, 32, 32, 0, 0, 0);
 		}
@@ -100,7 +105,7 @@ public:
 		}
 		if (tick % 4 == 0) {
 			int temp = brush->type;
-			if (IsKeyPressed(KEY_RIGHT) && brush->type < (int) SceneObjectType::PLAYER) brush->type++;
+			if (IsKeyPressed(KEY_RIGHT) && brush->type < (int) SceneObjectType::MOB) brush->type++;
 			if (IsKeyPressed(KEY_LEFT) && brush->type > (int) SceneObjectType::BACKGROUND) brush->type--;
 			if (brush->type != temp) {
 				brush->ord = SceneFile::getObjectDefaultID((SceneObjectType)brush->type);

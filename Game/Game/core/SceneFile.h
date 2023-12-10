@@ -14,7 +14,8 @@ enum class SceneObjectType {
 	WALL = 1,
 	BLOCK = 2,
 	ITEM_ENTITIY = 3,
-	PLAYER = 4
+	PLAYER = 4,
+	MOB = 5
 
 };
 
@@ -35,6 +36,17 @@ struct PrototypeGameObject {
 		color = { 0,0,0,0 };
 	}
 
+	PrototypeGameObject(int x, int y, int w, int h, int ord, int type, Color color) {
+		this->x = x;
+		this->y = y;
+		this->w = w;
+		this->h = h;
+		this->ord = ord;
+		this->type = type;
+		this->color = color;
+		this->id = 0;
+	}
+
 };
 
 /*
@@ -49,6 +61,8 @@ public:
 	void InitScene(Scene* scene);
 	void SaveScene(std::string name, int camWidth, int camHeight);
 
+	void LoadSceneForEditor(Scene* sceneEditor, SceneFile* context);
+
 	void setPlayer(int x, int y) {
 		isHavePlayer = (x >= 0);
 		player_x = x;
@@ -60,15 +74,25 @@ public:
 	}
 	
 	void addObject(PrototypeGameObject* object) {
-		objects.emplace(max_id, object);
+		object->id = max_id;
+		if (object->type == (int)SceneObjectType::BACKGROUND) {
+			backgroundObjects.emplace(max_id, object);
+		}
+		else {
+			objects.emplace(max_id, object);
+		}
 		max_id++;
 	}
 
 	void removeObject(int index) {
-		auto obj = objects[index];
-		if (obj != 0) {
-			delete obj;
+		if (backgroundObjects.count(index) > 0) {
+			auto obj = backgroundObjects[index];
+			if (obj != 0) delete obj;
+			backgroundObjects.erase(index);
+			return;
 		}
+		auto obj = objects[index];
+		if (obj != 0) delete obj;
 		objects.erase(index);
 	}
 
@@ -81,6 +105,7 @@ public:
 	SceneFile() {
 		this->path = "";
 		objects = std::map<uint32_t, PrototypeGameObject*>();
+		backgroundObjects = std::map<uint32_t, PrototypeGameObject*>();
 		max_id = 0;
 		player_x = -1;
 		player_y = -1;
@@ -108,6 +133,7 @@ private:
 private:
 
 	std::map<uint32_t, PrototypeGameObject*> objects;
+	std::map<uint32_t, PrototypeGameObject*> backgroundObjects;
 	int player_x = -1;
 	int player_y = -1;
 

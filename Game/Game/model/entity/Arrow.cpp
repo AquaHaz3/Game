@@ -4,7 +4,7 @@
 #include "../../events/ArrowHitEvent.hpp"
 #include "../../core/Scene.h"
 
-Arrow::Arrow(int x, int y, float speed, float angle, float damage, int id)
+Arrow::Arrow(int x, int y, float speed, float angle, float damage, int id, Entity* owner)
 	: Entity(x, y, 4, 4)
 {
 	this->angle = (angle / PI) * 180;
@@ -17,6 +17,7 @@ Arrow::Arrow(int x, int y, float speed, float angle, float damage, int id)
 	isMoving = true;
 	isAlive = true;
 	flags = flags & (~SOLID_OBJECT); // Убираем 'твердость' (чтобы игрок мог проходить сквозь)
+	this->owner = owner;
 }
 
 void Arrow::Draw()
@@ -46,7 +47,7 @@ void Arrow::Update(__int64 tick)
 					if (lifeTime < 458) {
 						auto e = new ArrowHitEvent(this);
 						solid->OnEvent(e); // Отправляем событие 'ArrowHitEvent' объекту, принявшему стрелу
-						if (e->destroyArrowAfterHit) lifeTime = 458;
+						if (e->destroyArrowAfterHit) lifeTime = 501;
 						phaseThrow = e->phase;
 						delete e;
 					}

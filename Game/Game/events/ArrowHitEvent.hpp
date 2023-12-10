@@ -10,6 +10,7 @@ public:
 	float damage;
 	bool destroyArrowAfterHit;
 	bool phase;
+	Entity* arrowOwner;
 
 public:
 
@@ -17,6 +18,7 @@ public:
 		damage = arrow->health;
 		destroyArrowAfterHit = false;
 		phase = false;
+		arrowOwner = arrow->owner;
 	}
 
 };
