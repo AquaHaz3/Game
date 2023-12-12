@@ -105,6 +105,7 @@ void Scene::Draw()
 		DrawText(about_particles.c_str(), camWidth - 198, 58, 20, WHITE);
 		DrawText(fps.c_str(), camWidth - 198, 82, 20, WHITE);
 		DrawText(camera.c_str(), camWidth - 198, 106, 10, WHITE);
+		DrawText(RAYLIB_VERSION, camWidth - 198, 118, 10, WHITE);
 	}
 
 	isRenderTime = false;
