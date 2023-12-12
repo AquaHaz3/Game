@@ -29,12 +29,15 @@ Mob::Mob(int x, int y, EntityID id)
 
 	direction = (int) Direction::DOWN;
 
-	detectRadius = 96;
+	detectRadius = models[(int)id].detectRadius;
+	idleRadius = models[(int)id].idleRadius;
 	max_hp = models[(int)id].health;
+	isDistanceBattle = models[(int)id].isDistanceBattle;
+	isSolid = models[(int)id].solid;
 	health = max_hp;
 
-	idlePos.x = x;
-	idlePos.y = y;
+	idlePos.x = x+16;
+	idlePos.y = y+16;
 	_idle_MoveState = 0;
 }
 
@@ -48,6 +51,7 @@ void Mob::Draw()
 	if (debug_util::isDebugBoxes()) {
 		if (isIdle) {
 			DrawCircleLines(aabb.min.x + 16, aabb.min.y + 16, detectRadius, PURPLE);
+			DrawCircle(idlePos.x, idlePos.y, 3, YELLOW);
 		}
 		else {
 			DrawCircleLines(aabb.min.x + 16, aabb.min.y + 16, detectRadius, YELLOW);
@@ -63,20 +67,31 @@ void Mob::Draw()
 	}
 }
 
+inline void Mob::updateDirection(float& angle)
+{
+	if (angle <= 0) angle += 360.0;
+	if (angle >= 305.0 || angle <= 45.0) direction = (char)Direction::RIGHT;
+	if (angle >= 135.0 && angle <= 235.0) direction = (char)Direction::LEFT;
+	if (angle > 45.0 && angle < 135.0) direction = (char)Direction::DOWN;
+	if (angle > 235.0 && angle < 305.0) direction = (char)Direction::UP;
+}
+
 void Mob::Update(__int64 tick)
 {
-	if (isIdle) {
-		if (tick % 144 == 0) idleTick = (idleTick + 1) % 3; // Номер кадра анимации простоя
-	};
+
+	if (tick % 144 == 0 && (_idle_MoveState > 0 || isIdle == false)) idleTick = (idleTick + 1) % 3; // Номер кадра анимации простоя
 
 	if (tick % 3 == 2) {
 		chooseTarget(tick);
 		toogleState();
 	}
 
-	if (target != nullptr) {
+	Vector2 prevPos = aabb.min;
+
+	if (target != nullptr) { // Режим преследования цели
 		if (tick % 5 == 1) {
 			Vector2 z = Vector2MoveTowards(aabb.min, target->aabb.min, 1);
+			Vector2 dz =Vector2Subtract(aabb.min, z);
 			float d = Vector2Distance(aabb.min, target->aabb.min);
 			for (auto solid : SceneManager::current->boxes) {
 				if (solid->flags & ENTITY_OBJECT) {
@@ -90,27 +105,54 @@ void Mob::Update(__int64 tick)
 					}
 				}
 			}
-			if (d > 64) setPos(z.x, z.y);
+			float angle = (Vector2Angle({aabb.min.x - 1, aabb.min.y}, z) / PI) * 360.0;
+			updateDirection(angle);
+			if (isDistanceBattle) {
+				if (d < detectRadius * 2) {
+					if(dz.x > 0) moveBy(dz.x, -dz.y);
+					if(dz.x < 0) moveBy(-dz.x, dz.y);
+				}
+			}
+			else {
+				if (d > 64) setPos(z.x, z.y);
+			}
 		}
 	}
-	else {
+	else { // Режим простоя
 		if (tick % 10 == 1 && (!SceneManager::isSceneStatic())) {
 			if (_idle_MoveState == 0) {
 				_idle_dx = (1 - (rand() % 3));
 				_idle_dy = (1 - (rand() % 3));
 				_idle_MoveState = 10;
+				if(_idle_dx == _idle_dy && _idle_dx == 0){
+					_idle_MoveState = 30;
+				}
 			}
 			else {
 				_idle_MoveState--;
 			}
 			moveBy(_idle_dx, _idle_dy);
 			float d = Vector2Distance(aabb.min, idlePos);
-			if (d > 64) {
+			if (d > idleRadius) {
 				_idle_dx = -_idle_dx;
 				_idle_dy = -_idle_dy;
 				moveBy(_idle_dx, _idle_dy);
 			}
 		}
+	}
+
+	if (isSolid) { // Если не может проникать через стены, проверяем
+
+		for (auto solid : SceneManager::current->boxes) {
+			if (solid->flags & SOLID_OBJECT) {
+				if (solid == this) continue;
+				if (UtilAABB::isOverlap(&aabb, &solid->aabb)) {
+					setPos(prevPos.x, prevPos.y);
+					break;
+				};
+			}
+		}
+
 	}
 
 	if (health <= 0) {
@@ -120,6 +162,8 @@ void Mob::Update(__int64 tick)
 
 #include "../../events/ArrowHitEvent.hpp"
 #include "../misc/TextParticle.h"
+#include "../misc/AnimatedParticle.h"
+#include "../ui/SoundUI.h"
 
 void Mob::OnEvent(Event* event)
 {
@@ -130,10 +174,15 @@ void Mob::OnEvent(Event* event)
 		hitEvent->destroyArrowAfterHit = true;
 		std::string about = "-" + std::to_string((int)hitEvent->damage);
 		SceneManager::addParticle(new TextParticle(aabb.max, about, 80, RED));
+		if (hitEvent->isExplosiveArrow) {
+			Vector2 pos = { (float)hitEvent->x, (float)hitEvent->y };
+			SceneManager::addParticle(new AnimatedParticle(pos, AnimationID::SharpExplosion, RED));
+			SoundUI::PlayOnce("explosion_small");
+		}
 	}
 }
 
-void Mob::chooseTarget(__int64 tick)
+void Mob::chooseTarget(__int64 tick) // Выбор цели (для атаки)
 {
 	auto players = SceneManager::GetPlayers();
 

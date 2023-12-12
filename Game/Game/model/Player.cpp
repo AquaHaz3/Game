@@ -1,6 +1,7 @@
 ﻿#include "Player.h"
 #include "../core/Debug.h"
 #include "../core/Scene.h"
+#include "ui/SoundUI.h"
 
 #define MAX_PLAYER_HP 10
 #define MAX_PLAYER_XP 200
@@ -24,20 +25,22 @@ Player::Player(int x, int y) : Entity(x, y, 20, 30, EntityID::Player)
 	inventoryCell = SpriteLoader::GetSprite("inv_cell.png"); // текстура ячейки инвентаря
 	inventoryHand = SpriteLoader::GetSprite("inv_hand.png"); // текстура ячейки инвентаря (рука)
 
-	texture.addTile(32, 64, 32, 32); // Go to RIGHT
-	texture.addTile(32, 0, 32, 32); // Go to DOWN
-	texture.addTile(32, 32, 32, 32); // Go to LEFT
-	texture.addTile(32, 96, 32, 32); // Go to UP
+	if (!texture->isTiled) {
+		texture->addTile(32, 64, 32, 32); // Go to RIGHT
+		texture->addTile(32, 0, 32, 32); // Go to DOWN
+		texture->addTile(32, 32, 32, 32); // Go to LEFT
+		texture->addTile(32, 96, 32, 32); // Go to UP
 
-	texture.addTile(0, 64, 32, 32); // Go to RIGHT
-	texture.addTile(0, 0, 32, 32); // Go to DOWN
-	texture.addTile(0, 32, 32, 32); // Go to LEFT
-	texture.addTile(0, 96, 32, 32); // Go to UP
+		texture->addTile(0, 64, 32, 32); // Go to RIGHT
+		texture->addTile(0, 0, 32, 32); // Go to DOWN
+		texture->addTile(0, 32, 32, 32); // Go to LEFT
+		texture->addTile(0, 96, 32, 32); // Go to UP
 
-	texture.addTile(64, 64, 32, 32); // Go to RIGHT
-	texture.addTile(64, 0, 32, 32); // Go to DOWN
-	texture.addTile(64, 32, 32, 32); // Go to LEFT
-	texture.addTile(64, 96, 32, 32); // Go to UP
+		texture->addTile(64, 64, 32, 32); // Go to RIGHT
+		texture->addTile(64, 0, 32, 32); // Go to DOWN
+		texture->addTile(64, 32, 32, 32); // Go to LEFT
+		texture->addTile(64, 96, 32, 32); // Go to UP
+	}
 
 	if (w < 32) {
 		x_offset = (32 - w) / 2; aabb.min.x = x;
@@ -75,7 +78,7 @@ void Player::Draw()
 		DrawTextPro(GetFontDefault(), ">", z, { 2,8 }, 180*angle, 20, 1, WHITE);
 	}
 
-	texture.DrawTile((int)aabb.min.x - x_offset, (int)aabb.min.y - y_offset, (int)direction + walk_tick * 4);
+	texture->DrawTile((int)aabb.min.x - x_offset, (int)aabb.min.y - y_offset, (int)direction + walk_tick * 4);
 
 	if ((WType)weapon.type == WType::SWORDS) {
 		Rectangle dest = { aabb.min.x+8, aabb.min.y+8, 20, 20 };
@@ -154,9 +157,13 @@ void Player::Update(__int64 tick)
 		if (aabb.min.y <= 0) setPos(aabb.min.x, pre.y);
 
 		SceneManager::current->bindCamera(&aabb, 320, 196);
+
+		SoundUI::Play("walk_stone");
+
 	}
 	else {
 		walk_tick = 0;
+		SoundUI::Stop("walk_stone");
 	}
 }
 
@@ -172,6 +179,7 @@ void Player::OnEvent(Event* event)
 			health = std::min(health+hp, MAX_PLAYER_HP);
 			auto about = "+"+std::to_string(hp); // +1 or +2 or +3
 			SceneManager::addParticle(new TextParticle(aabb.max, about, 80, RED));
+			SoundUI::PlayOnce("potion");
 			return;
 		}
 		if (itemE->id == ItemID::POTION_XP) { // При подборе XP
@@ -179,6 +187,7 @@ void Player::OnEvent(Event* event)
 			xp = std::min(xp + _xp, MAX_PLAYER_XP);
 			auto about = "+" + std::to_string(_xp); // from +20 to +60
 			SceneManager::addParticle(new TextParticle(aabb.max, about, 80, MAGIC_BLUE));
+			SoundUI::PlayOnce("potion");
 			return;
 		}
 		putToInventory((uint8_t) itemE->id); // помещаем подобранный предмет в инвентарь
@@ -228,7 +237,7 @@ void Player::drawInventory() // рисует инвентарь
 
 	Vector2 cellPos = { (float)inv_x, 0 };
 	SceneManager::ProjectToCamera(cellPos);
-	inventoryHand.Draw(cellPos);
+	inventoryHand->Draw(cellPos);
 	if (inventory[0].count > 0) { // Ячейка (руки)
 		DrawTextureV(Item::textures[inventory[0].id], cellPos, NO_TINT);
 	}
@@ -237,7 +246,7 @@ void Player::drawInventory() // рисует инвентарь
 
 	for (int i = 1; i < INVENTORY_SIZE; i++) { // Рисовка ячейки
 		cellPos.x += 32;
-		inventoryCell.Draw(cellPos);
+		inventoryCell->Draw(cellPos);
 		int c = inventory[i].count;
 		if (c > 0) DrawTextureV(Item::textures[inventory[i].id], cellPos, NO_TINT);
 	}
@@ -260,6 +269,7 @@ void Player::drawInventory() // рисует инвентарь
 
 bool Player::putToInventory(uint8_t id) // помещает предмет в инвентарь
 {
+	SoundUI::PlayOnce("pickup");
 	for (int i = 1; i < INVENTORY_SIZE; i++) { // Случай когда уже предмет есть, надо кол-во++
 		if (inventory[i].id == id) { 
 			inventory[i].count++; 
@@ -300,8 +310,9 @@ void Player::checkForAttack()
 				float damage = weapon.damage * (bow_progress / 100.0f);
 				SceneManager::addObject(
 					new Arrow(center.x, center.y + 8, 0.5 + (1 * (bow_progress / 100.0f)), 
-						angle, damage, 0, this)
+						angle, &weapon, this)
 				);
+				SoundUI::PlayOnce("bow");
 				xp -= weapon.xp_cost; // Снимаем с игрока xp
 			}
 			else {

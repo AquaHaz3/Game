@@ -35,7 +35,7 @@ public:
 	virtual void AfterDraw() override {
 		Vector2 playerPos = context.getPlayerPos();
 		if (playerPos.x >= 0) {
-			SpriteLoader::GetSprite("player.png").DrawPro(playerPos.x, playerPos.y, 32, 32, 0, 0, 0);
+			SpriteLoader::GetSprite("player.png")->DrawPro(playerPos.x, playerPos.y, 32, 32, 0, 0, 0);
 		}
 		cursor->Draw();
 		ui->Draw();

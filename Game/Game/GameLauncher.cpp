@@ -9,6 +9,8 @@
 #include "model/Wall.h"
 #include "model/ItemEntity.h"
 #include "model/Background.h"
+#include "model/ui/SoundUI.h"
+#include "model/misc/AnimatedParticle.h"
 #include "core/Sprite.h"
 #include <thread>
 
@@ -45,6 +47,8 @@ void GameLauncher::OnStart()
     Item::InitItems(); 
     Arrow::InitArrows(); 
     Entity::InitEntities();
+    SoundUI::InitSounds();
+    AnimatedParticle::InitAnimatedEffects();
 
     SpriteLoader::LoadInGameSprites(); 
 
@@ -53,29 +57,36 @@ void GameLauncher::OnStart()
 
 void GameLauncher::load()
 {
-    loadingStage = 0;
+    loadingStage = -1;
     std::string text = "Load: Blocks ...";
-    while (loadingStage < 6)
+    while (loadingStage < 7)
     {
         BeginDrawing();
         ClearBackground(DARKGRAY);
         DrawRectangle(256, 300, 512, 40, GRAY);
-        DrawRectangle(256, 300, 102 * loadingStage, 40, BLUE);
+        DrawRectangle(256, 300, 73 * loadingStage, 40, BLUE);
         DrawText(text.c_str(), 470 - (text.size() * 2), 355, 20, WHITE);
         loadingStage++;
         EndDrawing();
         switch (loadingStage)
         {
         case 0: Block::InitBlocks(); text = "Load: Items ..."; break;
-        case 1: Item::InitItems(); text = "Load: Arrows ..."; break;
-        case 2: Entity::InitEntities();; text = "Load: Entities ..."; break;
-        case 3: Arrow::InitArrows(); text = "Load: Some sprites ..."; break;
-        case 4: SpriteLoader::LoadInGameSprites(); text = "Starting scene ..."; break;
-        case 5: SceneManager::Instance()->Start(); text = "Game is ready!"; break;
+        case 1: Item::InitItems(); text = "Load: Entities ..."; break;
+        case 2: Entity::InitEntities();; text = "Load: Sounds ..."; break;
+        case 3: SoundUI::InitSounds();; text = "Load: Misc ..."; break;
+        case 4:
+            Arrow::InitArrows();
+            AnimatedParticle::InitAnimatedEffects();
+            text = "Load: Scenes ...";
+            break;
+        case 5: SpriteLoader::LoadInGameSprites(); text = "Starting scene ..."; break;
+        case 6: SceneManager::Instance()->Start(); text = "Game is ready!"; break;
         default:
             break;
         }
+        std::this_thread::sleep_for(std::chrono::milliseconds(25));
     }
+    std::this_thread::sleep_for(std::chrono::milliseconds(250));
 }
 
 void GameLauncher::Launch()
@@ -88,10 +99,10 @@ void GameLauncher::Launch()
     EndDrawing();
 
     SetTargetFPS(144);
-    OnStart();
+    //OnStart();
 
     std::thread th1(__update_thread, this);
-    // load();
+    load();
     draw();
 
     CloseAudioDevice();

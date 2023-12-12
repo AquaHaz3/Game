@@ -47,8 +47,8 @@ public:
 		DrawRectangleLines(editBar.x, editBar.y, camWidth-96, 48, EditorLine);
 
 
-		left_arrow.Draw({ toolPos.x, toolPos.y }); toolPos.x += 80;
-		right_arrow.Draw({ toolPos.x, toolPos.y }); toolPos.x -= 40;
+		left_arrow->Draw({ toolPos.x, toolPos.y }); toolPos.x += 80;
+		right_arrow->Draw({ toolPos.x, toolPos.y }); toolPos.x -= 40;
 
 		if (brush->type >= (int)SceneObjectType::BACKGROUND 
 			&& brush->type <= (int)SceneObjectType::BLOCK) {
@@ -64,7 +64,7 @@ public:
 		}
 
 		if (brush->type == (int) SceneObjectType::PLAYER) {
-			SpriteLoader::GetSprite("player.png").DrawPro(toolPos.x, toolPos.y, 32, 32, 0, 0, 0);
+			SpriteLoader::GetSprite("player.png")->DrawPro(toolPos.x, toolPos.y, 32, 32, 0, 0, 0);
 		}
 
 		BeginBlendMode(BLEND_SUBTRACT_COLORS);
@@ -73,8 +73,8 @@ public:
 		toolPos.x += 76;
 		DrawText(aboutId.c_str(), toolPos.x, toolPos.y, 10, WHITE);
 		toolPos.x += 76;
-		left_arrow.Draw({ toolPos.x, toolPos.y }); toolPos.x += 192;
-		right_arrow.Draw({ toolPos.x, toolPos.y }); toolPos.x -= 144;
+		left_arrow->Draw({ toolPos.x, toolPos.y }); toolPos.x += 192;
+		right_arrow->Draw({ toolPos.x, toolPos.y }); toolPos.x -= 144;
 		DrawText(aboutType.c_str(), toolPos.x, toolPos.y + 6, 20, WHITE);
 
 		rlPopMatrix();
@@ -122,8 +122,8 @@ private:
 	int camWidth;
 	int camHeight;
 
-	Sprite left_arrow;
-	Sprite right_arrow;
+	SpriteRef left_arrow;
+	SpriteRef right_arrow;
 
 	std::string aboutId;
 	std::string aboutType;

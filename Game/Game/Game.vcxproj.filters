@@ -90,7 +90,10 @@
     <ClCompile Include="events\ArrowHitEvent.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="core\SoundLoader.cpp">
+    <ClCompile Include="model\ui\SoundUI.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="model\misc\AnimatedParticle.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -194,10 +197,10 @@
     <ClInclude Include="model\ui\EditorUI.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="core\SoundLoader.h">
+    <ClInclude Include="model\ui\SoundUI.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="model\ui\SoundUI.h">
+    <ClInclude Include="model\misc\AnimatedParticle.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

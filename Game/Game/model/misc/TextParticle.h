@@ -26,8 +26,8 @@ public:
 
 private:
 
-	int x;
-	int y;
+	uint16_t x;
+	uint16_t y;
 	std::string text;
 	Color color;
 	int maxLifetime;

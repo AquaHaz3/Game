@@ -25,10 +25,10 @@ private:
 	int walk_tick; // номер кадра (дл€ анимации ходьбы)
 	char x_offset;
 	char y_offset;
-	Sprite texture; // текстура игрока
+	SpriteRef texture; // текстура игрока
 
-	Sprite inventoryCell; 
-	Sprite inventoryHand;
+	SpriteRef inventoryCell; 
+	SpriteRef inventoryHand;
 	std::vector<Item> inventory;
 	int invFreeIndex; // индекс свободной €чейки
 

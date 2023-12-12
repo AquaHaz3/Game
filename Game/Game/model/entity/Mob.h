@@ -10,6 +10,7 @@ public:
 	Mob(int x, int y, EntityID id);
 
 	virtual void Draw();
+	void inline updateDirection(float& angle);
 	virtual void Update(__int64 tick);
 
 	virtual void OnEvent(Event* event) override;
@@ -29,6 +30,9 @@ private:
 	char direction;
 
 	float detectRadius;
+	float idleRadius;
+	bool isDistanceBattle;
+	bool isSolid;
 
 	Vector2 idlePos;
 

@@ -45,6 +45,7 @@ Texture2D Sprite::GetNullTexture()
 }
 
 std::map<std::string, Texture2D> SpriteLoader::textures = std::map<std::string, Texture2D>();
+std::map<std::string, SpriteRef> SpriteLoader::loadedSprites = std::map<std::string, SpriteRef>();
 
 void SpriteLoader::LoadInGameSprites()
 {
@@ -56,13 +57,19 @@ void SpriteLoader::LoadInGameSprites()
 	textures.emplace("ui_right.png", Sprite::LoadTextureFromResources("ui_right.png"));
 }
 
-Sprite SpriteLoader::GetSprite(std::string name)
+SpriteRef SpriteLoader::GetSprite(std::string name)
 {
+
+	if (loadedSprites.count(name) > 0) return loadedSprites[name];
+
 	if (textures.count(name) > 0) {
-		return Sprite(textures[name]);
+		auto spriteRef = std::shared_ptr<Sprite>(new Sprite(textures[name]));
+		loadedSprites.emplace(name, spriteRef);
+		return spriteRef;
 	}
 	else {
-		printf("[SpriteLoader] [WARNING] Texture with name {%s} don't loaded", name.c_str());
-		return Sprite(Sprite::GetNullTexture());
+		auto spriteRef = std::shared_ptr<Sprite>(new Sprite(Sprite::LoadTextureFromResources(name)));
+		loadedSprites.emplace(name, spriteRef);
+		return spriteRef;
 	}
 }

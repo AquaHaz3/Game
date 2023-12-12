@@ -7,45 +7,54 @@
 
 
 class SoundUI {
-	static std::map<std::string, std::string> Sounds;
+
+	static std::map<std::string, Sound> Sounds;
+
 public:
-	static void AddSounds(std::string Name, std::string FilePath) {
-		std::map<std::string, std::string>::iterator it;
-		for (it = Sounds.begin(); it != Sounds.end(); it++) {
-			if (it->first == Name) {
-				/*throw "The sound with this name is already exist";*/
-				it->second = FilePath;
-				return;
-			}
+
+	static void AddSounds(std::string Name, std::string FilePath) 
+	{
+		Sound sound = LoadSound(FilePath.c_str());
+		Sounds.emplace(Name, sound);
+	}
+
+	static void InitSounds()
+	{
+		AddSounds("walk", "resources/sounds/footsteps.wav");
+		AddSounds("walk_stone", "resources/sounds/stone_walk.mp3");
+		AddSounds("bow", "resources/sounds/bow.mp3");
+		AddSounds("potion", "resources/sounds/potion.mp3");
+		AddSounds("pickup", "resources/sounds/pick.mp3");
+		AddSounds("explosion_small", "resources/sounds/explosion_small.wav");
+	}
+
+	static Sound GetSound(std::string Name) {
+		
+		if (Sounds.count(Name) <= 0) {
+			throw std::exception("The sound with this name is not exist");
 		}
-		Sounds.insert(std::pair < std::string, std::string>(Name, FilePath));
+		return Sounds[Name];
 	}
-	static void InitSounds() {
-		AddSounds("walk", "../../resources/sounds/footsteps.wav");
-	}
-	static Music GetSound(std::string Name) {
-		Music ToPlay;
-		std::map<std::string, std::string>::iterator it; 
-		for (it = Sounds.begin(); it != Sounds.end(); it++) {
-			if (it->first == Name) {
-				ToPlay = LoadMusicStream((it->second).c_str());
-				PlayMusicStream(ToPlay);
-				return ToPlay;
-			}
+
+	static void Play(std::string Name)
+	{
+		Sound s = GetSound(Name);
+		if (!IsSoundPlaying(s)) {
+			PlaySound(s);
 		}
-		/*if (it == Sounds.end() && it->first != Name) {
-			throw "The sound with this name is not exist";
-		}*/
 	}
-	static void Play(std::string Name) {
-		Music played;
-		/*try {*/
-			played = GetSound(Sounds[Name]);
-		/*}*/
-		/*catch(std::string err){
-			std::cout << err << std::endl;
-		}*/
-		UpdateMusicStream(played);
-		PlayMusicStream(played);
+
+	static void PlayOnce(std::string Name)
+	{
+		PlaySound(Sounds[Name]);
 	}
+	
+	static void Stop(std::string Name)
+	{
+		Sound s = GetSound(Name);
+		if (IsSoundPlaying(s)) {
+			StopSound(s);
+		}
+	}
+
 };

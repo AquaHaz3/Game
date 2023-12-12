@@ -4,12 +4,12 @@
 #include "../../events/ArrowHitEvent.hpp"
 #include "../../core/Scene.h"
 
-Arrow::Arrow(int x, int y, float speed, float angle, float damage, int id, Entity* owner)
+Arrow::Arrow(int x, int y, float speed, float angle, Weapon* weapon, Entity* owner)
 	: Entity(x, y, 4, 4)
 {
 	this->angle = (angle / PI) * 180;
 	this->speed = speed;
-	this->health = damage; // Здоровье стрелы 🤨 <=> Сколько урона он принесёт
+	this->health = weapon->damage * (speed - 0.5); // Здоровье стрелы 🤨 <=> Сколько урона он принесёт
 
 	this->xSpeed = cos(angle) * speed;
 	this->ySpeed = sin(angle) * speed;
@@ -18,11 +18,16 @@ Arrow::Arrow(int x, int y, float speed, float angle, float damage, int id, Entit
 	isAlive = true;
 	flags = flags & (~SOLID_OBJECT); // Убираем 'твердость' (чтобы игрок мог проходить сквозь)
 	this->owner = owner;
+
+	id = 0;
+	if (weapon->level == (int)WLevel::LEGENDARY) {
+		id = 1;
+	}
 }
 
 void Arrow::Draw()
 {
-	arrow_types[0].DrawPro(aabb.min.x , aabb.min.y, 32, 32, 16, 16, angle);
+	arrow_types[id].DrawPro(aabb.min.x , aabb.min.y, 32, 32, 16, 16, angle);
 	if (debug_util::isDebugBoxes()) {
 		DrawRectangleLines(aabb.min.x, aabb.min.y, 3, 3, RED);
 	}
@@ -69,4 +74,5 @@ std::vector<Sprite> Arrow::arrow_types = std::vector<Sprite>();
 void Arrow::InitArrows()
 {
 	arrow_types.push_back(Sprite("arrow.png"));
+	arrow_types.push_back(Sprite("arrow2.png"));
 }

@@ -3,6 +3,8 @@
 #include "Block.h"
 
 #include "../events/ArrowHitEvent.hpp"
+#include "misc/AnimatedParticle.h"
+#include "../core/Scene.h"
 
 class Wall : public Box2D
 {
@@ -22,7 +24,9 @@ public:
 
 	virtual void Update(__int64 tick) { }
 
-	virtual void OnEvent(Event* event) {};
+	virtual void OnEvent(Event* event) {
+
+	};
 
 };
 

@@ -10,6 +10,9 @@ public:
 	float damage;
 	bool destroyArrowAfterHit;
 	bool phase;
+	bool isExplosiveArrow;
+	uint16_t x;
+	uint16_t y;
 	Entity* arrowOwner;
 
 public:
@@ -19,6 +22,9 @@ public:
 		destroyArrowAfterHit = false;
 		phase = false;
 		arrowOwner = arrow->owner;
+		this->isExplosiveArrow = (arrow->id == 1);
+		x = arrow->aabb.min.x;
+		y = arrow->aabb.min.y;
 	}
 
 };
