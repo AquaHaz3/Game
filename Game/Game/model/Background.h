@@ -9,7 +9,7 @@ class Background : public GameObject
 
 public:
 
-	Background() { id = (int)BlockID::WALL; };
+	Background();
 	Background(int x, int y, int w, int h, BlockID id);
 
 

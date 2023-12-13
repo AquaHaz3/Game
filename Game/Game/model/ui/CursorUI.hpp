@@ -14,6 +14,15 @@ public:
 	CursorUI()
 	{
 		this->isGrid = false;
+		this->color = { 0,0,0,0 };
+		pos = { 0, 0, 32, 32 };
+		posData = "";
+		selectionData = "";
+		selectionDelay = 0;
+		this->onClick = 0;
+		this->onSelect = 0;
+		isSelection = 0;
+		select = { 0,0,0,0 };
 	};
 
 	CursorUI(bool isGrid, Color color,

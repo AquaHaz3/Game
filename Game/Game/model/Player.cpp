@@ -16,6 +16,12 @@ static Color NO_TINT = { 255,255,255,255 };
 
 #include <raymath.h>
 
+Player::Player() : Entity(0, 0, 32, 32, EntityID::Player)
+{
+	health = 0;
+	speed = 0;
+}
+
 Player::Player(int x, int y) : Entity(x, y, 20, 30, EntityID::Player)
 {
 
@@ -58,7 +64,7 @@ Player::Player(int x, int y) : Entity(x, y, 20, 30, EntityID::Player)
 		inventory.push_back(Item(ItemID::AIR, 0)); // Заполняем инвентарь пустотой
 	}
 
-	xp = 120;
+	xp = 150;
 	remindAboutXp = 0;
 	bow_progress = 0;
 	weapon = { 0,0,0,0,0 };
@@ -70,7 +76,7 @@ void Player::Draw()
 	if (bow_progress > 0) { // Рисуем направление натягивания лука, возле игрока
 		Vector2 mouse = SceneManager::GetMouseOnWorld();
 		Vector2 center = { aabb.min.x + w / 2,aabb.min.y + h / 2 };
-		float angle = Vector2Angle({center.x + 1, center.y}, mouse) / PI;
+		float angle = MyVector2Angle({center.x + 1, center.y}, mouse) / PI;
 		Vector2 z = Vector2MoveTowards(center, mouse, bow_progress);
 		DrawLineV(center, z, LIGHTGRAY);
 		DrawCircleV(Vector2MoveTowards(center, mouse, bow_progress / 2), 2, LIGHTGRAY);
@@ -93,9 +99,10 @@ void Player::Draw()
 		DrawText(test.c_str(), aabb.max.x, aabb.max.y, 10, WHITE);
 	}
 
-
+	SceneManager::BeginCameraOverlay();
 	drawInventory();
 	drawUI();
+	SceneManager::EndCameraOverlay();
 }
 
 #include "Movement.h"
@@ -126,7 +133,15 @@ void Player::Update(__int64 tick)
 			weapon = Item::weapons[swap.id];
 		}
 	}
-	
+
+	if (IsKeyDown(KEY_Z)) {
+		auto state = SceneManager::current->cameraZoom.Notify();
+		if (state == MORPHISM_STATE_ACTION) {
+			//SceneManager::current->setCameraScale(2);
+			
+			//SceneManager::current->setCameraScale(1);
+		}
+	}
 	
 	if (sword_progress > 0) sword_progress--;
 
@@ -201,6 +216,7 @@ static char digits[20] = {
 
 void Player::drawUI()
 {
+
 	int hp = (int)health;
 
 	Vector2 textPos = { 12, 8 };
@@ -230,6 +246,7 @@ void Player::drawUI()
 		DrawRectangleLinesEx(reminderRect, 2, MAGIC_BLUE2); // Напоминание о малом кол-ве XP 
 	}
 	if (remindAboutXp > 0) remindAboutXp--;
+
 }
 
 void Player::drawInventory() // рисует инвентарь
@@ -306,7 +323,7 @@ void Player::checkForAttack()
 			if (xp >= weapon.xp_cost) { // И если хватает xp на выстрел
 				Vector2 mouse = SceneManager::GetMouseOnWorld();
 				Vector2 center = { aabb.min.x + w / 2,aabb.min.y + h / 2 };
-				float angle = Vector2Angle({ center.x + 1, center.y }, mouse);
+				float angle = MyVector2Angle({ center.x + 1, center.y }, mouse);
 				float damage = weapon.damage * (bow_progress / 100.0f);
 				SceneManager::addObject(
 					new Arrow(center.x, center.y + 8, 0.5 + (1 * (bow_progress / 100.0f)), 

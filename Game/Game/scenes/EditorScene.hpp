@@ -111,10 +111,10 @@ private:
 		if (brush.type == (int)SceneObjectType::ITEM_ENTITIY) return;
 		if (brush.type == (int)SceneObjectType::MOB) return;
 
-		brush.x = cursor->select.x; 
-		brush.y = cursor->select.y; 
-		brush.w = cursor->select.width;
-		brush.h = cursor->select.height;
+		brush.x = (uint16_t) cursor->select.x; 
+		brush.y = (uint16_t) cursor->select.y;
+		brush.w = (uint16_t) cursor->select.width;
+		brush.h = (uint16_t) cursor->select.height;
 
 		if (brush.ord != 0 && btn == MOUSE_BUTTON_LEFT) {
 			auto obj = SceneFile::brushGameObjectFactory(&brush);

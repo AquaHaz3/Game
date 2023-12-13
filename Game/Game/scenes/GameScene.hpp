@@ -30,6 +30,12 @@ public:
        
 	};
 
+	virtual void AfterUpdate(__int64 tick) override {
+		if (tick % 5 == 0) {
+			cameraZoom.Update();
+		}
+	}
+
 private:
 
 	std::string name;

@@ -13,6 +13,8 @@ Scene::Scene()
 	playerContainer = std::vector<Entity*>();
 	player = 0;
 	isInit = false;
+	cam_scale = 1;
+	cameraZoom = Morphism<float>(&cam_scale, 2.0f, 1.0f, 0.0625f, [](){});
 }
 
 Scene::Scene(int width, int height)
@@ -30,6 +32,12 @@ Scene::Scene(int width, int height)
 	isStatic = false;
 	background = DARKGRAY;
 	isInit = false;
+	cam_scale = 1;
+	cameraZoom = Morphism<float>(&cam_scale, 2.0f, 1.0f, 0.0625f,
+		[this]() {
+			SceneManager::current->bindCamera(&player.get()->aabb, 320, 196);
+		}
+	);
 }
 
 void Scene::addPlayerToScene(Player* player)
@@ -63,6 +71,7 @@ void Scene::Draw()
 	}
 
 	rlPushMatrix();
+	rlScalef(cam_scale, cam_scale, 1);
 	rlTranslatef(cam_x, cam_y, 0);
 
 	int from_i = (int)(-cam_y) / 32;
@@ -154,14 +163,20 @@ void Scene::Dispose()
 	toRemove.clear();
 }
 
-void Scene::bindCamera(AABB* box, int borderW, int borderH)
+void Scene::bindCamera(AABB* box, int borderWidth, int borderHeight)
 {
-	int dx = box->max.x - (SceneManager::current->camWidth - borderW);
+
+	int camWidth = SceneManager::current->camWidth / SceneManager::current->cam_scale;
+	int camHeight = SceneManager::current->camHeight / SceneManager::current->cam_scale;
+	int borderW = borderWidth / SceneManager::current->cam_scale;
+	int borderH = borderHeight / SceneManager::current->cam_scale;
+
+	int dx = box->max.x - (camWidth - borderW);
 	int ddx = cam_x + box->min.x - borderW;
 	if(abs(cam_x) < dx) cam_x = -dx;
 	if (ddx < 0 && ddx >= cam_x) cam_x = cam_x - ddx;
 
-	int dy = box->max.y - (SceneManager::current->camHeight - borderH);
+	int dy = box->max.y - (camHeight - borderH);
 	int ddy = cam_y + box->min.y - borderH;
 	if (abs(cam_y) < dy) cam_y = -dy;
 	if (ddy < 0 && ddy >= cam_y) cam_y = cam_y - ddy;
@@ -205,7 +220,9 @@ SceneManager* SceneManager::instance = nullptr;
 bool SceneManager::isPaused = false;
 bool SceneManager::isDrawed = false;
 bool SceneManager::isReadyToPause = false;
+bool SceneManager::isCameraOverlay = false;
 Scene* SceneManager::current = nullptr;
+
 
 SceneManager* SceneManager::Instance()
 {
@@ -277,25 +294,49 @@ void SceneManager::StopAndExit()
 int SceneManager::AddScene(Scene* scene)
 {
 	scenes.push_back(std::shared_ptr<Scene>(scene));
-	return scenes.size() - 1;
+	return (int)scenes.size() - 1;
 }
 
 Vector2 SceneManager::GetMouseOnWorld()
 {
 	Vector2 mouse = GetMousePosition();
-	return { mouse.x - current->cam_x, mouse.y - current->cam_y };
+	mouse.x /= current->cam_scale;
+	mouse.y /= current->cam_scale;
+	return { (mouse.x - current->cam_x), (mouse.y - current->cam_y)};
 }
 
 void SceneManager::ProjectToCamera(Vector2& pos)
 {
-	pos.x -= SceneManager::current->cam_x;
-	pos.y -= SceneManager::current->cam_y;
+	if (isCameraOverlay) {
+		pos.x -= SceneManager::current->cam_x* SceneManager::current->cam_scale;
+		pos.y -= SceneManager::current->cam_y* SceneManager::current->cam_scale;
+	}
+	else {
+		pos.x -= SceneManager::current->cam_x;
+		pos.y -= SceneManager::current->cam_y;
+	}
 }
 
 void SceneManager::ProjectToCamera(Rectangle& rec)
 {
 	rec.x -= SceneManager::current->cam_x;
 	rec.y -= SceneManager::current->cam_y;
+
+}
+
+
+void SceneManager::BeginCameraOverlay()
+{
+	if (isCameraOverlay) return;
+	isCameraOverlay = true;
+	rlScalef(1 / current->cam_scale, 1 / current->cam_scale, 1);
+}
+
+void SceneManager::EndCameraOverlay()
+{
+	if (!isCameraOverlay) return;
+	rlScalef(current->cam_scale, current->cam_scale, 1);
+	isCameraOverlay = false;
 }
 
 bool SceneManager::isSceneStatic()

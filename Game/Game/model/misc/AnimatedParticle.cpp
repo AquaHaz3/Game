@@ -1,6 +1,13 @@
 #include "AnimatedParticle.h"
 
-AnimatedParticle::AnimatedParticle() : Particle() {}
+AnimatedParticle::AnimatedParticle() : Particle() 
+{
+	this->anim = 0;
+	this->x = 0;
+	this->y = 0;
+	this->color = {0,0,0,0};
+	this->id = (uint16_t)0;
+}
 
 AnimatedParticle::AnimatedParticle(Vector2 pos, AnimationID id, Color color)
 	: Particle()
@@ -62,5 +69,10 @@ void AnimatedParticle::InitAnimatedEffects()
 	addAnimatedEffect(AnimationID::SharpExplosion, "effect/Pack1Yellow.png", 64, 64, 24, 8, 11, false);
 }
 
-
-
+ParticleAnimation::ParticleAnimation()
+{
+	this->sprite = 0;
+	this->startFrame = 0;
+	this->frameCount = 0;
+	this->isVertical = false;
+}

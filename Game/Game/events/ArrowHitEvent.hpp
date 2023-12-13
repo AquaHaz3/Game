@@ -7,7 +7,7 @@ class ArrowHitEvent : public Event {
 public:
 
 	MAKE_CLASS_UNIQUE;
-	float damage;
+	int damage;
 	bool destroyArrowAfterHit;
 	bool phase;
 	bool isExplosiveArrow;
@@ -23,8 +23,8 @@ public:
 		phase = false;
 		arrowOwner = arrow->owner;
 		this->isExplosiveArrow = (arrow->id == 1);
-		x = arrow->aabb.min.x;
-		y = arrow->aabb.min.y;
+		x = (uint16_t)arrow->aabb.min.x;
+		y = (uint16_t)arrow->aabb.min.y;
 	}
 
 };

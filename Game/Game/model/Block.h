@@ -42,7 +42,7 @@ public:
 
 public:
 
-	Block() {};
+	Block();
 	Block(int x, int y, BlockID id);
 	Block(int x, int y, int w, int h, BlockID id);
 

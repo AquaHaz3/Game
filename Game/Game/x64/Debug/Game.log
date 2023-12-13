@@ -1,15 +1,2 @@
-﻿  Scene.cpp
-C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(43,15): warning C4244: =: преобразование "int" в "float", возможна потеря данных
-C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(44,15): warning C4244: =: преобразование "int" в "float", возможна потеря данных
-C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(45,19): warning C4244: =: преобразование "int" в "float", возможна потеря данных
-C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Sprite.h(46,20): warning C4244: =: преобразование "int" в "float", возможна потеря данных
-C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.h(56,46): warning C4244: =: преобразование "int" в "float", возможна потеря данных
-C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.h(57,48): warning C4244: =: преобразование "int" в "float", возможна потеря данных
-C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.cpp(159,9): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
-C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.cpp(160,10): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
-C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.cpp(161,30): warning C4244: =: преобразование "int" в "float", возможна потеря данных
-C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.cpp(164,9): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
-C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.cpp(165,10): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
-C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.cpp(166,31): warning C4244: =: преобразование "int" в "float", возможна потеря данных
-C:\Users\aquahaze\Documents\GitHub\Game\Game\Game\core\Scene.cpp(280,2): warning C4267: return: преобразование из "size_t" в "int"; возможна потеря данных
+﻿  Chest.cpp
   Game.vcxproj -> C:\Users\aquahaze\Documents\GitHub\Game\Game\x64\Debug\Game.exe

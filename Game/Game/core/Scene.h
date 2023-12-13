@@ -65,6 +65,8 @@ public:
 		cam_y = y;
 	}
 
+	void setCameraScale(float scale) { cam_scale = scale; }
+
 	/* 
 	Перемещает камеру так, чтобы объект был виден 
 	(А также центрирует, отн. borderW и borderH)
@@ -77,6 +79,7 @@ public:
 	PlayerRef player;
 	std::vector<Entity*>& getPlayerContainer();
 
+	Morphism<float> cameraZoom;
 
 protected:
 
@@ -90,6 +93,7 @@ protected:
 
 	float cam_x;
 	float cam_y;
+	float cam_scale;
 
 	bool isStatic;
 
@@ -142,6 +146,7 @@ public:
 	void Start();
 	void ChangeScene(int index);
 	void StopAndExit();
+
 	int AddScene(Scene* scene);
 
 	int getCameraWidth() {
@@ -157,9 +162,21 @@ public:
 		cameraHeight = h;
 	}
 
+	bool ZoomCamera(bool isDouble) {
+
+		bool a = (current->cam_scale == 1);
+
+		if (isDouble) current->cam_scale = 2;
+		else current->cam_scale = 1;
+
+		return a && isDouble;
+	}
+
 	static Vector2 GetMouseOnWorld();
 	static void ProjectToCamera(Vector2& pos);
 	static void ProjectToCamera(Rectangle& rec);
+	static void BeginCameraOverlay();
+	static void EndCameraOverlay();
 	static bool isSceneStatic();
 
 	/* SIDE: BOTH */
@@ -192,6 +209,8 @@ private:
 
 	int cameraWidth;
 	int cameraHeight;
+
+	static bool isCameraOverlay;
 
 	void pauseAll();
 	void change();

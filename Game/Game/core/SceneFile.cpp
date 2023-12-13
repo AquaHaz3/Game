@@ -22,7 +22,7 @@ GameObject* SceneFile::brushGameObjectFactory(PrototypeGameObject* brush)
     case SceneObjectType::BLOCK:
         return new Block(brush->x, brush->y, (BlockID)brush->ord);
     case SceneObjectType::MOB:
-        return new Mob(brush->x, brush->y, (EntityID)brush->ord);
+        return Entity::EntityFactory((EntityID)brush->ord, brush->x, brush->y, 32, 32, brush->ord);
     case SceneObjectType::ITEM_ENTITIY:
         return new ItemEntity(brush->x, brush->y, 32, 32, (ItemID) brush->ord);
     case SceneObjectType::PLAYER:
@@ -56,7 +56,7 @@ static GameObject* defaultGameObjectFactory(SceneObjectType type, ByteInStream& 
         case SceneObjectType::BLOCK:
             return new Block(x, y, w, h, (BlockID)ord);
         case SceneObjectType::MOB:
-            return new Mob(x, y, (EntityID)ord);
+            return Entity::EntityFactory((EntityID)ord, x, y, 32, 32, ord);
         }
     }
     else {
@@ -64,6 +64,7 @@ static GameObject* defaultGameObjectFactory(SceneObjectType type, ByteInStream& 
         short y = br.readShort();
         return new Player(x, y);
     }
+    return 0;
 }
 
 std::string SceneFile::getTypeName(SceneObjectType type)
@@ -99,7 +100,7 @@ int SceneFile::getObjectDefaultID(SceneObjectType type) {
     case SceneObjectType::ITEM_ENTITIY:
         return (int)ItemID::POTION_HEAL;
     case SceneObjectType::MOB:
-        return (int)EntityID::Ghost;
+        return (int)EntityID::Chest;
     case SceneObjectType::PLAYER:
         return 0;
     default:
@@ -167,7 +168,7 @@ void SceneFile::SaveScene(std::string name, int width, int height)
     output.writeInt32(MAGIC_NUMBER);
     output.writeShort(width);
     output.writeShort(height);
-    output.writeShort(objects.size() + backgroundObjects.size());
+    output.writeShort((int)objects.size() + (int)backgroundObjects.size());
 
     char proto96[96] = { 0 };
     char proto128[128] = { 0 };

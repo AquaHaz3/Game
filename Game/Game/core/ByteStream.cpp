@@ -79,6 +79,6 @@ void ByteOutStream::writeByte(uint8_t data)
 
 void ByteOutStream::writeUTFString(std::string str)
 {
-	writeShort(str.size());
+	writeShort((uint16_t)str.size());
 	write(str.c_str(), str.size());
 }

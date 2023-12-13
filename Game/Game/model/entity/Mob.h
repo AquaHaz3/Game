@@ -40,7 +40,7 @@ private:
     float _idle_dx;
     float _idle_dy;
 
-	float max_hp;
+	int max_hp;
 
 };
 

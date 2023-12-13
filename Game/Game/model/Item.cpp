@@ -7,6 +7,12 @@ std::vector<Weapon> Item::weapons = std::vector<Weapon>(MAX_ITEM_ID);
 #define _weapon(type, level, damage, xp_cost, reserved) \
 {(uint8_t) type, (uint8_t) level, damage, xp_cost, reserved}
 
+Item::Item()
+{
+	id = 0;
+	count = 0;
+}
+
 void Item::InitItems()
 {
 	addItem(ItemID::AIR);
@@ -16,7 +22,7 @@ void Item::InitItems()
 	addItem(ItemID::SPOTLIGHT, "light0.png");
 
 	//                             Type         Rare             d  x  r
-	addWeapon(ItemID::BOW, _weapon(WType::BOWS, WLevel::DEFAULT, 5, 5, 1), "weapon/bow.png");
+	addWeapon(ItemID::BOW, _weapon(WType::BOWS, WLevel::DEFAULT, 5, 2, 1), "weapon/bow.png");
 	addWeapon(ItemID::SWORD, _weapon(WType::SWORDS, WLevel::DEFAULT, 5, 0, 1), "weapon/sword.png");
 	addWeapon(ItemID::FAST_BOW, _weapon(WType::BOWS, WLevel::RARE, 9, 7, 4), "weapon/fast_bow.png");
 	addWeapon(ItemID::BOW2, _weapon(WType::BOWS, WLevel::UNUSUAL, 7, 6, 1), "weapon/bow2.png");

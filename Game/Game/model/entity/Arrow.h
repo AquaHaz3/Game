@@ -9,7 +9,8 @@ class Arrow : public Entity
 
 public:
 
-	Arrow() : Entity(0,0,0,0) {};
+	Arrow();
+
 	Arrow(int x, int y, float speed, float angle, Weapon* weapon, Entity* owner);
 
 	virtual void Draw() override;

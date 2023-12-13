@@ -19,3 +19,9 @@ namespace debug_util {
 	void switchDebugBoxes();
 
 }
+
+#include <math.h>
+
+inline float MyVector2Angle(Vector2 v1, Vector2 v2) {
+	return atan2f(v2.y - v1.y, v2.x - v1.x);
+}

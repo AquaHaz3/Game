@@ -20,7 +20,7 @@ public:
 		this->text = text;
 		this->callback = callback;
 
-		textX = x + w / 2 - (text.size() * 10 / 2) - 5;
+		textX = x + w / 2 - (((int)text.size()) * 10 / 2) - 5;
 		textY = y + h / 2 - 10;
 	}
 

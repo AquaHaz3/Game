@@ -27,7 +27,7 @@ struct ParticleAnimation {
 		this->isVertical = isVertical;
 	}
 
-	ParticleAnimation() {};
+	ParticleAnimation();;
 
 };
 

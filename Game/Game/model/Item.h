@@ -56,7 +56,7 @@ public:
 
 public:
 
-	Item() {};
+	Item();;
 
 	Item(ItemID id, int count) 
 	{

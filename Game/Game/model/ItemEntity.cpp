@@ -1,6 +1,15 @@
 #include "ItemEntity.h"
 #include "../core/Debug.h"
 
+ItemEntity::ItemEntity():
+	Entity(0, 0, 0, 0, EntityID::Item)
+{
+	this->id = (char)0;
+	this->tint = { 0,0,0,0 };
+	this->x_offset = 0;
+	this->y_offset = 0;
+}
+
 ItemEntity::ItemEntity(int x, int y, int w, int h, ItemID id)
 	: Entity(x, y, w, h, EntityID::Item)
 {

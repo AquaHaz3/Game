@@ -2,6 +2,11 @@
 
 static Color NO_TINT = { 255,255,255,255 };
 
+Block::Block()
+{
+	this->id = 0;
+}
+
 Block::Block(int x, int y, BlockID id)
 	: Box2D(x, y, 32, 32) 
 {

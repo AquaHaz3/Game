@@ -105,7 +105,7 @@ void Mob::Update(__int64 tick)
 					}
 				}
 			}
-			float angle = (Vector2Angle({aabb.min.x - 1, aabb.min.y}, z) / PI) * 360.0;
+			float angle = (MyVector2Angle({aabb.min.x - 1, aabb.min.y}, z) / PI) * 360.0;
 			updateDirection(angle);
 			if (isDistanceBattle) {
 				if (d < detectRadius * 2) {

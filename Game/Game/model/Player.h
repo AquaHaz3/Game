@@ -10,7 +10,7 @@ class Player : public Entity
 	
 public:
 
-	Player() : Entity(0, 0, 32, 32, EntityID::Player) {}
+	Player();
 
 	Player(int x, int y);
 
@@ -18,19 +18,19 @@ public:
 	virtual void Update(__int64 tick) override;
 	virtual void OnEvent(Event* event) override;
 
-	Direction direction; // Направление
+	Direction direction = Direction::RIGHT; // Направление
 
 private:
 
-	int walk_tick; // номер кадра (для анимации ходьбы)
-	char x_offset;
-	char y_offset;
-	SpriteRef texture; // текстура игрока
+	int walk_tick = 0; // номер кадра (для анимации ходьбы)
+	char x_offset = 0;
+	char y_offset = 0;
+	SpriteRef texture = 0; // текстура игрока
 
-	SpriteRef inventoryCell; 
-	SpriteRef inventoryHand;
+	SpriteRef inventoryCell = 0; 
+	SpriteRef inventoryHand = 0;
 	std::vector<Item> inventory;
-	int invFreeIndex; // индекс свободной ячейки
+	int invFreeIndex = 0; // индекс свободной ячейки
 
 	void drawUI(); // Рисует интерфейс (Жизни, XP)
 	void drawInventory();
@@ -38,16 +38,16 @@ private:
 
 	void checkForAttack(); // Обработка атаки игроком (Проверки на нажатие мыши и т.д.)
 
-	int xp;
-	int remindAboutXp; // Напоминание о xp;
-	char bow_progress; // натянутость лука
-	char sword_progress;
+	int xp = 0;
+	int remindAboutXp = 0; // Напоминание о xp;
+	char bow_progress = 0; // натянутость лука
+	char sword_progress = 0;
 
-	int inv_x; // 'x' позиция инвентаря на экране
+	int inv_x = 0; // 'x' позиция инвентаря на экране
 	//int xpbar_x; // 'x' позиция 'xp' бара на экране
 
 	Weapon weapon; // Наше текущее оружие в руке (его хар-ки)
-	int weaponID;
+	int weaponID = 0;
 };
 
 typedef std::shared_ptr<Player> PlayerRef;

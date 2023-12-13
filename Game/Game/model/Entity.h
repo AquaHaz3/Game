@@ -8,8 +8,9 @@ enum class EntityID {
 	Unknown = 0,
 	Player = 1,
 	Item = 2,
-	Ghost = 3,
-	Bat = 4,
+	Chest = 3,
+	Ghost = 4,
+	Bat = 5,
 	Dark,
 
 	__lastEntity
@@ -31,7 +32,7 @@ struct EntityModel {
 	uint16_t detectRadius;
 	uint16_t idleRadius;
 
-	EntityModel() {}
+	EntityModel();
 	EntityModel(EntityID id, short hp, bool isDistance, bool solid, uint16_t detectR, uint16_t idleR)
 	{
 		this->id = id;
@@ -72,13 +73,19 @@ protected:
 	static std::vector<Texture2D> textures;
 	static std::vector<EntityModel> models;
 
-	static void addEntity(
+	static void addEntityMob(
 		EntityID id, std::string tex_path,
 		short hp, bool isDistance, bool solid, uint16_t detectR, uint16_t idleR);
+
+	static void addEntityBase(EntityID id, std::string tex_path);
 
 public:
 
 	static void InitEntities();
+
+	static Entity* EntityFactory(EntityID id, int x, int y, int w, int h, uint16_t ord, Color optional);
+	static Entity* EntityFactory(EntityID id, int x, int y, int w, int h, uint16_t ord);
+	
 
 };
 

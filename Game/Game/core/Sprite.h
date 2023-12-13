@@ -40,10 +40,10 @@ public:
 
 	void addTile(int x, int y, int w, int h) {
 		Rectangle* region = new Rectangle();
-		region->x = x;
-		region->y = y;
-		region->width = w;
-		region->height = h;
+		region->x = (float)x;
+		region->y = (float)y;
+		region->width = (float)w;
+		region->height = (float)h;
 		tile.push_back(region);
 		isTiled = true;
 	}

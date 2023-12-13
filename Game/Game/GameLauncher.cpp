@@ -26,6 +26,8 @@ GameLauncher::GameLauncher()
     const int screenWidth = 1024;
     const int screenHeight = 640;
 
+    loadingStage = -1;
+
     isGameAlive = true;
 
     SceneManager::Instance()->setDefaultCameraSize(screenWidth, screenHeight);
@@ -65,7 +67,7 @@ void GameLauncher::load()
         ClearBackground(DARKGRAY);
         DrawRectangle(256, 300, 512, 40, GRAY);
         DrawRectangle(256, 300, 73 * loadingStage, 40, BLUE);
-        DrawText(text.c_str(), 470 - (text.size() * 2), 355, 20, WHITE);
+        DrawText(text.c_str(), 470 - ((int)text.size() * 2), 355, 20, WHITE);
         loadingStage++;
         EndDrawing();
         switch (loadingStage)
