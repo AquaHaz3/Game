@@ -4,14 +4,14 @@
 
 class SceneStartEvent : public Event {
 
-	MAKE_CLASS_UNIQUE;
-
 public:
 
-	SceneStartEvent() : Event(GET_CLASS_UUID()) {
+	MAKE_CLASS_UNIQUE;
 
+	int index;
+
+	SceneStartEvent(int index) : Event(GET_CLASS_UUID()) {
+		this->index = index;
 	}
 
 };
-
-RESOLVE_UNIQUE_SYMBOL(SceneStartEvent);

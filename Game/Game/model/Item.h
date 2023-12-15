@@ -73,6 +73,7 @@ protected:
 
 	friend class ItemEntity;
 	friend class Player;
+	friend class Chest;
 	friend class EditorUI;
 
 	static std::vector<Texture2D> textures;

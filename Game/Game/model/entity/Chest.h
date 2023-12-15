@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Entity.h"
+#include "../Item.h"
 
 class Chest : public Entity
 {
@@ -16,7 +17,23 @@ public:
 
 private:
 
+	ItemID chooseRandomItem();
+	Vector2 chooseRandomPlace();
+
 	uint8_t frame;
 	bool isPlayerNear;
+	bool isOpen;
+	bool isDropped;
+	bool isOpenTexture;
+	int16_t openTicks;
+
+	ItemID droppedItem;
+	Vector2 dropDest;
+	Vector2 dropPos;
+	Vector2 dropMove;
+	bool drawColorWhenOpen = false;
+
+	Color dropColor;
+
 
 };

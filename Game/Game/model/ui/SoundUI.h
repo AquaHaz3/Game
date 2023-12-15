@@ -26,6 +26,8 @@ public:
 		AddSounds("potion", "resources/sounds/potion.mp3");
 		AddSounds("pickup", "resources/sounds/pick.mp3");
 		AddSounds("explosion_small", "resources/sounds/explosion_small.wav");
+		AddSounds("chest_open", "resources/sounds/open_chest.wav");
+		AddSounds("chest_drop", "resources/sounds/chest_drop.wav");
 	}
 
 	static Sound GetSound(std::string Name) {

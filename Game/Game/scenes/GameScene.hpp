@@ -11,6 +11,9 @@
 #include "model/Background.h"
 #include <string>
 
+#include "../events/SceneStartEvent.hpp"
+#include "../events/EventBus.hpp"
+
 class GameScene : public Scene {
 
 public:
@@ -27,6 +30,10 @@ public:
 
         SceneFile file = SceneFile(name); // Берём сцену из сохранённого файла ( ..\data\base.scene )
         file.InitScene(this);
+
+		auto startEvent = new SceneStartEvent(1);
+		EventBus::getInstance()->post(startEvent);
+		delete startEvent;
        
 	};
 

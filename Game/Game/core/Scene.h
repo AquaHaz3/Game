@@ -66,6 +66,7 @@ public:
 	}
 
 	void setCameraScale(float scale) { cam_scale = scale; }
+	float getCameraScale() { return cam_scale; }
 
 	/* 
 	Перемещает камеру так, чтобы объект был виден 

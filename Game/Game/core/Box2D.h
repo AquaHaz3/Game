@@ -76,6 +76,13 @@ public:
 		return state;
 	};
 
+	void toOrigin() {
+		if (state == MORPHISM_STATE_UNACTIVE) return;
+		if (state == MORPHISM_STATE_ACTION_RETURN) return;
+
+		state = MORPHISM_STATE_ACTION_RETURN;
+	}
+
 	void Update()
 	{
 		if (value == nullptr) return;
@@ -90,7 +97,10 @@ public:
 			else state = MORPHISM_STATE_END_ACTION;
 		}
 		else {
-			if (*value > min) *value -= speed;
+			if (*value > min) {
+				*value -= speed;
+				onAction();
+			}
 			else state = MORPHISM_STATE_UNACTIVE;
 		}
 	};

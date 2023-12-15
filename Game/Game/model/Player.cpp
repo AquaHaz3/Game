@@ -20,6 +20,7 @@ Player::Player() : Entity(0, 0, 32, 32, EntityID::Player)
 {
 	health = 0;
 	speed = 0;
+	isFrozen = false;
 }
 
 Player::Player(int x, int y) : Entity(x, y, 20, 30, EntityID::Player)
@@ -68,6 +69,7 @@ Player::Player(int x, int y) : Entity(x, y, 20, 30, EntityID::Player)
 	remindAboutXp = 0;
 	bow_progress = 0;
 	weapon = { 0,0,0,0,0 };
+	isFrozen = false;
 }
 
 void Player::Draw()
@@ -107,6 +109,7 @@ void Player::Draw()
 
 #include "Movement.h"
 #include "../events/CollectItemEvent.hpp"
+#include "../events/ChestEvents.hpp"
 
 void Player::Update(__int64 tick)
 {
@@ -114,7 +117,11 @@ void Player::Update(__int64 tick)
 	if (tick % 3 != 0) return;
 	walk_tick = (tick / 100) % 2 + 1;
 	Vector2 pre = aabb.min;
-	bool isMoved = Movement::EntityWASDControl(this);
+
+	bool isMoved = false;
+	if (!isFrozen) {
+		isMoved = Movement::EntityWASDControl(this);
+	}
 
 	if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
 		if (sword_progress == 0) sword_progress = 30;
@@ -206,6 +213,12 @@ void Player::OnEvent(Event* event)
 			return;
 		}
 		putToInventory((uint8_t) itemE->id); // помещаем подобранный предмет в инвентарь
+	}
+	if (event->uuid == ChestOpenEvent::getClassUUID()) {
+		isFrozen = true;
+	}
+	if (event->uuid == ChestDropEvent::getClassUUID()) {
+		isFrozen = false;
 	}
 }
 

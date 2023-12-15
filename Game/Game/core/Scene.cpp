@@ -14,7 +14,7 @@ Scene::Scene()
 	player = 0;
 	isInit = false;
 	cam_scale = 1;
-	cameraZoom = Morphism<float>(&cam_scale, 2.0f, 1.0f, 0.0625f, [](){});
+	cameraZoom = Morphism<float>(&cam_scale, 1.5f, 1.0f, 0.03125f, [](){});
 }
 
 Scene::Scene(int width, int height)
@@ -33,7 +33,7 @@ Scene::Scene(int width, int height)
 	background = DARKGRAY;
 	isInit = false;
 	cam_scale = 1;
-	cameraZoom = Morphism<float>(&cam_scale, 2.0f, 1.0f, 0.0625f,
+	cameraZoom = Morphism<float>(&cam_scale, 1.5f, 1.0f, 0.03125f,
 		[this]() {
 			SceneManager::current->bindCamera(&player.get()->aabb, 320, 196);
 		}

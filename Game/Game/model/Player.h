@@ -48,6 +48,8 @@ private:
 
 	Weapon weapon; // Наше текущее оружие в руке (его хар-ки)
 	int weaponID = 0;
+
+	bool isFrozen;
 };
 
 typedef std::shared_ptr<Player> PlayerRef;
