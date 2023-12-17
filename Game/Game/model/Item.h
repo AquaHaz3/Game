@@ -18,6 +18,11 @@ enum class ItemID
 	FAST_BOW,
 	BOW2,
 	RED_BOW,
+	RED_WAND,
+	GREEN_WAND,
+	ELECTRO_STAFF,
+	GUN,
+	RED_STAFF,
 
 	__lastItem
 };
@@ -69,15 +74,15 @@ public:
 	static void InitItems();
 	static bool isWeaponItem(uint8_t id);
 
+	static std::vector<Weapon> weapons;
+
 protected:
 
 	friend class ItemEntity;
 	friend class Player;
 	friend class Chest;
 	friend class EditorUI;
-
 	static std::vector<Texture2D> textures;
-	static std::vector<Weapon> weapons;
 
 	/* Добавить предмет в список 
 	@param id - ID; tex_path - название текстурки */

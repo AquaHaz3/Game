@@ -8,6 +8,8 @@ class GameObject
 
 public:
 
+	virtual ~GameObject() {};
+
 	virtual void Draw() = 0;
 	virtual void Update(__int64 tick) = 0;
 	virtual void OnEvent(Event* event) = 0;
@@ -21,5 +23,6 @@ public:
 #define PARTICLE_OBJECT   0b00000010
 #define ENTITY_OBJECT     0b00000100
 #define SOLID_OBJECT      0b00001000
+#define PLAYER_OBJECT     0b00010000
 
 

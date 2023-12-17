@@ -12,6 +12,7 @@ enum class EntityID {
 	Ghost = 4,
 	Bat = 5,
 	Dark,
+	Agent,
 
 	__lastEntity
 };
@@ -68,9 +69,9 @@ protected:
 
 	friend class EditorUI;
 
-	Sprite texture;
+	SpriteRef texture;
 
-	static std::vector<Texture2D> textures;
+	static std::vector<SpriteRef> textures;
 	static std::vector<EntityModel> models;
 
 	static void addEntityMob(

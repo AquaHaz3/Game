@@ -17,30 +17,29 @@ public:
 
 private:
 
-	bool isHaveTarget;
+	bool isHaveTarget; 
 
-	void chooseTarget(__int64 tick);
-	void toogleState();
+	void chooseTarget(__int64 tick); // Выбор цели
+	void toogleState(); // 
 
-	Entity* target;
-	int targetChangeTick;
-	bool isIdle;
+	Entity* target; // Цель
+	bool isIdle; // Статус (true - ожидание, false - движение)
 
-	int idleTick;
-	char direction;
+	int idleTick; // Тик простоя
+	char direction; // направление
 
-	float detectRadius;
-	float idleRadius;
-	bool isDistanceBattle;
-	bool isSolid;
+	float detectRadius; // Радиус обнаружения
+	float idleRadius; // Радиус доступного движения во время простоя
+	bool isDistanceBattle; // Атакаует с дистанции, если false - ближний бой
+	bool isSolid; // Через стены не проникает
 
-	Vector2 idlePos;
+	Vector2 idlePos; // Позиция простоя
 
-    int _idle_MoveState;
-    float _idle_dx;
-    float _idle_dy;
+    int _idle_MoveState; // 
+    float _idle_dx; //
+    float _idle_dy; //
 
-	int max_hp;
+	int max_hp; // Здоровье 
 
 };
 

@@ -1,7 +1,5 @@
 #include "Entity.h"
 
-
-
 Entity::Entity(int x, int y, int w, int h)
 	: Box2D(x, y, w, h)
 {
@@ -25,36 +23,38 @@ void Entity::Draw()
 void Entity::Update(__int64 tick)
 {}
 
-#include "../events/ArrowHitEvent.hpp"
+#include "../events/ProjectileHitEvent.hpp"
 
 void Entity::OnEvent(Event* event)
 {
-	if (event->uuid == ArrowHitEvent::getClassUUID()) {
-		auto arrowHit = (ArrowHitEvent*)event;
+	if (event->uuid == ProjectileHitEvent::getClassUUID()) {
+		auto arrowHit = (ProjectileHitEvent*)event;
 		arrowHit->phase = true;
 	}
 }
 
-std::vector<Texture2D> Entity::textures = std::vector<Texture2D>(20);
+std::vector<SpriteRef> Entity::textures = std::vector<SpriteRef>(20);
 std::vector<EntityModel> Entity::models = std::vector<EntityModel>(20);
 
 void Entity::addEntityMob(EntityID id, std::string tex_path,
 	short hp, bool isDistance, bool solid, uint16_t detectR, uint16_t idleR)
 {
-	textures[(int)id] = Sprite::LoadTextureFromResources(tex_path);
+	textures[(int)id] = SpriteLoader::GetSprite(tex_path);
 	models[(int)id] = EntityModel(id, hp, isDistance, solid, detectR, idleR);
 }
 
 void Entity::addEntityBase(EntityID id, std::string tex_path)
 {
-	textures[(int)id] = Sprite::LoadTextureFromResources(tex_path);
+	textures[(int)id] = SpriteLoader::GetSprite(tex_path);
 }
 
 void Entity::InitEntities()
 {
-	addEntityMob(EntityID::Ghost, "entity/ghost.png", 15, false, false, 128, 64);
-	addEntityMob(EntityID::Bat, "entity/bat.png", 7, false, true, 96, 72);
-	addEntityMob(EntityID::Dark, "entity/dark.png", 25, true, true, 128, 32);
+	addEntityMob(EntityID::Ghost, "entity/ghost.png", 15, false, false, 140, 48);
+	addEntityMob(EntityID::Bat, "entity/bat.png", 7, false, true, 128, 72);
+	addEntityMob(EntityID::Dark, "entity/dark.png", 25, true, true, 160, 32);
+	addEntityMob(EntityID::Agent, "entity/agent.png", 20, true, true, 196, 16);
+
 	addEntityBase(EntityID::Chest, "entity/chest.png");
 }
 

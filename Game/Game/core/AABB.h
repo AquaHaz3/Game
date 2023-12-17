@@ -22,6 +22,15 @@ struct AABB
 
 namespace UtilAABB {
 
+	enum class Side {
+		LEFT,
+		TOP,
+		RIGHT,
+		BOTTOM,
+
+		UNKNOWN = 5
+ 	};
+
 	/* Проверка на столкновение */
 	bool isOverlap(AABB* a, AABB* b);
 
@@ -36,6 +45,8 @@ namespace UtilAABB {
 	
 	bool isIntersects(Vector2 a1, Vector2 a2, Vector2 b1, Vector2 b2);
 	bool isIntersectsBox(AABB* box, Vector2 b1, Vector2 b2);
+
+	UtilAABB::Side getCollisionSide(Vector2 from, Vector2 to, AABB* relateBox);
 
 }
 

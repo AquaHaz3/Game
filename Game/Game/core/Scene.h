@@ -20,6 +20,7 @@ public:
 	int height;
 
 	std::list<GameObject*> objects;
+
 	std::list<Box2D*> boxes;
 	std::list<Particle*> particles;
 
@@ -81,6 +82,8 @@ public:
 	std::vector<Entity*>& getPlayerContainer();
 
 	Morphism<float> cameraZoom;
+
+	uint16_t notifications = 0;
 
 protected:
 

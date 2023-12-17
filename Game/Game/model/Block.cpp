@@ -38,7 +38,7 @@ void Block::InitBlocks()
 	addBlock(BlockID::WOOD_Y, "wood_wall_y.png");
 	/* Ground blocks: */
 	addBlock(BlockID::GRAVEL, "gravel.png");
-	addBlock(BlockID::COBBLESTONE, "cobblestone.png");
+	addBlock(BlockID::COBBLESTONE, "cobblestone2.png");
 	addBlock(BlockID::FLOOR1, "floor.png");
 	addBlock(BlockID::FLOOR2, "floor2.png");
 	addBlock(BlockID::PLANKS, "planks.png");

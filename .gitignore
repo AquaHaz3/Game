@@ -10,9 +10,11 @@
 *.userosscache
 *.sln.docstates
 *.dll
+*.pdb
 
 unsorted_images/
 Game/.vs
+Game/x64/Debug/Game.pdb
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

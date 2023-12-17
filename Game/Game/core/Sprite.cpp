@@ -55,6 +55,8 @@ void SpriteLoader::LoadInGameSprites()
 	textures.emplace("inv_hand.png", Sprite::LoadTextureFromResources("inv_hand.png"));
 	textures.emplace("ui_left.png", Sprite::LoadTextureFromResources("ui_left.png"));
 	textures.emplace("ui_right.png", Sprite::LoadTextureFromResources("ui_right.png"));
+	textures.emplace("arrow.png", Sprite::LoadTextureFromResources("arrow.png"));
+	textures.emplace("arrow2.png", Sprite::LoadTextureFromResources("arrow2.png"));
 }
 
 SpriteRef SpriteLoader::GetSprite(std::string name)

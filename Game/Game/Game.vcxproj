@@ -150,10 +150,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="core\ByteStream.cpp" />
-    <ClCompile Include="events\ArrowHitEvent.cpp" />
+    <ClCompile Include="events\ProjectileHitEvent.cpp" />
     <ClCompile Include="events\ChestEvents.cpp" />
     <ClCompile Include="events\SceneStartEvent.cpp" />
     <ClCompile Include="model\entity\Arrow.cpp" />
+    <ClCompile Include="model\entity\Bullet.cpp" />
     <ClCompile Include="model\entity\Chest.cpp" />
     <ClCompile Include="model\entity\Mob.cpp" />
     <ClCompile Include="model\Background.cpp" />
@@ -179,9 +180,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\ByteStream.h" />
-    <ClInclude Include="events\ArrowHitEvent.hpp" />
+    <ClInclude Include="events\ProjectileHitEvent.hpp" />
     <ClInclude Include="events\ChestEvents.hpp" />
     <ClInclude Include="model\entity\Arrow.h" />
+    <ClInclude Include="model\entity\Bullet.h" />
     <ClInclude Include="model\entity\Chest.h" />
     <ClInclude Include="model\entity\Mob.h" />
     <ClInclude Include="model\Background.h" />

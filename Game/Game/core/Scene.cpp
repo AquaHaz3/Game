@@ -30,7 +30,7 @@ Scene::Scene(int width, int height)
 	this->height = height;
 	player = 0;
 	isStatic = false;
-	background = DARKGRAY;
+	background = {60,60,65,255};
 	isInit = false;
 	cam_scale = 1;
 	cameraZoom = Morphism<float>(&cam_scale, 1.5f, 1.0f, 0.03125f,
@@ -50,6 +50,7 @@ void Scene::addPlayerToScene(Player* player)
 
 void Scene::addObjectToScene(GameObject* obj)
 {
+	if (obj == 0) return;
 	objects.push_back(obj);
 	if (obj->flags & SOLID_OBJECT) boxes.push_back((Box2D*)obj);
 }
@@ -89,7 +90,12 @@ void Scene::Draw()
 	for (auto obj : objects) {
 		if (obj->flags & SOLID_OBJECT) {
 			Box2D* box = (Box2D*)obj;
-			if (box->aabb.max.x + cam_x > 0 && box->aabb.max.y + cam_y > 0) {
+			if (
+				box->aabb.max.x + cam_x > 0
+				&& box->aabb.max.y + cam_y > 0
+				&& box->aabb.min.x + cam_x <= camWidth
+				&& box->aabb.min.y + cam_y <= camHeight
+				) {
 				obj->Draw();
 			}
 		}
@@ -125,8 +131,23 @@ void Scene::Draw()
 void Scene::Update(__int64 tick)
 {
 
+	notifications = 0;
+
 	for (auto obj : objects) {
-		obj->Update(tick);
+		if (obj->flags & SOLID_OBJECT) {
+			Box2D* box = (Box2D*)obj;
+			if (
+				box->aabb.max.x + cam_x > -64
+				&& box->aabb.max.y + cam_y > -64
+				&& box->aabb.min.x + cam_x <= camWidth + 64
+				&& box->aabb.min.y + cam_y <= camHeight + 64
+				) {
+				obj->Update(tick);
+			}
+		}
+		else {
+			obj->Update(tick);
+		}
 	}
 
 	for (auto p : particles) {
@@ -141,8 +162,9 @@ void Scene::Update(__int64 tick)
 			objects.remove(to_r);
 			if(to_r->flags & SOLID_OBJECT) boxes.remove((Box2D*) to_r);
 			if(to_r->flags & PARTICLE_OBJECT) particles.remove((Particle*) to_r);
-			if(to_r->object_id == 0b1100110)
+			if (to_r->object_id == 0b11001100) {
 				delete to_r;
+			}
 		}
 		toRemove.clear();
 		//toRemove.shrink_to_fit();
@@ -199,7 +221,7 @@ void Scene::removeObject(GameObject* obj)
 
 void Scene::addParticle(Particle* particle)
 {
-	if (particles.size() > 50) {
+	if (particles.size() > 70) {
 		delete particle;
 		return;
 	}

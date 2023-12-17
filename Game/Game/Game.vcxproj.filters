@@ -87,7 +87,7 @@
     <ClCompile Include="core\ByteStream.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="events\ArrowHitEvent.cpp">
+    <ClCompile Include="events\ProjectileHitEvent.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="model\ui\SoundUI.cpp">
@@ -103,6 +103,9 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="events\SceneStartEvent.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="model\entity\Bullet.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -179,7 +182,7 @@
     <ClInclude Include="model\entity\Arrow.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="events\ArrowHitEvent.hpp">
+    <ClInclude Include="events\ProjectileHitEvent.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="core\SceneFile.h">
@@ -216,6 +219,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="events\ChestEvents.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="model\entity\Bullet.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

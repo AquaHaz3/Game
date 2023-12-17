@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include "Entity.h"
@@ -34,13 +35,15 @@ private:
 
 	void drawUI(); // Рисует интерфейс (Жизни, XP)
 	void drawInventory();
+	void drawWeaponInHand(int layer); // Рисует оружие в руке
 	bool putToInventory(uint8_t id);
 
-	void checkForAttack(); // Обработка атаки игроком (Проверки на нажатие мыши и т.д.)
+	void checkForAttack(__int64 tick); // Обработка атаки игроком (Проверки на нажатие мыши и т.д.)
 
 	int xp = 0;
 	int remindAboutXp = 0; // Напоминание о xp;
 	char bow_progress = 0; // натянутость лука
+	uint16_t gun_progress = 0; // перезарядка огнестрельного оружия
 	char sword_progress = 0;
 
 	int inv_x = 0; // 'x' позиция инвентаря на экране

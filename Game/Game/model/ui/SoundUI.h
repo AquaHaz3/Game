@@ -28,9 +28,12 @@ public:
 		AddSounds("explosion_small", "resources/sounds/explosion_small.wav");
 		AddSounds("chest_open", "resources/sounds/open_chest.wav");
 		AddSounds("chest_drop", "resources/sounds/chest_drop.wav");
+		AddSounds("magic", "resources/sounds/0.wav");
+		AddSounds("electro", "resources/sounds/electro.wav");
+		AddSounds("gun", "resources/sounds/gun.wav");
 	}
 
-	static Sound GetSound(std::string Name) {
+	static Sound& GetSound(std::string Name) {
 		
 		if (Sounds.count(Name) <= 0) {
 			throw std::exception("The sound with this name is not exist");

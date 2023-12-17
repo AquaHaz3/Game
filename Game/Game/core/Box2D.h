@@ -29,11 +29,9 @@ public:
 	Vector2& getPos() { return aabb.min; };
 
 	AABB aabb;
-
-protected: 
-
 	int w;
 	int h;
+	
 
 };
 

@@ -12,22 +12,22 @@ namespace Movement {
 		bool isMoved = false;
 		if (IsKeyDown(KEY_W)) {
 			entity->moveBy(0, -entity->speed);
-			entity->direction = Direction::UP;
+			//entity->direction = Direction::UP;
 			isMoved = true;
 		}
 		if (IsKeyDown(KEY_S)) {
 			entity->moveBy(0, entity->speed);
-			entity->direction = Direction::DOWN;
+			//entity->direction = Direction::DOWN;
 			isMoved = true;
 		}
 		if (IsKeyDown(KEY_A)) {
 			entity->moveBy(-entity->speed, 0);
-			entity->direction = Direction::LEFT;
+			//entity->direction = Direction::LEFT;
 			isMoved = true;
 		}
 		if (IsKeyDown(KEY_D)) {
 			entity->moveBy(entity->speed, 0);
-			entity->direction = Direction::RIGHT;
+			//entity->direction = Direction::RIGHT;
 			isMoved = true;
 		}
 		return isMoved;

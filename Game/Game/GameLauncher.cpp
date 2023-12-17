@@ -6,6 +6,7 @@
 #include "model/Block.h"
 #include "model/Item.h"
 #include "model/entity/Arrow.h"
+#include "model/entity/Bullet.h"
 #include "model/Wall.h"
 #include "model/ItemEntity.h"
 #include "model/Background.h"
@@ -35,12 +36,12 @@ GameLauncher::GameLauncher()
     auto start_scene = std::shared_ptr<Scene>(new MenuScene(screenWidth, screenHeight));
 
     SceneFile sceneFile = SceneFile("base.scene");
-    auto gameScene = new GameScene(screenWidth*2, screenHeight*2, "base.scene");
+    auto gameScene = new GameScene(2368, 2368, "base.scene");
     gameScene->setDebugGrid(false);
 
     SceneManager::Instance()->setStartScene(start_scene);
     SceneManager::Instance()->AddScene(gameScene);
-    SceneManager::Instance()->AddScene(new EditorScene(screenWidth*2, screenHeight*2));
+    SceneManager::Instance()->AddScene(new EditorScene(2368, 2368)); 
 }
 
 void GameLauncher::OnStart()
@@ -78,6 +79,7 @@ void GameLauncher::load()
         case 3: SoundUI::InitSounds();; text = "Load: Misc ..."; break;
         case 4:
             Arrow::InitArrows();
+            Bullet::InitBullets();
             AnimatedParticle::InitAnimatedEffects();
             text = "Load: Scenes ...";
             break;

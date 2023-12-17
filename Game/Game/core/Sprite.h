@@ -90,6 +90,7 @@ public:
 
 	static void LoadInGameSprites();
 	static SpriteRef GetSprite(std::string name);
+	static SpriteRef GetSprite(Texture2D texture);
 
 private:
 

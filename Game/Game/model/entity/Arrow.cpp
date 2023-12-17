@@ -1,7 +1,7 @@
 ﻿#include "Arrow.h"
 
 #include "../../core/Debug.h"
-#include "../../events/ArrowHitEvent.hpp"
+#include "../../events/ProjectileHitEvent.hpp"
 #include "../../core/Scene.h"
 
 Arrow::Arrow() : Entity(0,0,0,0)
@@ -15,6 +15,7 @@ Arrow::Arrow() : Entity(0,0,0,0)
 	lifeTime = 0;
 	isMoving = false;
 	isAlive = false;
+	isOwnedByPlayer = false;
 	flags = flags & (~SOLID_OBJECT); // Убираем 'твердость' (чтобы игрок мог проходить сквозь)
 	this->owner = 0;
 	id = 0;
@@ -23,6 +24,9 @@ Arrow::Arrow() : Entity(0,0,0,0)
 Arrow::Arrow(int x, int y, float speed, float angle, Weapon* weapon, Entity* owner)
 	: Entity(x, y, 4, 4)
 {
+
+	isOwnedByPlayer = (owner->flags & PLAYER_OBJECT);
+
 	this->angle = (angle / PI) * 180;
 	this->speed = speed;
 	this->health = (int)(weapon->damage * (speed - 0.5f)); // Здоровье стрелы 🤨 <=> Сколько урона он принесёт
@@ -43,7 +47,7 @@ Arrow::Arrow(int x, int y, float speed, float angle, Weapon* weapon, Entity* own
 
 void Arrow::Draw()
 {
-	arrow_types[id].DrawPro(aabb.min.x , aabb.min.y, 32, 32, 16, 16, angle);
+	arrow_types[id]->DrawPro(aabb.min.x , aabb.min.y, 32, 32, 16, 16, angle);
 	if (debug_util::isDebugBoxes()) {
 		DrawRectangleLines(aabb.min.x, aabb.min.y, 3, 3, RED);
 	}
@@ -60,13 +64,14 @@ void Arrow::Update(__int64 tick)
 	if (!isMoving) return;
 	moveBy(xSpeed, ySpeed);
 	if (tick % 3 == 2) {
+		auto players = SceneManager::GetPlayers();
 		for (auto solid : SceneManager::current->boxes) { // Проверяем не столкнулась ли стрела с чем-то?
 			if (solid == this) continue;
 			if (UtilAABB::isOverlap(&aabb, &solid->aabb)) {
 				if (solid->flags & ENTITY_OBJECT) {
 					bool phaseThrow = false;
 					if (lifeTime < 458) {
-						auto e = new ArrowHitEvent(this);
+						auto e = new ProjectileHitEvent(this);
 						solid->OnEvent(e); // Отправляем событие 'ArrowHitEvent' объекту, принявшему стрелу
 						if (e->destroyArrowAfterHit) lifeTime = 501;
 						phaseThrow = e->phase;
@@ -78,6 +83,23 @@ void Arrow::Update(__int64 tick)
 				return;
 			}
 		}
+		if (!isOwnedByPlayer) {
+			for (auto player : players) {
+				if (player == owner) continue;
+				if (UtilAABB::isOverlap(&aabb, &player->aabb)) {
+					if (player->flags & ENTITY_OBJECT) {
+						if (lifeTime < 458) {
+							auto e = new ProjectileHitEvent(this);
+							player->OnEvent(e);
+							if (e->destroyArrowAfterHit) lifeTime = 501;
+							delete e;
+						}
+					}
+					isMoving = false;
+					return;
+				}
+			}
+		}
 	}
 }
 
@@ -85,10 +107,10 @@ void Arrow::OnEvent(Event* event)
 {
 }
 
-std::vector<Sprite> Arrow::arrow_types = std::vector<Sprite>();
+std::vector<SpriteRef> Arrow::arrow_types = std::vector<SpriteRef>();
 
 void Arrow::InitArrows()
 {
-	arrow_types.push_back(Sprite("arrow.png"));
-	arrow_types.push_back(Sprite("arrow2.png"));
+	arrow_types.push_back(SpriteLoader::GetSprite("arrow.png"));
+	arrow_types.push_back(SpriteLoader::GetSprite("arrow2.png"));
 }

@@ -47,6 +47,7 @@ public:
 		if (isSelection == 1) {
 			DrawRectangleLinesEx(select, 1, ORANGE);
 			DrawRectangleRec(select, { 255, 161, 0, 60 });
+			DrawText(selectionData.c_str(), pos.x + 32, pos.y + 32, 10, WHITE);
 		}
 
 		if (isSelection == 2) {
@@ -68,7 +69,7 @@ public:
 		Vector2 mouse = SceneManager::GetMouseOnWorld();
 		if (tick % 2 == 0) {
 			posData = "(" + std::to_string((int)pos.x) + ", " + std::to_string((int)pos.y) + ")";
-			selectionData = "";
+			selectionData = "(" + std::to_string((int)select.width/32) + ", " + std::to_string((int)select.height / 32) + ")";
 		}
 		if (isGrid)
 		{

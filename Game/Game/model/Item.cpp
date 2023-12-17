@@ -21,12 +21,19 @@ void Item::InitItems()
 	addItem(ItemID::CROWN, "crown.png");
 	addItem(ItemID::SPOTLIGHT, "light0.png");
 
-	//                             Type         Rare             d  x  r
-	addWeapon(ItemID::BOW, _weapon(WType::BOWS, WLevel::DEFAULT, 5, 2, 1), "weapon/bow.png");
-	addWeapon(ItemID::SWORD, _weapon(WType::SWORDS, WLevel::DEFAULT, 5, 0, 1), "weapon/sword.png");
-	addWeapon(ItemID::FAST_BOW, _weapon(WType::BOWS, WLevel::RARE, 9, 7, 4), "weapon/fast_bow.png");
-	addWeapon(ItemID::BOW2, _weapon(WType::BOWS, WLevel::UNUSUAL, 7, 6, 1), "weapon/bow2.png");
-	addWeapon(ItemID::RED_BOW, _weapon(WType::BOWS, WLevel::LEGENDARY, 15, 10, 2), "weapon/red_bow.png");
+	using enum ItemID;
+
+	//                            Type           Rare            d  x  r
+	addWeapon(BOW, _weapon(WType::BOWS, WLevel::DEFAULT, 5, 2, 1), "weapon/bow.png");
+	addWeapon(SWORD, _weapon(WType::SWORDS, WLevel::DEFAULT, 5, 0, 1), "weapon/sword.png");
+	addWeapon(FAST_BOW, _weapon(WType::BOWS, WLevel::RARE, 9, 7, 4), "weapon/fast_bow.png");
+	addWeapon(BOW2, _weapon(WType::BOWS, WLevel::UNUSUAL, 7, 6, 1), "weapon/bow2.png");
+	addWeapon(RED_BOW, _weapon(WType::BOWS, WLevel::LEGENDARY, 15, 10, 2), "weapon/red_bow.png");
+	addWeapon(RED_WAND, _weapon(WType::EXTRA, WLevel::DEFAULT, 3, 3, 23), "weapon/magic_wand.png");
+	addWeapon(GREEN_WAND, _weapon(WType::EXTRA, WLevel::UNUSUAL, 8, 5, 20), "weapon/stuff_green.png");
+	addWeapon(ELECTRO_STAFF, _weapon(WType::EXTRA, WLevel::RARE, 5, 9, 30), "weapon/staff.png");
+	addWeapon(GUN, _weapon(WType::EXTRA, WLevel::UNUSUAL, 5, 2, 17), "weapon/gun.png");
+	addWeapon(RED_STAFF, _weapon(WType::EXTRA, WLevel::LEGENDARY, 8, 15, 30), "weapon/staff_2.png");
 }
 
 bool Item::isWeaponItem(uint8_t id) {

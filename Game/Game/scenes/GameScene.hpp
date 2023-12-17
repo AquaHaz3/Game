@@ -38,7 +38,7 @@ public:
 	};
 
 	virtual void AfterUpdate(__int64 tick) override {
-		if (tick % 5 == 0) {
+		if (tick % 3 == 0) {
 			cameraZoom.Update();
 		}
 	}

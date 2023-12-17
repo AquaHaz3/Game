@@ -48,3 +48,15 @@ bool UtilAABB::isIntersectsBox(AABB* box, Vector2 b1, Vector2 b2)
 	return t;
 }
 
+UtilAABB::Side UtilAABB::getCollisionSide(Vector2 from, Vector2 to, AABB* box)
+{
+	using enum UtilAABB::Side;
+
+	if (isIntersects(from, to, box->min, { box->min.x, box->max.y })) return LEFT;
+	if (isIntersects(from, to, box->min, { box->max.x, box->min.y })) return TOP;
+	if (isIntersects(from, to, { box->max.x, box->min.y }, box->max)) return RIGHT;
+	if (isIntersects(from, to, box->max, { box->min.x, box->max.y })) return BOTTOM;
+
+	return Side::UNKNOWN;
+}
+

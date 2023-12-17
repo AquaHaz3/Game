@@ -24,18 +24,18 @@ public:
 public:
 
 	static void InitArrows();
-	static std::vector<Sprite> arrow_types;
+	static std::vector<SpriteRef> arrow_types;
 
 	Entity* owner;
 	uint8_t id;
+	
+	bool isOwnedByPlayer;
 
 private:
 
 	int lifeTime;
 	bool isMoving;
 	bool isAlive;
-
-	
 
 };
 

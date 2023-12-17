@@ -1,6 +1,7 @@
 #include "Mob.h"
 #include "../../core/Scene.h"
 #include "../../core/Debug.h"
+#include "Bullet.h"
 
 #include <raymath.h>
 #include <rlgl.h>
@@ -10,22 +11,22 @@ Mob::Mob(int x, int y, EntityID id)
 {
 	isIdle = true;
 	target = nullptr;
-	texture = Sprite(textures[(int)id]);
+	texture = textures[(int)id];
 
-	texture.addTile(32, 64, 32, 32); // Go to RIGHT
-	texture.addTile(32, 0, 32, 32); // Go to DOWN
-	texture.addTile(32, 32, 32, 32); // Go to LEFT
-	texture.addTile(32, 96, 32, 32); // Go to UP
+	texture->addTile(32, 64, 32, 32); // Go to RIGHT
+	texture->addTile(32, 0, 32, 32); // Go to DOWN
+	texture->addTile(32, 32, 32, 32); // Go to LEFT
+	texture->addTile(32, 96, 32, 32); // Go to UP
 
-	texture.addTile(0, 64, 32, 32); // Go to RIGHT
-	texture.addTile(0, 0, 32, 32); // Go to DOWN
-	texture.addTile(0, 32, 32, 32); // Go to LEFT
-	texture.addTile(0, 96, 32, 32); // Go to UP
+	texture->addTile(0, 64, 32, 32); // Go to RIGHT
+	texture->addTile(0, 0, 32, 32); // Go to DOWN
+	texture->addTile(0, 32, 32, 32); // Go to LEFT
+	texture->addTile(0, 96, 32, 32); // Go to UP
 
-	texture.addTile(64, 64, 32, 32); // Go to RIGHT
-	texture.addTile(64, 0, 32, 32); // Go to DOWN
-	texture.addTile(64, 32, 32, 32); // Go to LEFT
-	texture.addTile(64, 96, 32, 32); // Go to UP
+	texture->addTile(64, 64, 32, 32); // Go to RIGHT
+	texture->addTile(64, 0, 32, 32); // Go to DOWN
+	texture->addTile(64, 32, 32, 32); // Go to LEFT
+	texture->addTile(64, 96, 32, 32); // Go to UP
 
 	direction = (int) Direction::DOWN;
 
@@ -45,7 +46,7 @@ void Mob::Draw()
 {
 
 	//if (type == EntityID::Ghost) BeginBlendMode(BLEND_ADD_COLORS);
-	texture.DrawTile(aabb.min.x, aabb.min.y, direction + idleTick * 4);
+	texture->DrawTile(aabb.min.x, aabb.min.y, direction + idleTick * 4);
 	//if (type == EntityID::Ghost) EndBlendMode();
 
 	if (debug_util::isDebugBoxes()) {
@@ -78,6 +79,7 @@ inline void Mob::updateDirection(float& angle)
 
 void Mob::Update(__int64 tick)
 {
+	//SceneManager::current->notifications++;
 
 	if (tick % 144 == 0 && (_idle_MoveState > 0 || isIdle == false)) idleTick = (idleTick + 1) % 3; // Номер кадра анимации простоя
 
@@ -90,31 +92,40 @@ void Mob::Update(__int64 tick)
 
 	if (target != nullptr) { // Режим преследования цели
 		if (tick % 5 == 1) {
-			Vector2 z = Vector2MoveTowards(aabb.min, target->aabb.min, 1);
-			Vector2 dz =Vector2Subtract(aabb.min, z);
-			float d = Vector2Distance(aabb.min, target->aabb.min);
-			for (auto solid : SceneManager::current->boxes) {
-				if (solid->flags & ENTITY_OBJECT) {
-					if (solid == this) continue;
-					float d = Vector2Distance(aabb.min, solid->aabb.min);
-					if (d < 20) {
-						Vector2 z2 = Vector2MoveTowards(aabb.min, solid->aabb.min, 1);
-						Vector2 z3 = Vector2Subtract(aabb.min, z2);
-						moveBy(z3.x, -z3.y);
-						return;
-					}
-				}
-			}
-			float angle = (MyVector2Angle({aabb.min.x - 1, aabb.min.y}, z) / PI) * 360.0;
-			updateDirection(angle);
-			if (isDistanceBattle) {
-				if (d < detectRadius * 2) {
-					if(dz.x > 0) moveBy(dz.x, -dz.y);
-					if(dz.x < 0) moveBy(-dz.x, dz.y);
-				}
+			if (tick % 1000 == 1) {
+				Vector2 center = { aabb.min.x + w / 2,aabb.min.y + h / 2 };
+				Vector2 tCenter = { target->aabb.min.x + target->w / 2,target->aabb.min.y + target->h / 2 };
+				Vector2 z = Vector2MoveTowards(center, tCenter, 64);
+				float _angle = MyVector2Angle({ center.x + 1, center.y }, z);
+				Bullet::SpawnMobBullet(type, center.x, center.y, _angle, this);
 			}
 			else {
-				if (d > 64) setPos(z.x, z.y);
+				Vector2 z = Vector2MoveTowards(aabb.min, target->aabb.min, 1);
+				Vector2 dz = Vector2Subtract(aabb.min, z);
+				float d = Vector2Distance(aabb.min, target->aabb.min);
+				for (auto solid : SceneManager::current->boxes) {
+					if (solid->flags & ENTITY_OBJECT) {
+						if (solid == this) continue;
+						float d = Vector2Distance(aabb.min, solid->aabb.min);
+						if (d < 20) {
+							Vector2 z2 = Vector2MoveTowards(aabb.min, solid->aabb.min, 1);
+							Vector2 z3 = Vector2Subtract(aabb.min, z2);
+							moveBy(z3.x, -z3.y);
+							return;
+						}
+					}
+				}
+				float angle = (MyVector2Angle({ aabb.min.x - 1, aabb.min.y }, z) / PI) * 360.0;
+				updateDirection(angle);
+				if (isDistanceBattle) {
+					if (d < detectRadius * 2) {
+						if (dz.x > 0) moveBy(dz.x, -dz.y);
+						if (dz.x < 0) moveBy(-dz.x, dz.y);
+					}
+				}
+				else {
+					if (d > 64) setPos(z.x, z.y);
+				}
 			}
 		}
 	}
@@ -142,7 +153,6 @@ void Mob::Update(__int64 tick)
 	}
 
 	if (isSolid) { // Если не может проникать через стены, проверяем
-
 		for (auto solid : SceneManager::current->boxes) {
 			if (solid->flags & SOLID_OBJECT) {
 				if (solid == this) continue;
@@ -152,7 +162,6 @@ void Mob::Update(__int64 tick)
 				};
 			}
 		}
-
 	}
 
 	if (health <= 0) {
@@ -160,15 +169,15 @@ void Mob::Update(__int64 tick)
 	}
 }
 
-#include "../../events/ArrowHitEvent.hpp"
+#include "../../events/ProjectileHitEvent.hpp"
 #include "../misc/TextParticle.h"
 #include "../misc/AnimatedParticle.h"
 #include "../ui/SoundUI.h"
 
 void Mob::OnEvent(Event* event)
 {
-	if (event->uuid == ArrowHitEvent::getClassUUID()) {
-		ArrowHitEvent* hitEvent = (ArrowHitEvent*)event;
+	if (event->uuid == ProjectileHitEvent::getClassUUID()) {
+		ProjectileHitEvent* hitEvent = (ProjectileHitEvent*)event;
 		health -= hitEvent->damage;
 		target = hitEvent->arrowOwner;
 		hitEvent->destroyArrowAfterHit = true;

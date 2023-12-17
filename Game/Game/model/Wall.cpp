@@ -35,8 +35,12 @@ void Wall::Draw()
 		for (int j = 0; j < blocksW; j++) {
 #if DEBUG_WALL
 			DrawRectangle(aabb.min.x + j * BLOCK_WIDTH, aabb.min.y + i * BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT, DEBUG_TINT);
-			DrawRectangleLines(aabb.min.x, aabb.min.y, w, h, GREEN);
-			DrawRectangleLines(aabb.min.x, aabb.min.y, aabb.max.x - aabb.min.x, aabb.max.y - aabb.min.y, GREEN);
+			//DrawRectangleLines(aabb.min.x, aabb.min.y, w, h, GREEN);
+			//DrawRectangleLines(aabb.min.x, aabb.min.y, aabb.max.x - aabb.min.x, aabb.max.y - aabb.min.y, GREEN);
+			DrawLine(aabb.min.x, aabb.min.y, aabb.min.x, aabb.max.y, GREEN);
+			DrawLine(aabb.min.x, aabb.min.y, aabb.max.x, aabb.min.y, GREEN);
+			DrawLine(aabb.max.x, aabb.min.y, aabb.max.x, aabb.max.y, GREEN);
+			DrawLine(aabb.max.x, aabb.max.y, aabb.min.x, aabb.max.y, GREEN);
 #else
 			DrawTexture(Block::textures[id], aabb.min.x + j * BLOCK_WIDTH, aabb.min.y + i * BLOCK_HEIGHT, NO_TINT);
 #endif

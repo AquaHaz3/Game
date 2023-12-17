@@ -60,7 +60,7 @@ public:
 		}
 
 		if (brush->type == (int)SceneObjectType::MOB) {
-			DrawTexturePro(Entity::textures[brush->ord], {0,0,32,32}, { toolPos.x, toolPos.y, 32, 32 }, {0,0}, 0, WHITE);
+			DrawTexturePro(Entity::textures[brush->ord]->texture, {0,0,32,32}, {toolPos.x, toolPos.y, 32, 32}, {0,0}, 0, WHITE);
 		}
 
 		if (brush->type == (int) SceneObjectType::PLAYER) {
