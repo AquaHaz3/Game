@@ -15,6 +15,8 @@ public:
 	bool isExplosiveArrow;
 	uint16_t x;
 	uint16_t y;
+	float xSpeed = 0;
+	float ySpeed = 0;
 	Entity* arrowOwner;
 
 public:

@@ -21,6 +21,8 @@ public:
 
 	Direction direction = Direction::RIGHT; // Направление
 
+	int xp = 0;
+
 private:
 
 	int walk_tick = 0; // номер кадра (для анимации ходьбы)
@@ -40,7 +42,6 @@ private:
 
 	void checkForAttack(__int64 tick); // Обработка атаки игроком (Проверки на нажатие мыши и т.д.)
 
-	int xp = 0;
 	int remindAboutXp = 0; // Напоминание о xp;
 	char bow_progress = 0; // натянутость лука
 	uint16_t gun_progress = 0; // перезарядка огнестрельного оружия

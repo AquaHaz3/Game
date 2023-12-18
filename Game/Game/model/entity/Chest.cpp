@@ -35,6 +35,12 @@ Chest::Chest(int x, int y)
 	frame = 0;
 }
 
+Chest::~Chest()
+{
+	EventBus::getInstance()
+		->unregisterEventListner(SceneStartEvent::getClassUUID(), this);
+}
+
 void Chest::Draw()
 {
 	texture->DrawTile(aabb.min.x, aabb.min.y, frame);
@@ -135,7 +141,7 @@ void Chest::OnEvent(Event* event)
 		if (startEvent->index == 1) {
 			flags = flags & (~SOLID_OBJECT);
 		}
-		printf("Chest::Event[SceneStartEvent] {index = %d}\n", startEvent->index);
+		//printf("Chest::Event[SceneStartEvent] {index = %d}\n", startEvent->index);
 	}
 }
 

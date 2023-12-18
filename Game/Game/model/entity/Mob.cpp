@@ -13,20 +13,23 @@ Mob::Mob(int x, int y, EntityID id)
 	target = nullptr;
 	texture = textures[(int)id];
 
-	texture->addTile(32, 64, 32, 32); // Go to RIGHT
-	texture->addTile(32, 0, 32, 32); // Go to DOWN
-	texture->addTile(32, 32, 32, 32); // Go to LEFT
-	texture->addTile(32, 96, 32, 32); // Go to UP
+	if (!texture->isTiled) {
 
-	texture->addTile(0, 64, 32, 32); // Go to RIGHT
-	texture->addTile(0, 0, 32, 32); // Go to DOWN
-	texture->addTile(0, 32, 32, 32); // Go to LEFT
-	texture->addTile(0, 96, 32, 32); // Go to UP
+		texture->addTile(32, 64, 32, 32); // Go to RIGHT
+		texture->addTile(32, 0, 32, 32); // Go to DOWN
+		texture->addTile(32, 32, 32, 32); // Go to LEFT
+		texture->addTile(32, 96, 32, 32); // Go to UP
 
-	texture->addTile(64, 64, 32, 32); // Go to RIGHT
-	texture->addTile(64, 0, 32, 32); // Go to DOWN
-	texture->addTile(64, 32, 32, 32); // Go to LEFT
-	texture->addTile(64, 96, 32, 32); // Go to UP
+		texture->addTile(0, 64, 32, 32); // Go to RIGHT
+		texture->addTile(0, 0, 32, 32); // Go to DOWN
+		texture->addTile(0, 32, 32, 32); // Go to LEFT
+		texture->addTile(0, 96, 32, 32); // Go to UP
+
+		texture->addTile(64, 64, 32, 32); // Go to RIGHT
+		texture->addTile(64, 0, 32, 32); // Go to DOWN
+		texture->addTile(64, 32, 32, 32); // Go to LEFT
+		texture->addTile(64, 96, 32, 32); // Go to UP
+	}
 
 	direction = (int) Direction::DOWN;
 
@@ -92,7 +95,7 @@ void Mob::Update(__int64 tick)
 
 	if (target != nullptr) { // Режим преследования цели
 		if (tick % 5 == 1) {
-			if (tick % 1000 == 1) {
+			if (tick % 250 == 1 && rand() % 3 == 0) {
 				Vector2 center = { aabb.min.x + w / 2,aabb.min.y + h / 2 };
 				Vector2 tCenter = { target->aabb.min.x + target->w / 2,target->aabb.min.y + target->h / 2 };
 				Vector2 z = Vector2MoveTowards(center, tCenter, 64);
@@ -178,7 +181,7 @@ void Mob::OnEvent(Event* event)
 {
 	if (event->uuid == ProjectileHitEvent::getClassUUID()) {
 		ProjectileHitEvent* hitEvent = (ProjectileHitEvent*)event;
-		health -= hitEvent->damage;
+		health -= hitEvent->damage; // урон
 		target = hitEvent->arrowOwner;
 		hitEvent->destroyArrowAfterHit = true;
 		std::string about = "-" + std::to_string((int)hitEvent->damage);

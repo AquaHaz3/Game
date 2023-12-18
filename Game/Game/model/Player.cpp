@@ -126,21 +126,21 @@ void Player::drawWeaponInHand(int layer) {
 	if (!sword && !wand) return;
 
 	if (direction == UP && layer == 0) {
-		Rectangle dest = { aabb.min.x + 8, aabb.min.y + 24, 24, 24 };
+		Rectangle dest = { aabb.min.x + 8, aabb.min.y + 20, 24, 24 };
 		float _angle = (float)-sword_progress;
 		if (wand) _angle = (float)-gun_progress;
 		DrawTexturePro(Item::textures[weaponID], { 32, 0, -32,32 }, dest, { 16,16 }, _angle, WHITE);
 	}
 
 	if (direction == LEFT && layer == 1) {
-		Rectangle dest = { aabb.min.x + 8, aabb.min.y + 24, 24, 24 };
+		Rectangle dest = { aabb.min.x + 8, aabb.min.y + 20, 24, 24 };
 		float _angle = (float)-sword_progress;
 		if (wand) _angle = (float)-gun_progress;
 		DrawTexturePro(Item::textures[weaponID], { 32, 0, -32,32 }, dest, { 16,16 }, _angle, WHITE);
 	}
 
 	if ((direction == RIGHT || direction == DOWN) && layer == 1) {
-		Rectangle dest = { aabb.min.x + 16, aabb.min.y + 28, 24, 24 };
+		Rectangle dest = { aabb.min.x + 12, aabb.min.y + 24, 24, 24 };
 		float _angle = (float)sword_progress;
 		if (wand) _angle = (float)gun_progress;
 		DrawTexturePro(Item::textures[weaponID], { 0,0,32,32 }, dest, { 8,20 }, _angle, WHITE);
@@ -277,8 +277,16 @@ void Player::OnEvent(Event* event)
 	if (event->uuid == ChestDropEvent::getClassUUID()) {
 		isFrozen = false;
 	}
-	if (event->uuid == ProjectileHitEvent::getClassUUID()) {
+	if (event->uuid == ProjectileHitEvent::getClassUUID()) { // Игрок ловит снаряд
 		auto hitEvent = (ProjectileHitEvent*)event;
+		Vector2 from = { hitEvent->x - hitEvent->xSpeed * 8, hitEvent->y - hitEvent->ySpeed *8 };
+		Vector2 to = { hitEvent->x + hitEvent->xSpeed * 8, hitEvent->y + hitEvent->ySpeed * 8 };
+		using namespace UtilAABB;
+		auto side = getCollisionSide(from, to, &aabb);
+		if (side == Side::LEFT && direction == Direction::LEFT && sword_progress == -30) return;
+		if (side == Side::RIGHT && direction == Direction::RIGHT && sword_progress == -30) return;
+		if (side == Side::TOP && direction == Direction::UP && sword_progress == -30) return;
+		if (side == Side::BOTTOM && direction == Direction::DOWN && sword_progress == -30) return;
 		this->health -= hitEvent->damage;
 	}
 }
@@ -346,6 +354,7 @@ void Player::Update(__int64 tick)
 						auto event = new CollectItemEvent((ItemEntity*)e);
 						OnEvent(event);
 						delete event;
+						e->flags ^= ENTITY_OBJECT;
 						SceneManager::removeObject(e);
 					}
 					continue;
@@ -371,6 +380,10 @@ void Player::Update(__int64 tick)
 	}
 	if (tick % 2700 == 0 || (tick % 900 == 0 && xp < 5)) {
 		xp = std::min(xp + 1, MAX_PLAYER_XP);
+	}
+
+	if (health <= 0) {
+		SceneManager::PlayerGameOver(this);
 	}
 }
 

@@ -12,6 +12,8 @@ public:
 		w = 0; h = 0;
 	};
 
+	virtual ~Box2D() {};
+
 	Box2D(int x, int y, int width, int height) 
 	{
 		aabb = AABB((float)x, (float)y, (float) x + width, (float) y + height);

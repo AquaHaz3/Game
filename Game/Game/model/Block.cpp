@@ -25,9 +25,11 @@ void Block::Draw()
 }
 
 std::vector<Texture2D> Block::textures = std::vector<Texture2D>(MAX_BLOCK_ID);
+int Block::lastBlock = (int)BlockID::__lastBlock;
 
 void Block::InitBlocks()
 {
+	lastBlock = (int) BlockID::__lastBlock;
 	/* Solid blocks: */
 	addBlock(BlockID::WALL, "wall.png");
 	addBlock(BlockID::DARK_BRICK, "dark_bricks.png");

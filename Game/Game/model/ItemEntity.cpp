@@ -25,6 +25,12 @@ ItemEntity::ItemEntity(int x, int y, int w, int h, ItemID id)
 	}
 	this->id = (char)id; 
 	this->tint = { 0,0,0,0 };
+	if (id == ItemID::POTION_HEAL) {
+		tint = RED;
+	}
+	if (id == ItemID::POTION_XP) {
+		tint = BLUE;
+	}
 }
 
 ItemEntity::ItemEntity(int x, int y, int w, int h, ItemID id, Color light)
@@ -42,6 +48,12 @@ ItemEntity::ItemEntity(int x, int y, int w, int h, ItemID id, Color light)
 	}
 	this->id = (char)id;
 	this->tint = light;
+	if (id == ItemID::POTION_HEAL) {
+		tint = RED;
+	}
+	if (id == ItemID::POTION_XP) {
+		tint = BLUE;
+	}
 }
 
 void ItemEntity::Draw()

@@ -10,6 +10,7 @@ public:
 
 	Chest();
 	Chest(int x, int y);
+	~Chest();
 
 	virtual void Draw() override;
 	virtual void Update(__int64 tick) override;

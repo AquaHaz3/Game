@@ -17,6 +17,14 @@ Entity::Entity(int x, int y, int w, int h, EntityID type) : Box2D(x, y, w, h)
 	this->type = type;
 }
 
+Entity::~Entity()
+{
+	if (texture != nullptr) {
+		texture.reset();
+		texture = nullptr;
+	}
+}
+
 void Entity::Draw()
 {}
 
@@ -54,6 +62,7 @@ void Entity::InitEntities()
 	addEntityMob(EntityID::Bat, "entity/bat.png", 7, false, true, 128, 72);
 	addEntityMob(EntityID::Dark, "entity/dark.png", 25, true, true, 160, 32);
 	addEntityMob(EntityID::Agent, "entity/agent.png", 20, true, true, 196, 16);
+	addEntityMob(EntityID::Glow, "entity/glow.png", 12, false, true, 196, 16);
 
 	addEntityBase(EntityID::Chest, "entity/chest.png");
 }
@@ -80,7 +89,7 @@ Entity* Entity::EntityFactory(EntityID id, int x, int y, int w, int h, uint16_t 
 		return new Player(x, y);
 	}
 	if (id == EntityID::Chest) {
-		printf("Build chest at {%d, %d}\n", x, y);
+		//printf("Build chest at {%d, %d}\n", x, y);
 		return new Chest(x, y);
 	}
 

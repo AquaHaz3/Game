@@ -118,7 +118,16 @@ public:
 				delete obj;
 			}
 		}
+		for (const auto& kv : backgroundObjects) {
+			PrototypeGameObject* obj = kv.second;
+			if (obj != 0) {
+				delete obj;
+			}
+		}
+		path.~basic_string();
+		printf("[Memory] delete SceneFile\n");
 		objects.clear();
+		backgroundObjects.clear();
 	}
 
 	static GameObject* brushGameObjectFactory(PrototypeGameObject* brush);

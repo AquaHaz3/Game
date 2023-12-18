@@ -30,7 +30,7 @@ public:
 
 	Scene();
 	Scene(int width, int height);
-	~Scene();
+	virtual ~Scene();
 
 	void addPlayerToScene(Player* player);
 	void addObjectToScene(GameObject* obj);
@@ -48,6 +48,8 @@ public:
 	virtual void AfterDraw() { };
 	virtual void AfterUpdate(__int64 tick) { };
 	virtual void OnDispose() { };
+	virtual void OnPause(__int64 tick) { };
+	virtual void PauseDraw() { };
 
 	void moveCamera(float x, float y) {
 		cam_x -= x;
@@ -78,7 +80,7 @@ public:
 	*/
 	void bindCamera(AABB* box, int borderW, int borderH);
 
-	PlayerRef player;
+	Player* player;
 	std::vector<Entity*>& getPlayerContainer();
 
 	Morphism<float> cameraZoom;
@@ -124,7 +126,11 @@ public:
 
 	static void inline DrawCurrentScene() 
 	{
-		if (current == nullptr || isPaused) return;
+		if (current == nullptr) return;
+		if (isPaused) {
+			current->PauseDraw();
+			return;
+		}
 		isDrawed = false;
 		current->Draw();
 		isDrawed = true;
@@ -133,7 +139,11 @@ public:
 	static void inline UpdateCurrentScene(__int64 tick)
 	{
 		isReadyToPause = false;
-		if (current == nullptr || isPaused) return;
+		if (current == nullptr) return;
+		if (isPaused) {
+			current->OnPause(tick);
+			return;
+		}
 		current->Update(tick);
 		if (isReadyToPause) Instance()->pauseAll();
 	}
@@ -149,6 +159,7 @@ public:
 	void Resume();
 	void Start();
 	void ChangeScene(int index);
+	void ChangeSceneAndDispose(int index, Scene* construct);
 	void StopAndExit();
 
 	int AddScene(Scene* scene);
@@ -182,6 +193,8 @@ public:
 	static void BeginCameraOverlay();
 	static void EndCameraOverlay();
 	static bool isSceneStatic();
+
+	static void PlayerGameOver(Player* player);
 
 	/* SIDE: BOTH */
 	static std::vector<Entity*>& GetPlayers();

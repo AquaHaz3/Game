@@ -35,7 +35,7 @@ Scene::Scene(int width, int height)
 	cam_scale = 1;
 	cameraZoom = Morphism<float>(&cam_scale, 1.5f, 1.0f, 0.03125f,
 		[this]() {
-			SceneManager::current->bindCamera(&player.get()->aabb, 320, 196);
+			SceneManager::current->bindCamera(&player->aabb, 320, 196);
 		}
 	);
 }
@@ -43,7 +43,7 @@ Scene::Scene(int width, int height)
 void Scene::addPlayerToScene(Player* player)
 {
 	if (this->player != nullptr) return;
-	this->player = std::shared_ptr<Player>(player);
+	this->player = player;
 	objects.push_back(player);
 	playerContainer.push_back(player);
 }
@@ -162,6 +162,9 @@ void Scene::Update(__int64 tick)
 			objects.remove(to_r);
 			if(to_r->flags & SOLID_OBJECT) boxes.remove((Box2D*) to_r);
 			if(to_r->flags & PARTICLE_OBJECT) particles.remove((Particle*) to_r);
+			if (to_r == player) {
+				player = nullptr;
+			}
 			if (to_r->object_id == 0b11001100) {
 				delete to_r;
 			}
@@ -175,7 +178,7 @@ void Scene::Dispose()
 {
 	OnDispose();
 	for (auto obj : objects) {
-		if (obj != player.get()) {
+		if (obj != player) {
 			delete obj;
 		}
 	}
@@ -183,6 +186,10 @@ void Scene::Dispose()
 	particles.clear();
 	boxes.clear();
 	toRemove.clear();
+	if (player != nullptr) {
+		delete player;
+		player = nullptr;
+	}
 }
 
 void Scene::bindCamera(AABB* box, int borderWidth, int borderHeight)
@@ -307,6 +314,22 @@ void SceneManager::ChangeScene(int index)
 	}
 }
 
+void SceneManager::ChangeSceneAndDispose(int index, Scene* construct)
+{
+	if (scenes[current_index].get() != 0) {
+		scenes[current_index].reset();
+		if (construct != nullptr) {
+			scenes[current_index] = std::shared_ptr<Scene>(construct);
+		}
+		current = nullptr;
+	}
+	if (scenes[index].get() != 0) {
+		Pause();
+		isReadyToChange = true;
+		current_index = index;
+	}
+}
+
 void SceneManager::StopAndExit()
 {
 	Pause();
@@ -366,6 +389,12 @@ bool SceneManager::isSceneStatic()
 	return current->isStatic;
 }
 
+void SceneManager::PlayerGameOver(Player* player)
+{
+	SceneManager::removeObject(player);
+	instance->Pause();
+}
+
 std::vector<Entity*>& SceneManager::GetPlayers()
 {
 	return current->getPlayerContainer();
@@ -392,7 +421,7 @@ void SceneManager::pauseAll()
 
 void SceneManager::change()
 {
-	current->Dispose();
+	if(current != nullptr) current->Dispose();
 	current = scenes[current_index].get();
 	if (!current->isInit) current->OnStart();
 	isReadyToChange = false;

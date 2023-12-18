@@ -117,7 +117,7 @@ int SceneFile::getObjectLastID(SceneObjectType type) {
         return (int)BlockID::__lastBackground;
     case SceneObjectType::WALL:
     case SceneObjectType::BLOCK:
-        return (int)BlockID::__lastBlock;
+        return (int)Block::lastBlock;
     case SceneObjectType::ITEM_ENTITIY:
         return (int)ItemID::__lastItem;
     case SceneObjectType::PLAYER:
@@ -224,7 +224,7 @@ void SceneFile::LoadSceneForEditor(Scene* scene, SceneFile* context)
         short h = br.readShort();
         int ord = br.readShort();
         br.seekg(pos);
-        printf("Load object: {%s, (%d, %d, %d, %d), %d}\n", SceneFile::getTypeName(type).c_str(), x, y, w, h, ord);
+        //printf("Load object: {%s, (%d, %d, %d, %d), %d}\n", SceneFile::getTypeName(type).c_str(), x, y, w, h, ord);
         if (type == SceneObjectType::PLAYER) {
             context->setPlayer(x, y);
         }

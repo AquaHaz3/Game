@@ -24,6 +24,8 @@ static void __update_thread(GameLauncher* launcher);
 GameLauncher::GameLauncher()
 {
 
+    SetTraceLogLevel(LOG_ERROR);
+
     const int screenWidth = 1024;
     const int screenHeight = 640;
 
@@ -58,10 +60,14 @@ void GameLauncher::OnStart()
     SceneManager::Instance()->Start();
 }
 
+#include "python/cpp/PyRuntime.hpp"
+
 void GameLauncher::load()
 {
     loadingStage = -1;
     std::string text = "Load: Blocks ...";
+    PyFile initScript = PyFile("initScript");
+    initScript.addMethod("entry", 0);
     while (loadingStage < 7)
     {
         BeginDrawing();
@@ -81,6 +87,7 @@ void GameLauncher::load()
             Arrow::InitArrows();
             Bullet::InitBullets();
             AnimatedParticle::InitAnimatedEffects();
+            initScript.methods["entry"].callVoid();
             text = "Load: Scenes ...";
             break;
         case 5: SpriteLoader::LoadInGameSprites(); text = "Starting scene ..."; break;

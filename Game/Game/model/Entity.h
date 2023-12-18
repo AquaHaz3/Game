@@ -13,6 +13,7 @@ enum class EntityID {
 	Bat = 5,
 	Dark,
 	Agent,
+	Glow,
 
 	__lastEntity
 };
@@ -60,6 +61,7 @@ public:
 
 	Entity(int x, int y, int w, int h);
 	Entity(int x, int y, int w, int h, EntityID type);
+	virtual ~Entity();
 
 	virtual void Draw() override;
 	virtual void Update(__int64 tick) override;

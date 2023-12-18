@@ -133,7 +133,7 @@ void Bullet::Update(__int64 tick)
 			}
 			if (this->chain != nullptr && tick % 27 == 2) {
 				if (UtilAABB::isIntersectsBox(&solid->aabb, aabb.min, chain->aabb.min)) {
-					float _health = health; health = rand() % 2 + 1;
+					float _health = health; health = rand() % 2 + 1 + (id == (int)BulletID::ELECTRO_RED);
 					auto e = new ProjectileHitEvent(this);
 					solid->OnEvent(e);
 					delete e; health = _health;
@@ -146,6 +146,8 @@ void Bullet::Update(__int64 tick)
 				if (UtilAABB::isOverlap(&aabb, &player->aabb)) {
 					if (player->flags & ENTITY_OBJECT) {
 						auto e = new ProjectileHitEvent(this);
+						e->xSpeed = xSpeed;
+						e->ySpeed = ySpeed;
 						player->OnEvent(e);
 						delete e;
 						SceneManager::removeObject(this);
@@ -168,7 +170,7 @@ void Bullet::Update(__int64 tick)
 	else {
 		if (this->chain != nullptr) {
 			float d = Vector2Distance(aabb.min, chain->aabb.min);
-			if (d > 192) {
+			if (d > 192 && !isOwnedByPlayer) {
 				this->chain->parent = nullptr;
 				this->chain = nullptr;
 			}
@@ -239,7 +241,7 @@ void Bullet::SpawnPlayerBullet(uint8_t weapon_id, int x, int y, float angle, Ent
 		auto pair = new Bullet(x, y, ELECTRO_2, weapon->damage, angle + PI / 4, 3, owner);
 		auto pair2 = new Bullet(x, y, ELECTRO_2, weapon->damage, angle, 3, owner);
 		main->addBulletToChain(pair); pair->addBulletToChain(pair2); 
-		SceneManager::addObject(main);
+		SceneManager::addObject(main);   
 		SceneManager::addObject(pair); SceneManager::addObject(pair2);
 	}
 
@@ -281,6 +283,16 @@ void Bullet::SpawnMobBullet(EntityID id, int x, int y, float angle, Entity* owne
 		main->addBulletToChain(pair); pair->addBulletToChain(pair2);
 		SceneManager::addObject(main);
 		SceneManager::addObject(pair); SceneManager::addObject(pair2);
+	}
+
+	if (id == EntityID::Glow) {
+		if (rand() % 2 == 0) {
+			SceneManager::addObject(new Bullet(x, y, RED_MAGIC, 1, angle - 0.07, 2, owner));
+			SceneManager::addObject(new Bullet(x, y, RED_MAGIC, 0.5, angle + 0.07, 2, owner));
+		}
+		else {
+			SceneManager::addObject(new Bullet(x, y, RED_ENERGY, 1, angle, 0, owner));
+		}
 	}
 }
 

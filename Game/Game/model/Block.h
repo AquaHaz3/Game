@@ -55,12 +55,14 @@ public:
 public:
 
 	static void InitBlocks();
+	static void addBlock(BlockID id, std::string tex_path);
+
+	static int lastBlock;
 
 protected:
 
 	static std::vector<Texture2D> textures;
 
-	static void addBlock(BlockID id, std::string tex_path);
 
 	friend class Wall;  // 
 	friend class Background;  // 
