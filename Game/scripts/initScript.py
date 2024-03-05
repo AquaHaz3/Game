@@ -15,6 +15,7 @@ def InitBlocks():
 	addBlock("bee_nest.png")
 	addBlock("melon_top.png")
 	addBlock("pumpkin_top.png")
+	addBlock("test2.png")
 
 def entry():
 

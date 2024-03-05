@@ -51,7 +51,8 @@ public:
 	virtual void OnPause(__int64 tick) { };
 	virtual void PauseDraw() { };
 
-	void moveCamera(float x, float y) {
+	void moveCamera(float x, float y)
+	{
 		cam_x -= x;
 		cam_y -= y;
 		if (cam_x > 0) cam_x = 0;

@@ -1,0 +1,108 @@
+Числа
+
+bin        | dec | signed dec
+0b00000101 = 5   = (5)
+0b11111011 = 251 = (-5)
+
+Регистр флагов:
+EFLAGS [32bit]
+FLAGS [16bit]
+
+flag - can be 0 or 1, relates to some state
+
+"Set flag" = 1
+"Reset flag" = 0
+
+# ROLP - result of last op
+
+00: CF - Carry flag (флаг переноса, переполнения) (if ROLP, is overflowed of reciever: CF = 1)
+01: 1 (reserved) 
+02: PF - Parity Flag (Флаг четности) (if ROLP.count(1) % 2 == 0: PF = 1)
+03: 0 (reserved)
+04: AF - Auxilialry Flag (Флаг полупереноса) (if ROLP, is overflowed(by 4 bit): AF = 1)
+05: 0 (reserved)
+06: ZF - Zero Flag (if ROLP == 0: ZF = 1)
+07: SF - Sign Flag (SF = ROLP[ROLP.len - 1])
+08: TF - Trap Flag ()
+09: IF - Interrupt Enable Flag (if IF == 0: {CPU ignore interrupts})  
+10: DF - Direction Flag (Флаг направления) (if DF == 1: {stirngs reversed in memory})
+11: OF - Overflow Flag (Флаг переполнения) (if ROLP overflowed by bounds of singned number: OF = 1)
+12-13: IO-PL 
+14: NT
+15: 0 (reserved) 
+
+Арифметические инструкции:
+
+1) add OP1, OP2: OP1 = OP1 + OP2 
+2) sub OP1, OP2: OP1 = OP1 - OP2
+
+These flags can be modified after [add,sub]:
+    CF, OF, SF, ZF, PF
+
+3) neg OP1: OP1 = -OP1
+4) inc OP1
+5) dec OP1
+
+6) adc OP1, OP2: OP1 = OP1 + OP2 + CF
+7) sbb OP1, OP2: OP1 = OP1 - OP2 - CF
+
+-----------------------------
+
+8) mul OP1; 
+
+ op size |  OP2  |  result |   
+---------+-------+---------+
+   byte  |   AL  |     AX  |
+---------+-------+---------+
+   word  |   AX  |  DX:AX  |
+---------+-------+---------+
+
+Flags, which can be modified: CF, OF
+
+9.1) imul OP1; (like mul OP1, but signed)
+9.2) imul OP1, OP2: OP1 = OP1 * OP2
+9.3) imul OP1, OP2, OP3; OP1 = OP2 * OP3; OP3 - const value (number)
+
+10) div OP1;
+
+ op size |  OP2  |  result | reminder |
+---------+-------+---------+----------+
+   byte  |   AX  |    AL   |    AH    |
+---------+-------+---------+----------+
+   word  | DX:AX |    AX   |    DX    |
+---------+-------+---------+----------+
+
+11) idiv OP1; (like div OP1, but signed)
+
+Преобразование типов:
+
+mov bl, byte ptr [addr]
+mov bh, 
+
+· movzx OP1, OP2; *H = 0 
+· movsx OP1, OP2; *H = 0 with sign(OP2)
+
+Преобразование(знаковое) AX(AH, AL): 
+    · CBW - Преобразование байт в слово: AL -> AX
+    · CWD - Преобразование слово в два слова: AX -> DX AX
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
