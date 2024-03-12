@@ -61,7 +61,7 @@ Player::Player(int x, int y) : Entity(x, y, 20, 30, EntityID::Player)
 	invFreeIndex = 1;
 
 	inv_x = (SceneManager::current->camWidth / 2) - ((32 * INVENTORY_SIZE) / 2);
-
+	 
 	for (int i = 0; i < INVENTORY_SIZE; i++) {
 		inventory.push_back(Item(ItemID::AIR, 0)); // Заполняем инвентарь пустотой
 	}
